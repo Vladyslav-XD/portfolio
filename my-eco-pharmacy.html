@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Nunito:wght@600;700;800;900&amp;family=Space+Mono:wght@400;700&amp;family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  #mep-root { --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --rule:#14110B; --muted:#8a8576; --hair:#d3ccba; --stone:#DEDCD6; --red:#E1251B; --green:#4F8A2C; --green-d:#2C6A26; --green-l:#80B834; --orange:#FB5410; --chalk:#FCFCFC; }
+  #mep-root[data-theme="dark"] { --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; }
+  ::selection { background:#4F8A2C; color:#F4F1E8; }
+  a { color:inherit; text-decoration:none; }
+  #mep-root button:focus-visible, #mep-root a:focus-visible { outline:3px solid var(--green); outline-offset:2px; }
+  #mep-root { background:var(--paper); }
+  .mep-wrap { max-width:1320px; margin:0 auto; width:100%; }
+  [style*="Archivo Expanded"]{ font-family:'Archivo','Manrope',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
+  .mep-zoomwrap{ overflow:hidden; }
+  #mep-root [data-col2] > *, #mep-root [data-col3] > *, #mep-root [data-hero] > *{ min-width:0; }
+  #mep-root [data-mocks] *{ min-width:0; }
+  #mep-root [data-mocks] img{ max-width:100%; }
+  @media (max-width:860px){
+    #mep-root [data-col2]{ grid-template-columns:1fr !important; }
+    #mep-root [data-col3]{ grid-template-columns:1fr !important; }
+    #mep-root [data-hero]{ grid-template-columns:1fr !important; }
+    #mep-root [data-mocks]{ grid-template-columns:1fr !important; }
+  }
+  @media (min-width:861px) and (max-width:1100px){
+    #mep-root [data-col3]:not([data-keep]){ grid-template-columns:1fr 1fr !important; }
+  }
+</style>
+</helmet>
+
+<div id="mep-root" style="position:relative; color:var(--ink); font-family:'Hanken Grotesk','Manrope',sans-serif; transition:background-color .4s,color .4s;">
+
+  <header style="position:sticky; top:0; z-index:40; background:var(--stone); border-bottom:5px solid var(--rule); display:flex; justify-content:space-between; align-items:stretch;">
+    <a href="index.html" data-cursor="1" aria-label="Vlad Filon — home" style="display:flex; align-items:center; padding:14px 22px; border-right:5px solid var(--rule);">
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--ink); color:var(--paper); font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.02em;">VF</span>
+    </a>
+    <a href="index.html" data-cursor="1" style="display:flex; align-items:center; padding:0 22px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; letter-spacing:0.06em; color:var(--muted);" data-en="← All work" data-ua="← Усі роботи">← All work</a>
+    <div style="flex:1;"></div>
+    <nav id="mep-nav" style="display:flex; align-items:stretch;">
+      <a href="index.html" data-cursor="1" data-en="Work" data-ua="Роботи" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Work</a>
+      <a href="art.html" data-cursor="1" data-en="Art" data-ua="Арт" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Art</a>
+      
+      <button id="mep-theme" data-cursor="1" title="Toggle theme" style="display:flex; align-items:center; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:14px;"><span id="mep-theme-icon">☾</span></button>
+      <button id="mep-lang" data-cursor="1" style="display:flex; align-items:center; gap:5px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;"><span id="mep-lang-en">EN</span><span style="opacity:.4;">/</span><span id="mep-lang-ua" style="opacity:.4;">UA</span></button>
+      <a href="index.html#cta" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display:flex; align-items:center; padding:0 24px; font-weight:700; font-size:14px; background:var(--red); color:#F4F1E8; border-left:5px solid var(--rule);">Let’s Talk</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="s-hero" data-screen-label="My Eco Pharmacy — hero" style="border-bottom:5px solid var(--rule); background:var(--rule); display:grid; grid-template-columns:1.02fr 0.98fr; gap:5px;" data-hero="">
+    <div style="background:var(--surface); padding:clamp(40px,4.5vw,68px) clamp(24px,4vw,56px); display:flex; flex-direction:column; justify-content:space-between; min-height:620px;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline;">
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--green);" data-en="BRAND IDENTITY · LOGOBOOK" data-ua="БРЕНД-АЙДЕНТИКА · ЛОГОБУК">BRAND IDENTITY · LOGOBOOK</div>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted);">2021</div>
+      </div>
+      <div>
+        <h1 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(40px,5vw,86px); line-height:0.84; letter-spacing:-0.03em; margin:24px 0 0;">My Eco<br><span style="color:var(--orange);">Pharmacy</span></h1>
+        <p data-reveal="" style="font-weight:500; font-size:clamp(17px,1.5vw,21px); line-height:1.45; color:var(--ink); max-width:500px; margin:22px 0 0;" data-en="A sustainability-led identity and brand marketing for a Ukrainian pharmacy chain — “Моя Еко Аптека”. One warm, eco-minded mark — and the campaigns that carried it — built to hold from a shop sign to a charity citylight." data-ua="Айдентика та бренд-маркетинг української аптечної мережі «Моя Еко Аптека», побудовані на принципах сталого розвитку. Один теплий, еко-орієнтований знак — і кампанії, що його понесли, — від вивіски до благодійного сітілайту.">A sustainability-led identity and brand marketing for a Ukrainian pharmacy chain — “Моя Еко Аптека”. One warm, eco-minded mark — and the campaigns that carried it — built to hold from a shop sign to a charity citylight.</p>
+      </div>
+      <div style="display:flex; gap:30px; flex-wrap:wrap; margin-top:34px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px;">
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="ROLE" data-ua="РОЛЬ">ROLE</div><div style="margin-top:5px;" data-en="Brand Identity & Graphic Designer · Brand Marketer" data-ua="Дизайнер бренд-айдентики та графіки · Бренд-маркетолог">Brand Identity & Graphic Designer · Brand Marketer</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="DELIVERABLE" data-ua="ДЕЛІВЕРАБЛ">DELIVERABLE</div><div style="margin-top:5px;" data-en="Logo system · Guidelines" data-ua="Лого-система · Гайдлайни">Logo system · Guidelines</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="TOOLS" data-ua="ІНСТРУМЕНТИ">TOOLS</div><div style="margin-top:5px;">Illustrator · Photoshop · Figma · Trello</div></div>
+      </div>
+    </div>
+    <div style="background:var(--ink); position:relative; min-height:620px; display:flex; flex-direction:column;">
+      <div id="mep-stage" style="flex:1; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:56px; background:#FCFCFC; transition:background-color .3s;">
+        <div id="mep-logo-color" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:56px; opacity:1; transition:opacity .25s;">
+          <dc-import name="My Eco Logo" mode="color" hint-size="78%,40%" style="width:78%; max-width:440px;"></dc-import>
+        </div>
+        <div id="mep-logo-reverse" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:56px; opacity:0; transition:opacity .25s;">
+          <dc-import name="My Eco Logo" mode="reverse" hint-size="78%,40%" style="width:78%; max-width:440px;"></dc-import>
+        </div>
+        <div style="position:absolute; left:20px; top:18px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:var(--muted); mix-blend-mode:difference;" data-en="↻ TAP A BACKGROUND" data-ua="↻ ОБЕРИ ФОН">↻ TAP A BACKGROUND</div>
+      </div>
+      <div style="display:flex; border-top:5px solid var(--rule);">
+        <button class="mep-bg" data-bgkey="chalk" data-bg="#FCFCFC" data-logo="color" data-cursor="1" aria-label="On chalk" style="flex:1; height:62px; background:#FCFCFC; border:none; border-right:2px solid var(--rule); cursor:pointer;"></button>
+        <button class="mep-bg" data-bgkey="green" data-bg="#4F8A2C" data-logo="reverse" data-cursor="1" aria-label="On green" style="flex:1; height:62px; background:#4F8A2C; border:none; border-right:2px solid var(--rule); cursor:pointer;"></button>
+        <button class="mep-bg" data-bgkey="orange" data-bg="#FB5410" data-logo="reverse" data-cursor="1" aria-label="On orange" style="flex:1; height:62px; background:#FB5410; border:none; border-right:2px solid var(--rule); cursor:pointer;"></button>
+        <button class="mep-bg" data-bgkey="ink" data-bg="#14110B" data-logo="reverse" data-cursor="1" aria-label="On ink" style="flex:1; height:62px; background:#14110B; border:none; cursor:pointer;"></button>
+      </div>
+      <div id="mep-ring" style="position: fixed; left: 0; top: 0; width: 12px; height: 12px; margin-left: -6px; margin-top: -6px; border: 1.5px solid var(--rule); border-radius: 50%; pointer-events: none; z-index: 91; opacity: 0; transition: width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode: difference"></div>
+    </div>
+  </section>
+
+  <!-- 01 CONCEPT -->
+  <section id="s-concept" data-screen-label="Concept" style="background:var(--green); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#d4ecc4;" data-en="01 / THE CONCEPT" data-ua="01 / КОНЦЕПТ">01 / THE CONCEPT</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(28px,4vw,56px); line-height:0.98; letter-spacing:-0.02em; margin:14px 0 8px; max-width:900px;" data-en="A pharmacy built on sustainable development." data-ua="Аптека, побудована на сталому розвитку.">A pharmacy built on sustainable development.</h2>
+      <p data-reveal="" style="font-weight:500; font-size:16.5px; line-height:1.62; color:#eaf6e2; max-width:840px; margin:0 0 40px;" data-en="The brief was an identity for a Ukrainian pharmacy that builds the principles of sustainable development into how it actually operates — not as a slogan, but as a structure. The whole image had to combine natural elements, a modern minimalist style and a clear association with eco-consciousness and care for health. It rests on three pillars." data-ua="Завдання — айдентика української аптеки, що вбудовує принципи сталого розвитку у свою реальну діяльність — не як гасло, а як структуру. Увесь образ мав поєднати природні елементи, сучасний мінімалізм і чітку асоціацію з екосвідомістю та турботою про здоров’я. Він стоїть на трьох стовпах.">The brief was an identity for a Ukrainian pharmacy that builds the principles of sustainable development into how it actually operates — not as a slogan, but as a structure. The whole image had to combine natural elements, a modern minimalist style and a clear association with eco-consciousness and care for health. It rests on three pillars.</p>
+      <div data-col3="" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; background:rgba(244,241,232,.28); border:2px solid rgba(244,241,232,.28);">
+        <div data-reveal="" style="background:var(--green); padding:30px 28px; display:flex; flex-direction:column; gap:12px; min-height:230px;">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#cfe8bf;">01</span>
+          <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:24px; letter-spacing:-0.01em;" data-en="Economy" data-ua="Економіка">Economy</div>
+          <p style="font-weight:500; font-size:15px; line-height:1.55; margin:0; color:#eaf6e2;" data-en="Responsibility in running the business and fair treatment of partners and clients." data-ua="Відповідальність у веденні бізнесу та справедливе ставлення до партнерів і клієнтів.">Responsibility in running the business and fair treatment of partners and clients.</p>
+        </div>
+        <div data-reveal="" style="background:var(--green); padding:30px 28px; display:flex; flex-direction:column; gap:12px; min-height:230px;">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#cfe8bf;">02</span>
+          <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:24px; letter-spacing:-0.01em;" data-en="Environment" data-ua="Довкілля">Environment</div>
+          <p style="font-weight:500; font-size:15px; line-height:1.55; margin:0; color:#eaf6e2;" data-en="Ecological awareness, a smaller footprint and support for a healthy way of living." data-ua="Екологічна свідомість, менший вплив на природу та підтримка здорового способу життя.">Ecological awareness, a smaller footprint and support for a healthy way of living.</p>
+        </div>
+        <div data-reveal="" style="background:var(--green); padding:30px 28px; display:flex; flex-direction:column; gap:12px; min-height:230px;">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#cfe8bf;">03</span>
+          <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:24px; letter-spacing:-0.01em;" data-en="Society" data-ua="Соціум">Society</div>
+          <p style="font-weight:500; font-size:15px; line-height:1.55; margin:0; color:#eaf6e2;" data-en="Tolerance, care for people and strengthening the health of the community." data-ua="Толерантність, турбота про людей і зміцнення суспільного здоров’я.">Tolerance, care for people and strengthening the health of the community.</p>
+        </div>
+      </div>
+      <div data-reveal="" style="display:flex; align-items:center; gap:18px; margin-top:5px; background:var(--orange); color:#F4F1E8; padding:22px 28px; border:2px solid rgba(244,241,232,.28); border-top:none;">
+        <span style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(15px,1.6vw,20px); letter-spacing:0.02em;">→</span>
+        <span style="font-weight:600; font-size:clamp(15px,1.6vw,19px); line-height:1.4;" data-en="Three pillars, one outcome — sustainable development." data-ua="Три стовпи, один результат — сталий розвиток.">Three pillars, one outcome — sustainable development.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 NAMING & LOGO -->
+  <section id="s-naming" data-screen-label="Naming &amp; the logo" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--green);" data-en="02 / NAMING &amp; THE LOGO" data-ua="02 / НЕЙМІНГ І ЛОГОТИП">02 / NAMING &amp; THE LOGO</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:14px 0 8px; max-width:820px;" data-en="“Моя Еко Аптека” — a capsule that grows leaves." data-ua="«Моя Еко Аптека» — капсула, що проростає листям.">“Моя Еко Аптека” — a capsule that grows leaves.</h2>
+      <p data-reveal="" style="font-weight:500; font-size:16.5px; line-height:1.62; margin:0 0 36px; max-width:820px;" data-en="The mark fuses the two halves of the idea: a pharmaceutical capsule for medicine and trust, with stylised plant leaves inside it for nature and the organic. Together they say “a pharmacy that cares — for you and for the world.”" data-ua="Знак поєднує дві половини ідеї: фармацевтичну капсулу — про ліки й довіру — зі стилізованим листям усередині, про природу й органічність. Разом вони кажуть: «аптека, що дбає — про тебе й про світ».">The mark fuses the two halves of the idea: a pharmaceutical capsule for medicine and trust, with stylised plant leaves inside it for nature and the organic. Together they say “a pharmacy that cares — for you and for the world.”</p>
+      <div data-col2="" style="display:grid; grid-template-columns:1fr 1fr; gap:5px; background:var(--rule); border:2px solid var(--rule);">
+        <div style="background:#FCFCFC; display:flex; align-items:center; justify-content:center; padding:clamp(36px,5vw,72px); min-height:300px;">
+          <dc-import name="My Eco Logo" mode="color" hint-size="86%,46%" style="width:86%; max-width:420px;"></dc-import>
+        </div>
+        <div style="background:var(--surface); display:flex; flex-direction:column;">
+          <div data-naming="" style="display:flex; gap:18px; align-items:flex-start; padding:24px 26px; border-bottom:2px solid var(--rule);">
+            <span style="flex:none; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--green); letter-spacing:0.1em; padding-top:3px;">Моя</span>
+            <p style="font-weight:500; font-size:14.5px; line-height:1.5; margin:0;" data-en="“My” — personal involvement. Every client, pharmacist or partner can say: this is my pharmacy." data-ua="«Моя» — особиста залученість. Кожен клієнт, фармацевт чи партнер може сказати: це моя аптека.">“My” — personal involvement. Every client, pharmacist or partner can say: this is my pharmacy.</p>
+          </div>
+          <div data-naming="" style="display:flex; gap:18px; align-items:flex-start; padding:24px 26px; border-bottom:2px solid var(--rule);">
+            <span style="flex:none; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--green); letter-spacing:0.1em; padding-top:3px;">Еко</span>
+            <p style="font-weight:500; font-size:14.5px; line-height:1.5; margin:0;" data-en="“Eco” — sustainability in practice: smart use of resources, fair prices and accessible medicine." data-ua="«Еко» — сталість на практиці: розумне споживання ресурсів, чесні ціни й доступні ліки.">“Eco” — sustainability in practice: smart use of resources, fair prices and accessible medicine.</p>
+          </div>
+          <div data-naming="" style="display:flex; gap:18px; align-items:flex-start; padding:24px 26px;">
+            <span style="flex:none; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--orange); letter-spacing:0.1em; padding-top:3px;">Аптека</span>
+            <p style="font-weight:500; font-size:14.5px; line-height:1.5; margin:0;" data-en="“Pharmacy” — not just a place to buy medicine, but a symbol of trust, reliability and professionalism." data-ua="«Аптека» — не просто місце продажу ліків, а символ довіри, надійності та професіоналізму.">“Pharmacy” — not just a place to buy medicine, but a symbol of trust, reliability and professionalism.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 COLOUR -->
+  <section id="s-colour" data-screen-label="Colour" style="background:var(--surface); border-bottom:5px solid var(--rule);">
+    <div class="mep-wrap" style="padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--green);" data-en="03 / COLOUR" data-ua="03 / КОЛІР">03 / COLOUR</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:14px 0 8px; max-width:760px;" data-en="Living green, energetic orange, clean white." data-ua="Живий зелений, енергійний помаранч, чиста білизна.">Living green, energetic orange, clean white.</h2>
+      <p data-reveal="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted); margin:0 0 30px;" data-en="↳ CLICK A SWATCH TO COPY ITS HEX" data-ua="↳ КЛІКНИ ПЛАШКУ, ЩОБ СКОПІЮВАТИ HEX">↳ CLICK A SWATCH TO COPY ITS HEX</p>
+      <div data-col3="" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; background:var(--rule); border:2px solid var(--rule);">
+        <button class="mep-swatch" data-hex="#4F8A2C" data-reveal="" style="text-align:left; cursor:pointer; background:#4F8A2C; color:#F4F1E8; min-height:250px; padding:26px; display:flex; flex-direction:column; justify-content:space-between; border:none; transition:transform .2s;"><div><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:22px;">Green</span><div class="mep-hex" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; margin-top:6px;">#4F8A2C</div></div><p style="font-weight:500; font-size:15px; line-height:1.55; margin:0; color:#eaf6e2;" data-en="Nature, life and harmony — eco-consciousness, trust, calm and health." data-ua="Природа, життя й гармонія — екосвідомість, довіра, спокій і здоров’я.">Nature, life and harmony — eco-consciousness, trust, calm and health.</p></button>
+        <button class="mep-swatch" data-hex="#FB5410" data-reveal="" style="text-align:left; cursor:pointer; background:#FB5410; color:#F4F1E8; min-height:250px; padding:26px; display:flex; flex-direction:column; justify-content:space-between; border:none; transition:transform .2s;"><div><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:22px;">Orange</span><div class="mep-hex" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; margin-top:6px;">#FB5410</div></div><p style="font-weight:500; font-size:15px; line-height:1.55; margin:0; color:#ffe2da;" data-en="Energy, optimism and innovation — progress, openness, warmth and friendliness." data-ua="Енергія, оптимізм та інновації — прогрес, відкритість, тепло й дружність.">Energy, optimism and innovation — progress, openness, warmth and friendliness.</p></button>
+        <button class="mep-swatch" data-hex="#FCFCFC" data-reveal="" style="text-align:left; cursor:pointer; background:#FCFCFC; color:#14110B; min-height:250px; padding:26px; display:flex; flex-direction:column; justify-content:space-between; border:none; transition:transform .2s;"><div><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:22px;">White</span><div class="mep-hex" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; margin-top:6px;">#FCFCFC</div></div><p style="font-weight:500; font-size:15px; line-height:1.55; margin:0; color:#6b6a64;" data-en="Cleanliness, simplicity and transparency — honesty, quality and a sense of lightness." data-ua="Чистота, простота й прозорість — чесність, якість і відчуття легкості.">Cleanliness, simplicity and transparency — honesty, quality and a sense of lightness.</p></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 TYPOGRAPHY -->
+  <section id="s-type" data-screen-label="Typography" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--green);" data-en="04 / TYPOGRAPHY" data-ua="04 / ТИПОГРАФІКА">04 / TYPOGRAPHY</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:14px 0 30px; max-width:820px;" data-en="Nunito — rounded, friendly, reliable." data-ua="Nunito — округлий, дружній, надійний.">Nunito — rounded, friendly, reliable.</h2>
+      <div data-col2="" style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;">
+        <div data-reveal="" style="background:#FCFCFC; border:2px solid var(--rule); padding:clamp(28px,3vw,46px);">
+          <div style="font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(34px,4.4vw,64px); line-height:1.0; color:#14110B;">Aa Bb Cc</div>
+          <div style="font-family:'Nunito',sans-serif; font-weight:700; font-size:clamp(17px,1.7vw,24px); line-height:1.35; color:var(--muted); margin-top:18px;">ABCDEFGHIJKLM<br>NOPQRSTUVWXYZ<br>0123456789 — АБВГ</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <p data-reveal="" style="font-weight:500; font-size:16.5px; line-height:1.62; margin:0;" data-en="Nunito carries the identity: soft, rounded forms read as friendliness, trust and openness — exactly the welcome an eco pharmacy wants. It stays clear at small sizes across screen and print, and its balance of strict geometry and softness mirrors the brand itself: ecological, yet dependable." data-ua="Айдентику несе Nunito: м’які округлі форми читаються як доброзичливість, довіра й відкритість — саме той прийом, якого хоче еко-аптека. Він лишається чітким на малих розмірах в екрані й друці, а баланс суворої геометрії та м’якості віддзеркалює сам бренд: екологічний, але надійний.">Nunito carries the identity: soft, rounded forms read as friendliness, trust and openness — exactly the welcome an eco pharmacy wants. It stays clear at small sizes across screen and print, and its balance of strict geometry and softness mirrors the brand itself: ecological, yet dependable.</p>
+          <div data-reveal="" style="display:flex; gap:5px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px;">
+            <span style="background:#14110B; color:#F4F1E8; padding:9px 15px;">Display · 900</span>
+            <span style="background:var(--surface); color:var(--ink); border:1.5px solid var(--rule); padding:9px 15px;">Text · 600</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 CLEAR SPACE & MIN SIZE -->
+  <section id="s-space" data-screen-label="Clear space &amp; minimum size" style="background:var(--surface); border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--green);" data-en="05 / CLEAR SPACE &amp; MINIMUM SIZE" data-ua="05 / ОХОРОННЕ ПОЛЕ ТА МІН. РОЗМІР">05 / CLEAR SPACE &amp; MINIMUM SIZE</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:14px 0 8px; max-width:820px;" data-en="Room to breathe, a floor it can’t cross." data-ua="Простір, щоб дихати, і межа, яку не можна переходити.">Room to breathe, a floor it can’t cross.</h2>
+      <p data-reveal="" style="font-weight:500; font-size:16.5px; line-height:1.62; margin:0 0 30px; max-width:820px;" data-en="Clear space keeps the logo legible and stops it merging with other elements: keep at least the height of the letter “А” from the wordmark free on every side. Below the minimum size the wordmark and the leaves lose clarity — so it has a hard floor." data-ua="Охоронне поле тримає лого читабельним і не дає зливатися з іншими елементами: лишай не менше висоти літери «А» з напису з кожного боку. Менше за мінімальний розмір напис і листя втрачають чіткість — тож є жорстка межа.">Clear space keeps the logo legible and stops it merging with other elements: keep at least the height of the letter “А” from the wordmark free on every side. Below the minimum size the wordmark and the leaves lose clarity — so it has a hard floor.</p>
+      <div data-col2="" style="display:grid; grid-template-columns:1.15fr 0.85fr; gap:5px; background:var(--rule); border:2px solid var(--rule);">
+        <div style="background:#FCFCFC; padding:36px;">
+          <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--orange);" data-en="CLEAR SPACE = А" data-ua="ОХОРОННЕ ПОЛЕ = А">CLEAR SPACE = А</div>
+          <div data-reveal="" style="margin:24px auto 0; max-width:540px; background:#FFFFFF; border:1px solid var(--hair);">
+            <img src="mep-clearspace.png" alt="Clear-space construction grid — the margin around the logo equals the height of the letter А" style="display:block; width:100%; height:auto;">
+          </div>
+          <p style="font-weight:500; font-size:14.5px; line-height:1.5; margin:18px 0 0; color:#6b6a64; text-align:center;" data-en="The clear space equals the height of the letter “А” — one grid unit free on every side." data-ua="Охоронне поле дорівнює висоті літери «А» — одна клітинка сітки з кожного боку.">The clear space equals the height of the letter “А” — one grid unit free on every side.</p>
+        </div>
+        <div style="background:#FCFCFC; padding:36px; display:flex; flex-direction:column;">
+          <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--orange);" data-en="MINIMUM SIZE" data-ua="МІНІМАЛЬНИЙ РОЗМІР">MINIMUM SIZE</div>
+          <div data-reveal="" style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:20px 0;">
+            <dc-import name="My Eco Logo" mode="color" hint-size="170px,80px" style="width:170px;"></dc-import>
+            <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--green);">20 mm / 120 px — full logo</span>
+          </div>
+          <p style="font-weight:500; font-size:14.5px; line-height:1.5; margin:0; color:#6b6a64; text-align:center;" data-en="Never reproduce the full logo below 20 mm in print or 120 px on screen." data-ua="Ніколи не відтворюй повне лого менше за 20 мм у друці або 120 px на екрані.">Never reproduce the full logo below 20 mm in print or 120 px on screen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 MONOCHROME -->
+  <section id="s-mono" data-screen-label="Monochrome" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--green);" data-en="06 / BLACK &amp; WHITE" data-ua="06 / ЧОРНО-БІЛИЙ">06 / BLACK &amp; WHITE</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:14px 0 8px; max-width:820px;" data-en="One ink, two sides." data-ua="Один колір, два боки.">One ink, two sides.</h2>
+      <p data-reveal="" style="font-weight:500; font-size:16.5px; line-height:1.62; margin:0 0 30px; max-width:820px;" data-en="When colour isn’t an option — engraving, a stamp, single-colour print, a fax or an official document — the logo holds as one solid ink. Positive for light surfaces, knocked out for dark ones, with the leaves always reading as the negative space inside the capsule." data-ua="Коли колір недоступний — гравіювання, печатка, одноколірний друк, факс чи офіційний документ — лого тримається одним суцільним кольором. Позитив для світлих поверхонь, вивідка для темних, а листя завжди читається як негативний простір усередині капсули.">When colour isn’t an option — engraving, a stamp, single-colour print, a fax or an official document — the logo holds as one solid ink. Positive for light surfaces, knocked out for dark ones, with the leaves always reading as the negative space inside the capsule.</p>
+      <div data-col2="" style="display:grid; grid-template-columns:1fr 1fr; gap:5px; background:var(--rule); border:2px solid var(--rule);">
+        <div style="position:relative; background:#FCFCFC; min-height:300px; display:flex; align-items:center; justify-content:center; padding:clamp(34px,5vw,68px);">
+          <span style="position:absolute; left:18px; top:16px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:var(--muted);" data-en="POSITIVE · INK" data-ua="ПОЗИТИВ · ЧОРНИЙ">POSITIVE · INK</span>
+          <dc-import name="My Eco Logo" mode="mono" hint-size="84%,42%" style="width:84%; max-width:420px;"></dc-import>
+        </div>
+        <div style="position:relative; background:#14110B; min-height:300px; display:flex; align-items:center; justify-content:center; padding:clamp(34px,5vw,68px);">
+          <span style="position:absolute; left:18px; top:16px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#9a9282;" data-en="REVERSE · KNOCKOUT" data-ua="ВИВІДКА · РЕВЕРС">REVERSE · KNOCKOUT</span>
+          <dc-import name="My Eco Logo" mode="mono-rev" hint-size="84%,42%" style="width:84%; max-width:420px;"></dc-import>
+        </div>
+      </div>
+      <p style="font-weight:500; font-size:14.5px; line-height:1.5; margin:16px 0 0; color:var(--muted); max-width:820px;" data-en="Use a single brand ink or pure black; never mix tones or introduce a second colour in the one-colour lockup." data-ua="Використовуй один брендовий колір або чистий чорний; ніколи не змішуй відтінки й не додавай другий колір в одноколірному варіанті.">Use a single brand ink or pure black; never mix tones or introduce a second colour in the one-colour lockup.</p>
+    </div>
+  </section>
+
+  <!-- 07 BACKGROUNDS -->
+  <section id="s-bg" data-screen-label="Backgrounds" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--green);" data-en="07 / ON ANY BACKGROUND" data-ua="07 / НА БУДЬ-ЯКОМУ ФОНІ">07 / ON ANY BACKGROUND</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:14px 0 30px; max-width:760px;" data-en="Full colour on light, reversed on brand surfaces." data-ua="Повний колір на світлому, реверс на брендових поверхнях.">Full colour on light, reversed on brand surfaces.</h2>
+      <div data-col2="" data-keep="" style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:5px; background:var(--rule); border:2px solid var(--rule);">
+        <div style="background:#FCFCFC; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:26px;"><dc-import name="My Eco Logo" mode="color" hint-size="90%,46%" style="width:90%;"></dc-import></div>
+        <div style="background:var(--green); aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:26px;"><dc-import name="My Eco Logo" mode="reverse" hint-size="90%,46%" style="width:90%;"></dc-import></div>
+        <div style="background:var(--orange); aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:26px;"><dc-import name="My Eco Logo" mode="reverse" hint-size="90%,46%" style="width:90%;"></dc-import></div>
+        <div style="background:#14110B; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:26px;"><dc-import name="My Eco Logo" mode="reverse" hint-size="90%,46%" style="width:90%;"></dc-import></div>
+      </div>
+      <p style="font-weight:500; font-size:14.5px; line-height:1.5; margin:16px 0 0; color:var(--muted); max-width:820px;" data-en="Full colour on chalk and light surfaces; a single-colour cream version on green, orange and ink. Always keep strong contrast — never place the mark on a busy, low-contrast photo." data-ua="Повний колір на крейді й світлих поверхнях; одноколірна кремова версія на зеленому, помаранчевому й чорному. Завжди тримай контраст — ніколи не став знак на строкате, малоконтрастне фото.">Full colour on chalk and light surfaces; a single-colour cream version on green, orange and ink. Always keep strong contrast — never place the mark on a busy, low-contrast photo.</p>
+    </div>
+  </section>
+
+  <!-- 08 MISUSE -->
+  <section id="s-misuse" data-screen-label="Forbidden variations" style="background:var(--surface); border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--red);" data-en="08 / FORBIDDEN VARIATIONS" data-ua="08 / ЗАБОРОНЕНІ ВАРІАЦІЇ">08 / FORBIDDEN VARIATIONS</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:14px 0 8px; max-width:820px;" data-en="Six ways to break the logo." data-ua="Шість способів зламати лого.">Six ways to break the logo.</h2>
+      <p data-reveal="" style="font-weight:500; font-size:16.5px; line-height:1.62; margin:0 0 30px; max-width:820px;" data-en="Examples of incorrect use — changing the proportions or colours, adding shadows, effects or distortions, or any other element that breaks the identity. When in doubt, place the master files exactly as they are." data-ua="Приклади неправильного використання — зміна пропорцій чи кольорів, додавання тіней, ефектів чи спотворень, або будь-який інший елемент, що порушує айдентику. Якщо сумніваєшся — став майстер-файли точно як є.">Examples of incorrect use — changing the proportions or colours, adding shadows, effects or distortions, or any other element that breaks the identity. When in doubt, place the master files exactly as they are.</p>
+      <div data-col3="" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; background:var(--rule); border:2px solid var(--rule);">
+        <figure data-reveal="" style="margin:0; background:#FCFCFC; display:flex; flex-direction:column; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:4/3; background:#FCFCFC; display:flex; align-items:center; justify-content:center; padding:24px; overflow:hidden;">
+            <div style="width:86%; transform:scaleX(1.55);"><dc-import name="My Eco Logo" mode="color" hint-size="100%,46%" style="width:100%;"></dc-import></div>
+            <span style="position:absolute; top:12px; right:12px; width:28px; height:28px; border-radius:50%; background:var(--red); color:#F4F1E8; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; line-height:1;">✕</span>
+          </div>
+          <figcaption style="padding:13px 16px; border-top:2px solid var(--rule); font-family:'Space Mono','JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--ink);" data-en="DON’T STRETCH" data-ua="НЕ РОЗТЯГУЙ">DON’T STRETCH</figcaption>
+        </figure>
+        <figure data-reveal="" style="margin:0; background:#FCFCFC; display:flex; flex-direction:column; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:4/3; background:#FCFCFC; display:flex; align-items:center; justify-content:center; padding:24px; overflow:hidden;">
+            <div style="width:84%; filter:hue-rotate(155deg) saturate(1.6);"><dc-import name="My Eco Logo" mode="color" hint-size="100%,46%" style="width:100%;"></dc-import></div>
+            <span style="position:absolute; top:12px; right:12px; width:28px; height:28px; border-radius:50%; background:var(--red); color:#F4F1E8; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; line-height:1;">✕</span>
+          </div>
+          <figcaption style="padding:13px 16px; border-top:2px solid var(--rule); font-family:'Space Mono','JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--ink);" data-en="DON’T RECOLOUR" data-ua="НЕ ЗМІНЮЙ КОЛІР">DON’T RECOLOUR</figcaption>
+        </figure>
+        <figure data-reveal="" style="margin:0; background:#FCFCFC; display:flex; flex-direction:column; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:4/3; background:#FCFCFC; display:flex; align-items:center; justify-content:center; padding:24px; overflow:hidden;">
+            <div style="width:84%; filter:drop-shadow(0 7px 5px rgba(20,17,11,.45));"><dc-import name="My Eco Logo" mode="color" hint-size="100%,46%" style="width:100%;"></dc-import></div>
+            <span style="position:absolute; top:12px; right:12px; width:28px; height:28px; border-radius:50%; background:var(--red); color:#F4F1E8; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; line-height:1;">✕</span>
+          </div>
+          <figcaption style="padding:13px 16px; border-top:2px solid var(--rule); font-family:'Space Mono','JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--ink);" data-en="DON’T ADD SHADOWS" data-ua="НЕ ДОДАВАЙ ТІНІ">DON’T ADD SHADOWS</figcaption>
+        </figure>
+        <figure data-reveal="" style="margin:0; background:#FCFCFC; display:flex; flex-direction:column; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:4/3; background:#FCFCFC; display:flex; align-items:center; justify-content:center; padding:24px; overflow:hidden;">
+            <div style="width:78%; transform:rotate(-13deg);"><dc-import name="My Eco Logo" mode="color" hint-size="100%,46%" style="width:100%;"></dc-import></div>
+            <span style="position:absolute; top:12px; right:12px; width:28px; height:28px; border-radius:50%; background:var(--red); color:#F4F1E8; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; line-height:1;">✕</span>
+          </div>
+          <figcaption style="padding:13px 16px; border-top:2px solid var(--rule); font-family:'Space Mono','JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--ink);" data-en="DON’T ROTATE" data-ua="НЕ НАХИЛЯЙ">DON’T ROTATE</figcaption>
+        </figure>
+        <figure data-reveal="" style="margin:0; background:#FCFCFC; display:flex; flex-direction:column; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:4/3; background:#FCFCFC; display:flex; align-items:center; justify-content:center; padding:24px; overflow:hidden;">
+            <div style="width:84%; filter:blur(1.6px);"><dc-import name="My Eco Logo" mode="color" hint-size="100%,46%" style="width:100%;"></dc-import></div>
+            <span style="position:absolute; top:12px; right:12px; width:28px; height:28px; border-radius:50%; background:var(--red); color:#F4F1E8; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; line-height:1;">✕</span>
+          </div>
+          <figcaption style="padding:13px 16px; border-top:2px solid var(--rule); font-family:'Space Mono','JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--ink);" data-en="DON’T ADD EFFECTS" data-ua="НЕ ДОДАВАЙ ЕФЕКТИ">DON’T ADD EFFECTS</figcaption>
+        </figure>
+        <figure data-reveal="" style="margin:0; background:#FCFCFC; display:flex; flex-direction:column; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:4/3; background:#4F8A2C; display:flex; align-items:center; justify-content:center; padding:24px; overflow:hidden;">
+            <div style="width:84%;"><dc-import name="My Eco Logo" mode="color" hint-size="100%,46%" style="width:100%;"></dc-import></div>
+            <span style="position:absolute; top:12px; right:12px; width:28px; height:28px; border-radius:50%; background:var(--red); color:#F4F1E8; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; line-height:1;">✕</span>
+          </div>
+          <figcaption style="padding:13px 16px; border-top:2px solid var(--rule); font-family:'Space Mono','JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--ink);" data-en="KEEP STRONG CONTRAST" data-ua="ТРИМАЙ КОНТРАСТ">KEEP STRONG CONTRAST</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 APPLICATIONS -->
+  <section id="s-apply" data-screen-label="Applications" style="background:var(--surface); border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px);">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--green);" data-en="09 / APPLICATIONS" data-ua="09 / ЗАСТОСУВАННЯ">09 / APPLICATIONS</div>
+      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:14px 0 30px; max-width:760px;" data-en="On screen, on the street, on the shelf." data-ua="На екрані, на вулиці, на полиці.">On screen, on the street, on the shelf.</h2>
+      <!-- feature: landing -->
+      <figure data-lift="" data-reveal="" data-mocks="" style="margin:0; background:var(--surface); overflow:hidden; display:flex; flex-direction:column; border:2px solid var(--rule); transition:transform .25s, box-shadow .25s;">
+        <div class="mep-zoomwrap"><video class="mep-zoom" src="mep-landing.mp4" poster="mep-laptop.png" autoplay loop muted playsinline preload="auto" style="display:block; width:100%; aspect-ratio:16/9; object-fit:cover; background:#14110B; transition:transform .5s cubic-bezier(.2,.7,.2,1);"></video></div>
+        <figcaption style="padding:16px 20px; border-top:1.5px solid var(--rule);"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--orange);" data-en="DIGITAL — LANDING PAGE" data-ua="ЦИФРА — ЛЕНДИНГ">DIGITAL — LANDING PAGE</div></figcaption>
+      </figure>
+      <!-- 2-col: sign + busstop -->
+      <div data-mocks="" style="display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-top:5px; background:var(--rule); border:2px solid var(--rule);">
+        <figure data-lift="" data-reveal="" style="margin:0; background:var(--surface); overflow:hidden; display:flex; flex-direction:column; transition:transform .25s, box-shadow .25s;">
+          <div class="mep-zoomwrap"><img class="mep-zoom" src="mep-sign.png" alt="Illuminated round shop sign with the emblem" style="display:block; width:100%; aspect-ratio:4/3; object-fit:cover; transition:transform .5s cubic-bezier(.2,.7,.2,1);"></div>
+          <figcaption style="padding:16px 20px; border-top:1.5px solid var(--rule);"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--orange);" data-en="RETAIL — ILLUMINATED SIGN" data-ua="РИТЕЙЛ — СВІТЛОВА ВИВІСКА">RETAIL — ILLUMINATED SIGN</div></figcaption>
+        </figure>
+        <figure data-lift="" data-reveal="" style="margin:0; background:var(--surface); overflow:hidden; display:flex; flex-direction:column; transition:transform .25s, box-shadow .25s;">
+          <div class="mep-zoomwrap"><img class="mep-zoom" src="mep-billboard.png" alt="Digital citylight inviting pharmacists to join" style="display:block; width:100%; aspect-ratio:4/3; object-fit:cover; transition:transform .5s cubic-bezier(.2,.7,.2,1);"></div>
+          <figcaption style="padding:16px 20px; border-top:1.5px solid var(--rule);"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--orange);" data-en="RECRUITMENT — DIGITAL CITYLIGHT" data-ua="HR — ЦИФРОВИЙ СІТІЛАЙТ">RECRUITMENT — DIGITAL CITYLIGHT</div></figcaption>
+        </figure>
+      </div>
+      <!-- social charity feature -->
+      <figure data-lift="" data-reveal="" data-mocks="" style="margin:5px 0 0; background:var(--surface); overflow:hidden; display:flex; flex-direction:column; border:2px solid var(--rule); transition:transform .25s, box-shadow .25s;">
+        <div class="mep-zoomwrap"><img class="mep-zoom" src="mep-busstop.png" alt="Charity citylight supporting Ukraine's defenders" style="display:block; width:100%; aspect-ratio:16/9; object-fit:cover; transition:transform .5s cubic-bezier(.2,.7,.2,1);"></div>
+        <figcaption style="padding:16px 20px; border-top:1.5px solid var(--rule); display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--orange);" data-en="SOCIAL — CHARITY CAMPAIGN" data-ua="СОЦІАЛЬНЕ — БЛАГОДІЙНІСТЬ">SOCIAL — CHARITY CAMPAIGN</div><div style="font-weight:500; font-size:13px; color:var(--muted);" data-en="With the Serhiy Prytula Foundation — ₴5 from every pack to Ukraine’s defenders." data-ua="Спільно з Фондом Сергія Притули — 5 ₴ з кожної упаковки на Сили оборони України.">With the Serhiy Prytula Foundation — ₴5 from every pack to Ukraine’s defenders.</div></figcaption>
+      </figure>
+      <!-- merch wide -->
+      <figure data-lift="" data-reveal="" data-mocks="" style="margin:5px 0 0; background:var(--surface); overflow:hidden; display:flex; flex-direction:column; border:2px solid var(--rule); transition:transform .25s, box-shadow .25s;">
+        <div class="mep-zoomwrap"><img class="mep-zoom" src="mep-merch.png" alt="Tote bag, mug and eco paper bag with the logo" style="display:block; width:100%; aspect-ratio:1920/919; object-fit:cover; transition:transform .5s cubic-bezier(.2,.7,.2,1);"></div>
+        <figcaption style="padding:16px 20px; border-top:1.5px solid var(--rule); display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--orange);" data-en="MERCH — TOTE · MUG · ECO-BAG" data-ua="МЕРЧ — ШОПЕР · ЧАШКА · ЕКО-ПАКЕТ">MERCH — TOTE · MUG · ECO-BAG</div><div style="font-weight:500; font-size:13px; color:var(--muted);" data-en="“Plastic? No, thanks!” — sustainability carried into everyday objects." data-ua="«Пластик? Ні, дякую!» — сталість, перенесена у щоденні речі.">“Plastic? No, thanks!” — sustainability carried into everyday objects.</div></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--orange); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:clamp(56px,6vw,92px) clamp(20px,5vw,64px); text-align:center;">
+    <div class="mep-wrap">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#ffe2da;" data-en="WANT A BRAND THAT MEANS IT?" data-ua="ПОТРІБЕН БРЕНД ІЗ СЕНСОМ?">WANT A BRAND THAT MEANS IT?</div>
+      <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(30px,5vw,66px); line-height:0.96; letter-spacing:-0.02em; margin:18px auto 0; max-width:820px;" data-en="Let’s build your identity." data-ua="Зробімо твою айдентику.">Let’s build your identity.</h2>
+      <a href="index.html#cta" data-cta="" data-cursor="1" data-en="Start a project →" data-ua="Почати проєкт →" style="display:inline-block; margin-top:32px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:15px; background:#14110B; color:#F4F1E8; padding:16px 30px; border:2px solid #14110B;">Start a project →</a>
+    </div>
+  </section>
+
+  <!-- NEXT -->
+  <section style="background:var(--paper); padding:clamp(48px,5vw,64px) clamp(20px,5vw,64px);">
+    <a href="tverdokhlib.html" data-cursor="1" data-nextcard="" style="display:flex; justify-content:space-between; align-items:center; border:2.5px solid var(--rule); padding:34px 30px; gap:18px; max-width:1320px; margin:0 auto; transition:background-color .25s, color .25s;">
+      <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted); transition:color .25s;" data-nextlabel="" data-en="NEXT PROJECT" data-ua="НАСТУПНИЙ ПРОЄКТ">NEXT PROJECT</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,40px); margin-top:6px;">Tverdokhlib Running Team</div></div>
+      <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:32px;">→</span>
+    </a>
+  </section>
+
+  <footer style="background:var(--surface); color:var(--ink); border-top:5px solid var(--rule); padding:40px clamp(20px,5vw,64px); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+    <a href="index.html" data-cursor="1" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:15px;">VLAD FILON</a>
+    <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted);">Dublin, Ireland · © 2026</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = document.getElementById('mep-root');
+    if (!root) return;
+
+    /* theme (shared vf-theme) */
+    const themeBtn = document.getElementById('mep-theme'), themeIcon = document.getElementById('mep-theme-icon');
+    let theme = 'light';
+    try { theme = localStorage.getItem('vf-theme') || 'light'; } catch (_) {}
+    const applyTheme = () => { root.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀' : '☾'; };
+    applyTheme();
+    if (themeBtn) themeBtn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('vf-theme', theme); } catch (_) {} applyTheme(); });
+
+    /* custom cursor ring */
+    const ring = document.getElementById('mep-ring');
+    let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry;
+    addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; if (ring) ring.style.opacity = '1'; });
+    const loop = () => { rx += (tx-rx)*0.25; ry += (ty-ry)*0.25; if (ring) ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); };
+    loop();
+    const grow = () => { if (ring) { ring.style.width='40px'; ring.style.height='40px'; ring.style.marginLeft='-20px'; ring.style.marginTop='-20px'; } };
+    const shrink = () => { if (ring) { ring.style.width='12px'; ring.style.height='12px'; ring.style.marginLeft='-6px'; ring.style.marginTop='-6px'; } };
+    root.querySelectorAll('[data-cursor],a,button').forEach(el => { el.addEventListener('mouseenter', grow); el.addEventListener('mouseleave', shrink); });
+
+    /* nav hovers */
+    root.querySelectorAll('#mep-nav a[style*="var(--red)"]').forEach(el => { el.style.transition = 'filter .15s'; el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; }); el.addEventListener('mouseleave', () => { el.style.filter = 'none'; }); });
+    root.querySelectorAll('#mep-nav a:not([style*="var(--red)"])').forEach(el => { el.style.transition = 'color .15s'; el.addEventListener('mouseenter', () => { el.style.color = 'var(--green)'; }); el.addEventListener('mouseleave', () => { el.style.color = ''; }); });
+    root.querySelectorAll('[data-cta]').forEach(el => { el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; el.style.transform = 'translateY(-1px)'; }); el.addEventListener('mouseleave', () => { el.style.filter = 'none'; el.style.transform = 'none'; }); });
+    root.querySelectorAll('[data-nextcard]').forEach(el => { const lbl = el.querySelector('[data-nextlabel]'); el.addEventListener('mouseenter', () => { el.style.background = 'var(--green)'; el.style.color = '#F4F1E8'; el.style.borderColor = 'var(--green)'; if(lbl) lbl.style.color = 'rgba(244,241,232,0.85)'; }); el.addEventListener('mouseleave', () => { el.style.background = ''; el.style.color = ''; el.style.borderColor = 'var(--rule)'; if(lbl) lbl.style.color = ''; }); });
+
+    /* scroll reveal */
+    const reveals = [...root.querySelectorAll('[data-reveal]')];
+    reveals.forEach(el => {
+      const sibs = [...el.parentElement.children].filter(c => c.hasAttribute('data-reveal'));
+      const i = sibs.indexOf(el);
+      el.dataset.revealDelay = (i > 0 ? Math.min(i, 8) * 70 : 0);
+      el.style.opacity = '0'; el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)';
+    });
+    const show = (el) => { if (el.dataset.revealDone) return; el.dataset.revealDone = '1'; const d = +(el.dataset.revealDelay || 0); setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, d); };
+    if ('IntersectionObserver' in window) { const io = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } }), { threshold: 0.1 }); reveals.forEach(el => io.observe(el)); }
+    setTimeout(() => reveals.forEach(el => { el.dataset.revealDone = '1'; el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }), 1500);
+
+    /* hero: logo on backgrounds */
+    const stage = document.getElementById('mep-stage');
+    const colorWrap = document.getElementById('mep-logo-color');
+    const reverseWrap = document.getElementById('mep-logo-reverse');
+    const bgBtns = [...root.querySelectorAll('.mep-bg')];
+    const markActive = (btn) => { bgBtns.forEach(b => { const on = b === btn; b.style.boxShadow = on ? 'inset 0 0 0 4px var(--rule)' : 'none'; b.style.zIndex = on ? '2' : '1'; }); };
+    bgBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (stage) stage.style.background = btn.getAttribute('data-bg');
+        const useColor = btn.getAttribute('data-logo') === 'color';
+        if (colorWrap) colorWrap.style.opacity = useColor ? '1' : '0';
+        if (reverseWrap) reverseWrap.style.opacity = useColor ? '0' : '1';
+        markActive(btn);
+      });
+    });
+    if (bgBtns[0]) markActive(bgBtns[0]);
+
+    /* colour: click to copy hex */
+    root.querySelectorAll('.mep-swatch').forEach(sw => {
+      sw.addEventListener('mouseenter', () => { sw.style.transform = 'scale(1.015)'; });
+      sw.addEventListener('mouseleave', () => { sw.style.transform = ''; });
+      sw.addEventListener('click', () => {
+        const hex = sw.getAttribute('data-hex'); const label = sw.querySelector('.mep-hex'); if (!label) return;
+        const orig = hex;
+        const done = () => { label.textContent = (this.lang === 'ua' ? 'СКОПІЙОВАНО ✓' : 'COPIED ✓'); setTimeout(() => { label.textContent = orig; }, 1100); };
+        try { navigator.clipboard.writeText(hex).then(done).catch(done); } catch (_) { done(); }
+      });
+    });
+
+    /* lift cards */
+    root.querySelectorAll('[data-lift]').forEach(card => {
+      card.addEventListener('mouseenter', () => { card.style.transform = 'translateY(-6px)'; card.style.boxShadow = '0 18px 40px rgba(20,17,11,.16)'; const z = card.querySelector('.mep-zoom'); if (z) z.style.transform = 'scale(1.06)'; });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; const z = card.querySelector('.mep-zoom'); if (z) z.style.transform = ''; });
+    });
+
+    /* applications video: force muted autoplay (React may drop the muted attr, which blocks autoplay) + play only in view */
+    const vid = root.querySelector('#s-apply video');
+    if (vid) {
+      vid.muted = true; vid.defaultMuted = true; vid.playsInline = true; vid.loop = true; vid.setAttribute('muted', ''); vid.setAttribute('loop', '');
+      const tryPlay = () => { try { const p = vid.play(); if (p && p.catch) p.catch(() => {}); } catch (_) {} };
+      vid.addEventListener('loadeddata', tryPlay);
+      vid.addEventListener('canplay', tryPlay);
+      if ('IntersectionObserver' in window) {
+        const vio = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) tryPlay(); else { try { vid.pause(); } catch (_) {} } }), { threshold: 0.2 });
+        vio.observe(vid);
+      } else { tryPlay(); }
+    }
+
+    /* EN / UA */
+    this.lang = 'en';
+    const applyLang = () => {
+      root.querySelectorAll('[data-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua') : el.getAttribute('data-en'); if (v != null) el.innerHTML = v; });
+      const en = document.getElementById('mep-lang-en'), ua = document.getElementById('mep-lang-ua');
+      if (en && ua) { en.style.opacity = this.lang === 'en' ? '1' : '.4'; ua.style.opacity = this.lang === 'ua' ? '1' : '.4'; }
+    };
+    const lb = document.getElementById('mep-lang');
+    if (lb) lb.addEventListener('click', () => { this.lang = this.lang === 'en' ? 'ua' : 'en'; applyLang(); });
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

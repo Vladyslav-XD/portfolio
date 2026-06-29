@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  #mf-root { --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --rule:#14110B; --muted:#8a8576; --hair:#d3ccba; --stone:#DEDCD6; --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; }
+  #mf-root[data-theme="dark"] { --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; }
+  ::selection { background:#E1251B; color:#fff; }
+  a { color:inherit; text-decoration:none; }
+  #mf-root button:focus-visible, #mf-root a:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  #mf-root { background:var(--paper); }
+
+  /* mobile-qa */
+  @media (max-width:768px){
+    #mf-root section, #mf-root footer{ padding-left:20px !important; padding-right:20px !important; }
+    #mf-root [style*="grid-template-columns"]:not([data-cjm]){ grid-template-columns:1fr !important; }
+    #mf-root [style*="repeat(3"]:not([data-cjm]), #mf-root [style*="repeat(4"]:not([data-cjm]){ grid-template-columns:repeat(2,1fr) !important; }
+    #mf-root [style*="padding:88px 48px"], #mf-root [style*="padding:80px 48px"], #mf-root [style*="padding:78px 48px"], #mf-root [style*="padding:64px 48px"], #mf-root [style*="padding:62px 48px"], #mf-root [style*="padding:60px 48px"], #mf-root [style*="padding:56px 48px"], #mf-root [style*="padding:30px 28px"]{ padding-left:20px !important; padding-right:20px !important; }
+  }
+
+  /* ae-remap */
+  [style*="Archivo Expanded"]{ font-family:'Archivo','Manrope',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
+</style>
+</helmet>
+
+<div id="mf-root" style="position:relative; color:var(--ink); font-family:'Hanken Grotesk','Manrope',sans-serif; transition:background-color .4s,color .4s;">
+
+  
+
+  <header style="position:sticky; top:0; z-index:40; background:var(--stone); border-bottom:5px solid var(--rule); display:flex; justify-content:space-between; align-items:stretch;">
+    <a href="index.html" data-cursor="1" aria-label="Vlad Filon — home" style="display:flex; align-items:center; padding:14px 22px; border-right:5px solid var(--rule);">
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--ink); color:var(--paper); font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.02em;">VF</span>
+    </a>
+    <a href="index.html" data-cursor="1" style="display:flex; align-items:center; padding:0 22px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; letter-spacing:0.06em; color:var(--muted);" data-en="← All work" data-ua="← Усі роботи">← All work</a>
+    <div style="flex:1;"></div>
+    <nav id="mf-nav" style="display:flex; align-items:stretch;">
+      <a href="index.html" data-cursor="1" data-en="Work" data-ua="Роботи" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Work</a>
+      <a href="art.html" data-cursor="1" data-en="Art" data-ua="Арт" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Art</a>
+      
+      <button id="mf-theme" data-cursor="1" title="Toggle theme" style="display:flex; align-items:center; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:14px;"><span id="mf-theme-icon">☾</span></button>
+      <button id="mf-lang" data-cursor="1" style="display:flex; align-items:center; gap:5px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;"><span id="mf-lang-en">EN</span><span style="opacity:.4;">/</span><span id="mf-lang-ua" style="opacity:.4;">UA</span></button>
+      <a href="index.html" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display:flex; align-items:center; padding:0 24px; font-weight:700; font-size:14px; background:var(--red); color:#F4F1E8; border-left:5px solid var(--rule);">Let’s Talk</a>
+    </nav>
+  </header>
+
+  <section style="border-bottom:5px solid var(--rule); display:grid; grid-template-columns:1fr 1fr; gap:5px; background:var(--rule);">
+    <div style="background:var(--surface); padding:64px 48px; display:flex; flex-direction:column; justify-content:space-between;">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted);">MOBILE APP · 2026</div>
+      <div>
+        <h1 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(44px,6vw,92px); line-height:0.86; letter-spacing:-0.03em; margin:24px 0 0;">Mocktail<br>Finder</h1>
+        <p style="font-weight:500; font-size:clamp(17px,1.6vw,21px); line-height:1.45; color:var(--ink); max-width:440px; margin:24px 0 0;" data-en="Discover, save and craft 100+ alcohol-free cocktails — a calm home for mindful drinking." data-ua="Знаходь, зберігай і створюй 100+ безалкогольних коктейлів — спокійний дім для усвідомленого пиття.">Discover, save and craft 100+ alcohol-free cocktails — a calm home for mindful drinking.</p>
+      </div>
+      <div style="display:flex; gap:36px; flex-wrap:wrap; margin-top:36px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px;">
+        <div><div style="color:var(--muted); letter-spacing:0.1em;">ROLE</div><div style="margin-top:5px;">UX/UI · RN Dev</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;">PLATFORM</div><div style="margin-top:5px;">iOS · Android</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;">STACK</div><div style="margin-top:5px;">React Native</div></div>
+      </div>
+    </div>
+    <div style="background:#0E5C57; position:relative; min-height:580px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:28px;">
+      <video id="mf-demo" src="mocktail-demo4.mp4" muted loop autoplay playsinline preload="auto" style="width:auto; height:100%; max-height:560px; object-fit:cover; object-position:50% 0%; aspect-ratio:1080/1895; cursor:pointer; border-radius:48px;">px;"></video>
+      <button id="mf-play" aria-label="Play video" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:74px; height:74px; border-radius:50%; border:none; background:rgba(244,241,232,0.92); color:#14110B; font-size:26px; cursor:pointer; display:none; align-items:center; justify-content:center; padding-left:5px;">▶</button>
+    <div id="mf-ring" style="position: fixed; left: 98px; top: 259px; width: 12px; height: 12px; margin-left: -6px; margin-top: -6px; border: 1.5px solid var(--rule); border-radius: 50%; pointer-events: none; z-index: 91; opacity: 0; transition: width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode: difference"></div></div>
+  </section>
+
+  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">01 / CONTEXT</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:760px;" data-en="Drinking culture changed.&lt;br&gt;The tools didn’t follow." data-ua="Культура пиття змінилась.&lt;br&gt;Інструменти — ні.">Drinking culture changed.<br>The tools didn’t follow.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:17px; line-height:1.6; color:var(--muted); max-width:620px; margin:26px 0 44px;" data-en="A growing “sober-curious” audience wants the ritual and craft of a cocktail without the alcohol — but discovery still happens through scattered blog posts, screenshots and bar menus. There was no calm, dedicated home for the alcohol-free drink." data-ua="Аудиторія «sober-curious» прагне ритуалу й майстерності коктейлю без алкоголю — але пошук досі живе в розкиданих статтях, скріншотах і барних меню. Не було спокійного, окремого дому для безалкогольного напою.">A growing “sober-curious” audience wants the ritual and craft of a cocktail without the alcohol — but discovery still happens through scattered blog posts, screenshots and bar menus. There was no calm, dedicated home for the alcohol-free drink.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);">
+      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);">SIGNAL 01</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="A ritual, not a compromise" data-ua="Ритуал, а не компроміс">A ritual, not a compromise</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="People skipping alcohol still want something that feels held — flavour, presentation and a name worth ordering." data-ua="Ті, хто відмовляється від алкоголю, хочуть відчуття вартісного — смак, подача й назва, яку хочеться замовити.">People skipping alcohol still want something that feels held — flavour, presentation and a name worth ordering.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);">SIGNAL 02</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="Recipes live nowhere" data-ua="Рецепти ніде не живуть">Recipes live nowhere</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="Mocktail recipes are buried in long articles and saved photos. Nothing lets you browse, filter and keep them in one place." data-ua="Рецепти губляться в довгих статтях і збережених фото. Ніщо не дає гортати, фільтрувати й тримати їх в одному місці.">Mocktail recipes are buried in long articles and saved photos. Nothing lets you browse, filter and keep them in one place.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);">SIGNAL 03</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="Generic apps miss the craft" data-ua="Загальні застосунки не про майстерність">Generic apps miss the craft</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="Recipe apps treat drinks as an afterthought — no ingredient filters, no “surprise me”, no space to add your own." data-ua="Рецептні застосунки ставляться до напоїв як до другорядного — без фільтрів інгредієнтів, без «здивуй мене», без місця для власних.">Recipe apps treat drinks as an afterthought — no ingredient filters, no “surprise me”, no space to add your own.</p></div>
+    </div>
+  </section>
+
+  <section data-band style="background:var(--blue); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:80px 48px; text-align:center; clip-path:inset(0 100% 0 0);">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#c5cffb;">02 / PRODUCT GOAL</div>
+    <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(30px,5.2vw,72px); line-height:0.96; letter-spacing:-0.02em; margin:20px auto 0; max-width:900px;" data-en="Find, save and create a great alcohol-free drink — in under a minute." data-ua="Знайти, зберегти й створити чудовий безалкогольний напій — менш ніж за хвилину.">Find, save and create a great alcohol-free drink — in under a minute.</h2>
+    <p style="font-weight:500; font-size:16px; line-height:1.55; color:#dbe2fc; max-width:560px; margin:22px auto 0;" data-en="One clear job, done simply: a single, friendly home where anyone can discover mocktails by category or ingredient, keep the ones they love, and build their own." data-ua="Одне чітке завдання, зроблене просто: єдиний дружній дім, де кожен знаходить мокteйли за категорією чи інгредієнтом, зберігає улюблені й створює власні.">One clear job, done simply: a single, friendly home where anyone can discover mocktails by category or ingredient, keep the ones they love, and build their own.</p>
+  </section>
+
+  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">03 / PROCESS</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:680px;" data-en="From a loose idea to a shipped product." data-ua="Від сирої ідеї до готового продукту.">From a loose idea to a shipped product.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:22px 0 40px;" data-en="The project moved through a complete cycle — understanding the user, structuring the experience, designing the interface, then building and refining it as a real React Native app." data-ua="Проєкт пройшов повний цикл — розуміння користувача, структурування досвіду, дизайн інтерфейсу, далі — збірка й доведення як реального React Native застосунку.">The project moved through a complete cycle — understanding the user, structuring the experience, designing the interface, then building and refining it as a real React Native app.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);">
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--red);">01</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Research" data-ua="Дослідження">Research</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Looked at how people find and keep non-alcoholic recipes." data-ua="Як люди знаходять і зберігають безалкогольні рецепти.">Looked at how people find and keep non-alcoholic recipes.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--blue);">02</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="User goals" data-ua="Цілі користувача">User goals</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Defined the core jobs: discover, decide, save, create." data-ua="Ключові задачі: знайти, вирішити, зберегти, створити.">Defined the core jobs: discover, decide, save, create.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:#caa400;">03</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="User flows" data-ua="Користувацькі флоу">User flows</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Mapped every path including share, empty and random states." data-ua="Усі шляхи, включно з share, порожніми й випадковими станами.">Mapped every path including share, empty and random states.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--ink);">04</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Architecture" data-ua="Архітектура">Architecture</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Reduced the app to four screens and one bottom navigation." data-ua="Звів застосунок до чотирьох екранів і однієї нижньої навігації.">Reduced the app to four screens and one bottom navigation.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--red);">05</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="UI design" data-ua="UI дизайн">UI design</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Built a compact system: colour, type, cards, chips, states." data-ua="Компактна система: колір, тип, картки, чипи, стани.">Built a compact system: colour, type, cards, chips, states.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--blue);">06</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Prototype" data-ua="Прототип">Prototype</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Wired a clickable flow to test discovery and the add-recipe form." data-ua="Клікабельний флоу для тесту пошуку й форми додавання.">Wired a clickable flow to test discovery and the add-recipe form.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:#caa400;">07</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Implementation" data-ua="Реалізація">Implementation</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Translated the design into reusable React Native components." data-ua="Переніс дизайн у перевикористовувані React Native компоненти.">Translated the design into reusable React Native components.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--ink);">08</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Testing" data-ua="Тестування">Testing</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Checked navigation, validation and the empty / error states." data-ua="Перевірив навігацію, валідацію та порожні / помилкові стани.">Checked navigation, validation and the empty / error states.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--red);">09</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Optimization" data-ua="Оптимізація">Optimization</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Tuned animation performance and refined naming and labels." data-ua="Підлаштував анімації та вдосконалив назви й підписи.">Tuned animation performance and refined naming and labels.</p></div>
+    </div>
+  </section>
+
+  <section style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">04 / USER FLOW</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,4vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:720px;" data-en="From “I want a drink” to a saved recipe." data-ua="Від «хочу напій» до збереженого рецепта.">From “I want a drink” to a saved recipe.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:22px 0 40px;" data-en="The main journey is deliberately short. Every entry point — search, category or a random suggestion — leads to the same rich detail screen, where the drink can be saved or shared." data-ua="Головний шлях навмисно короткий. Будь-яка точка входу — пошук, категорія чи випадкова підказка — веде до одного детального екрана, де напій можна зберегти чи поділитися.">The main journey is deliberately short. Every entry point — search, category or a random suggestion — leads to the same rich detail screen, where the drink can be saved or shared.</p>
+    <div data-reveal="" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;">
+      <span style="background:#14110B; color:#F4F1E8; padding:9px 14px;">Open app</span>
+      <span style="color:var(--muted);">→</span>
+      <span style="background:var(--blue); color:#F4F1E8; padding:9px 14px;">Home</span>
+      <span style="color:var(--muted);">→</span>
+      <span style="display:flex; flex-direction:column; gap:6px;">
+        <span style="border:1.5px solid var(--rule); padding:7px 12px;">Search by name</span>
+        <span style="border:1.5px solid var(--rule); padding:7px 12px;">Browse category</span>
+        <span style="border:1.5px dashed var(--blue); padding:7px 12px;">Surprise me</span>
+      </span>
+      <span style="color:var(--muted);">→</span>
+      <span style="background:#0E8C82; color:#F4F1E8; padding:9px 14px;">Recipe details</span>
+      <span style="color:var(--muted);">→</span>
+      <span style="display:flex; flex-direction:column; gap:6px;">
+        <span style="background:var(--red); color:#F4F1E8; padding:7px 12px;">♥ Add to favourites</span>
+        <span style="border:1.5px solid var(--rule); padding:7px 12px;">Share recipe</span>
+      </span>
+      <span style="color:var(--muted);">→</span>
+      <span style="background:var(--yellow); color:#14110B; padding:9px 14px;">Favourites</span>
+    </div>
+  </section>
+
+  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">05 / INFORMATION ARCHITECTURE</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:600px;" data-en="Four screens. One bar.&lt;br&gt;Nothing to get lost in." data-ua="Чотири екрани. Одна панель.&lt;br&gt;Ніде загубитись.">Four screens. One bar.<br>Nothing to get lost in.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:22px 0 40px;" data-en="Built around four core actions, each mapped to a screen. A single bottom navigation keeps the whole product one tap away." data-ua="Побудовано навколо чотирьох дій, кожна — окремий екран. Одна нижня навігація тримає весь продукт за один тап.">Built around four core actions, each mapped to a screen. A single bottom navigation keeps the whole product one tap away.</p>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);">
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:130px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px;">Home</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Browse, search &amp; filter — the entry point." data-ua="Огляд, пошук і фільтр — точка входу.">Browse, search &amp; filter — the entry point.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:130px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px;">Recipe Details</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Ingredients, steps &amp; the save / share actions." data-ua="Інгредієнти, кроки та дії зберегти / поділитися.">Ingredients, steps &amp; the save / share actions.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:130px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px;">Favourites</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Saved recipes, with an empty state for newcomers." data-ua="Збережені рецепти, з порожнім станом для новачків.">Saved recipes, with an empty state for newcomers.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:130px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px;">Add Recipe</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Create a custom mocktail with live validation." data-ua="Створити власний мокteйль з валідацією наживо.">Create a custom mocktail with live validation.</p></div>
+    </div>
+  </section>
+
+  <section style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">06 / KEY SCREENS</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 12px; max-width:600px;" data-en="The product, screen by screen." data-ua="Продукт, екран за екраном.">The product, screen by screen.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:600px; margin:0 0 40px;" data-en="Every screen ships in both light and dark mode — discovery, recipe detail, favourites and a create-your-own flow with live validation." data-ua="Кожен екран — у світлій і темній темі: пошук, деталі рецепта, обране та власний флоу створення з валідацією наживо.">Every screen ships in both light and dark mode — discovery, recipe detail, favourites and a create-your-own flow with live validation.</p>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);">
+      <div style="background:var(--surface); padding:16px;"><img src="mf-1.png" alt="Home" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">01 · HOME</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-8.png" alt="Home dark" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">02 · HOME · DARK</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-2.png" alt="Recipe ingredients" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">03 · RECIPE · INGREDIENTS</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-3.png" alt="Recipe steps" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">04 · RECIPE · STEPS</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-4.png" alt="Recipe dark" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">05 · RECIPE · DARK</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-5.png" alt="Favourites" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">06 · FAVOURITES</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-10.png" alt="Favourites empty" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">07 · FAVOURITES · EMPTY</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-9.png" alt="Favourites empty dark" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">08 · EMPTY · DARK</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-6.png" alt="Add recipe" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">09 · ADD RECIPE</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-7.png" alt="Add recipe filled" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">10 · ADD · FILLED</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-11.png" alt="Add recipe dark" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">11 · ADD · DARK</div></div>
+      <div style="background:var(--surface); padding:16px;"><img src="mf-12.png" alt="Add recipe validation" style="width:100%; display:block;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">12 · ADD · VALIDATION</div></div>
+    </div>
+  </section>
+
+  <section data-band style="background:var(--red); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:78px 48px; text-align:center; clip-path:inset(0 100% 0 0);">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#ffd9d2;" data-en="LIKE WHAT YOU SEE?" data-ua="СПОДОБАЛОСЬ?">LIKE WHAT YOU SEE?</div>
+    <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(30px,5vw,68px); line-height:0.96; letter-spacing:-0.02em; margin:18px auto 0; max-width:760px;" data-en="Let’s build your product next." data-ua="Зробімо твій продукт наступним.">Let’s build your product next.</h2>
+    <a href="index.html#cta" data-cta="" data-cursor="1" data-en="Start a project →" data-ua="Почати проєкт →" style="display:inline-block; margin-top:32px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:clamp(16px,1.8vw,20px); background:#F4F1E8; color:#14110B; border-radius:44px; padding:14px 28px; transition:filter .15s, transform .14s;">Start a project →</a>
+  </section>
+
+  <section style="background:var(--paper); padding:64px 48px;">
+    <a href="race-planner.html" data-cursor="1" style="display:flex; justify-content:space-between; align-items:center; border:2.5px solid var(--rule); padding:34px 30px; gap:18px;">
+      <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted);" data-en="NEXT PROJECT" data-ua="НАСТУПНИЙ ПРОЄКТ">NEXT PROJECT</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,40px); margin-top:8px;">Race Planner</div></div>
+      <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:32px;">→</span>
+    </a>
+  </section>
+
+  <footer style="background:var(--surface); color:var(--ink); border-top:5px solid var(--rule); padding:40px 48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+    <a href="index.html" data-cursor="1" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:15px;">VLAD FILON</a>
+    <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted);">Dublin, Ireland · © 2026</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = document.getElementById('mf-root');
+    if (!root) return;
+    const themeBtn = document.getElementById('mf-theme'), themeIcon = document.getElementById('mf-theme-icon');
+    let theme = 'light';
+    try { theme = localStorage.getItem('vf-theme') || 'light'; } catch (_) {}
+    const applyTheme = () => { root.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀' : '☾'; };
+    applyTheme();
+    if (themeBtn) themeBtn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('vf-theme', theme); } catch (_) {} applyTheme(); });
+
+    const ring = document.getElementById('mf-ring');
+    let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry;
+    addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; if (ring) ring.style.opacity = '1'; });
+    const loop = () => { rx += (tx-rx)*0.25; ry += (ty-ry)*0.25; if (ring) ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); };
+    loop();
+    const grow = () => { if (ring) { ring.style.width='40px'; ring.style.height='40px'; ring.style.marginLeft='-20px'; ring.style.marginTop='-20px'; } };
+    const shrink = () => { if (ring) { ring.style.width='12px'; ring.style.height='12px'; ring.style.marginLeft='-6px'; ring.style.marginTop='-6px'; } };
+    root.querySelectorAll('[data-cursor],a,button').forEach(el => { el.addEventListener('mouseenter', grow); el.addEventListener('mouseleave', shrink); });
+
+    root.querySelectorAll('#mf-nav a[style*="var(--red)"]').forEach(el => { el.style.transition = 'filter .15s'; el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; }); el.addEventListener('mouseleave', () => { el.style.filter = 'none'; }); });
+    root.querySelectorAll('#mf-nav a:not([style*="var(--red)"])').forEach(el => { el.style.transition = 'color .15s'; el.addEventListener('mouseenter', () => { el.style.color = 'var(--red)'; }); el.addEventListener('mouseleave', () => { el.style.color = ''; }); });
+
+    const reveals = [...root.querySelectorAll('[data-reveal]')];
+    // stagger index: each element delayed by its position among same-parent reveals
+    reveals.forEach(el => {
+      const sibs = [...el.parentElement.children].filter(c => c.hasAttribute('data-reveal'));
+      const i = sibs.indexOf(el);
+      el.dataset.revealDelay = (i > 0 ? Math.min(i, 8) * 70 : 0);
+      el.style.opacity = '0'; el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)';
+    });
+    const show = (el) => { if (el.dataset.revealDone) return; el.dataset.revealDone = '1'; const d = +(el.dataset.revealDelay || 0); setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, d); };
+    const sweep = () => { const h = innerHeight; reveals.forEach(el => { if (el.dataset.revealDone) return; const r = el.getBoundingClientRect(); if (r.top < h*0.92 && r.bottom > 0) show(el); }); };
+    if ('IntersectionObserver' in window) { const io = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } }), { threshold: 0.1 }); reveals.forEach(el => io.observe(el)); }
+    // colored bands wipe in horizontally
+    const bands = [...root.querySelectorAll('[data-band]')];
+    bands.forEach(b => { b.style.transition = 'clip-path .9s cubic-bezier(.6,0,.2,1)'; });
+    const bandSweep = () => { const h = innerHeight; bands.forEach(b => { if (b.dataset.bandDone) return; const r = b.getBoundingClientRect(); if (r.top < h*0.82 && r.bottom > 0) { b.dataset.bandDone = '1'; b.style.clipPath = 'inset(0 0 0 0)'; } }); };
+    if ('IntersectionObserver' in window) { const bio = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) { en.target.dataset.bandDone = '1'; en.target.style.clipPath = 'inset(0 0 0 0)'; bio.unobserve(en.target); } }), { threshold: 0.2 }); bands.forEach(b => bio.observe(b)); }
+    bandSweep(); addEventListener('scroll', bandSweep, { passive: true });
+    setTimeout(() => bands.forEach(b => { b.style.clipPath = 'inset(0 0 0 0)'; }), 1600);
+
+    sweep(); addEventListener('scroll', sweep, { passive: true }); addEventListener('resize', sweep); setTimeout(sweep, 400);
+    setTimeout(() => reveals.forEach(el => { el.dataset.revealDone = '1'; el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }), 1500);
+
+    this.lang = 'en';
+    const applyLang = () => {
+      root.querySelectorAll('[data-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua') : el.getAttribute('data-en'); if (v != null) el.innerHTML = v; });
+      const en = document.getElementById('mf-lang-en'), ua = document.getElementById('mf-lang-ua');
+      if (en && ua) { en.style.opacity = this.lang === 'en' ? '1' : '.4'; ua.style.opacity = this.lang === 'ua' ? '1' : '.4'; }
+    };
+    root.querySelectorAll('[data-cta]').forEach(el => { el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; el.style.transform = 'translateY(-1px)'; }); el.addEventListener('mouseleave', () => { el.style.filter = 'none'; el.style.transform = 'none'; }); });
+    const lb = document.getElementById('mf-lang');
+    if (lb) lb.addEventListener('click', () => { this.lang = this.lang === 'en' ? 'ua' : 'en'; applyLang(); });
+
+    /* demo video: persist playback position */
+    const vid = document.getElementById('mf-demo');
+    const playBtn = document.getElementById('mf-play');
+    if (vid) {
+      try { const t = parseFloat(localStorage.getItem('mf-demo-time') || '0'); if (t > 0) vid.currentTime = t; } catch (_) {}
+      vid.addEventListener('timeupdate', () => { try { localStorage.setItem('mf-demo-time', vid.currentTime); } catch (_) {} });
+      const sync = () => { if (playBtn) playBtn.style.display = vid.paused ? 'flex' : 'none'; };
+      const tryPlay = () => { vid.muted = true; const p = vid.play(); if (p) p.then(sync).catch(sync); else sync(); };
+      vid.addEventListener('canplay', tryPlay);
+      vid.addEventListener('play', sync); vid.addEventListener('pause', sync);
+      const toggle = () => { if (vid.paused) tryPlay(); else vid.pause(); };
+      vid.addEventListener('click', toggle);
+      if (playBtn) playBtn.addEventListener('click', toggle);
+      // kick off once user interacts anywhere (covers autoplay-blocking browsers)
+      const kick = () => { tryPlay(); window.removeEventListener('pointerdown', kick); };
+      window.addEventListener('pointerdown', kick);
+      tryPlay();
+    }
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

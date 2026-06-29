@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  #na-root { --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --rule:#14110B; --muted:#6f6a59; --hair:#d3ccba; --stone:#DEDCD6; --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; }
+  #na-root[data-theme="dark"] { --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; }
+  ::selection { background:#E1251B; color:#fff; }
+  a { color:inherit; text-decoration:none; }
+  #na-root button:focus-visible, #na-root a:focus-visible, #na-root [data-art]:focus-visible { outline:3px solid var(--blue); outline-offset:3px; }
+  #na-root { background:var(--paper); }
+  [style*="Archivo Expanded"]{ font-family:'Archivo','Manrope',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
+  @media (prefers-reduced-motion: reduce){ #na-root *, #na-lightbox * { transition-duration:1ms !important; animation-duration:1ms !important; } }
+
+  /* masonry */
+  #na-grid { column-count:3; column-gap:5px; }
+  @media (max-width:1000px){ #na-grid { column-count:2; } }
+  @media (max-width:620px){ #na-grid { column-count:1; } }
+  #na-grid .na-card { break-inside:avoid; margin-bottom:5px; }
+  #na-root .na-card, #na-root button { color:var(--ink); }
+
+  /* card hover */
+  .na-card .na-view { opacity:0; transform:translateY(6px); transition:opacity .25s, transform .25s; }
+  .na-card:hover .na-view { opacity:1; transform:translateY(0); }
+  .na-card .na-img { transition:transform .5s cubic-bezier(.2,.7,.2,1); }
+  .na-card:hover .na-img { transform:scale(1.035); }
+
+
+  @media (max-width:760px){
+    #na-hero { grid-template-columns:1fr !important; }
+    #na-nav a[data-sec], #na-nav #na-talk { display:none !important; }
+  }
+</style>
+</helmet>
+
+<div id="na-root" style="position:relative; color:var(--ink); font-family:'Hanken Grotesk','Manrope',sans-serif; transition:background-color .4s,color .4s;">
+
+  <!-- ===== HEADER ===== -->
+  <header style="position:sticky; top:0; z-index:40; background:var(--stone); border-bottom:5px solid var(--rule); display:flex; justify-content:space-between; align-items:stretch;">
+    <a href="index.html" data-cursor="1" aria-label="Vlad Filon — home" style="display:flex; align-items:center; padding:14px 22px; border-right:5px solid var(--rule);">
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--ink); color:var(--paper); font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.02em;">VF</span>
+    </a>
+    <a href="index.html" data-cursor="1" data-en="← Back" data-ua="← Назад" style="display:flex; align-items:center; padding:0 22px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; letter-spacing:0.06em; color:var(--muted);">← Back</a>
+    <div style="flex:1;"></div>
+    <nav id="na-nav" style="display:flex; align-items:stretch;">
+      <a href="index.html#works" data-sec="1" data-cursor="1" data-en="Work" data-ua="Роботи" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Work</a>
+      <a href="index.html#about" data-sec="1" data-cursor="1" data-en="About" data-ua="Про мене" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">About</a>
+      <span data-cursor="1" data-en="Not Art" data-ua="Не арт" style="display:flex; align-items:center; padding:0 20px; font-weight:700; font-size:14px; border-left:1.5px solid var(--hair); background:var(--ink); color:var(--paper);">Not Art</span>
+      <button id="na-theme" data-cursor="1" title="Toggle theme" style="display:flex; align-items:center; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:14px;"><span id="na-theme-icon">☾</span></button>
+      <button id="na-lang" data-cursor="1" style="display:flex; align-items:center; gap:5px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;"><span id="na-lang-en">EN</span><span style="opacity:.4;">/</span><span id="na-lang-ua" style="opacity:.4;">UA</span></button>
+      <a id="na-talk" href="index.html#cta" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display:flex; align-items:center; padding:0 24px; font-weight:700; font-size:14px; background:var(--red); color:#F4F1E8; border-left:5px solid var(--rule);">Let’s Talk</a>
+    </nav>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section data-screen-label="Not Art — intro" style="border-bottom:5px solid var(--rule); background:var(--rule); display:grid; grid-template-columns:1.25fr 0.75fr; gap:5px;" id="na-hero">
+    <div style="background:var(--surface); padding:clamp(40px,5vw,76px) clamp(24px,4vw,60px); display:flex; flex-direction:column; justify-content:space-between; min-height:540px;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline;">
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:var(--red);" data-en="NOT ART" data-ua="НЕ АРТ">NOT ART</div>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted);">09</div>
+      </div>
+      <div>
+        <h1 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(42px,6.5vw,108px); line-height:0.9; letter-spacing:-0.035em; margin:18px 0 0; color:var(--ink);" data-en="Paintings&lt;br&gt;nobody&lt;br&gt;asked for" data-ua="Картини,&lt;br&gt;яких ніхто&lt;br&gt;не просив">Paintings<br>nobody<br>asked for</h1>
+        <p data-reveal="" style="font-weight:500; font-size:clamp(16px,1.5vw,20px); line-height:1.55; color:var(--ink); max-width:46ch; margin:26px 0 0;" data-en="Design is the job. This is what happens when I close the laptop — oil and oil on canvas. Mostly studies and copies, painted slowly, badly and happily. No brief, no deadline, no right answer. The best clients get one as a gift." data-ua="Дизайн — це робота. А це те, що стається, коли я закриваю ноутбук: олія на полотні. Переважно етюди й копії — повільно, погано і з задоволенням. Без брифу, без дедлайну, без правильної відповіді. Найкращим клієнтам одну дарую.">Design is the job. This is what happens when I close the laptop — oil and oil on canvas. Mostly studies and copies, painted slowly, badly and happily. No brief, no deadline, no right answer. The best clients get one as a gift.</p>
+      </div>
+      <div style="display:flex; gap:30px; flex-wrap:wrap; margin-top:34px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px;">
+      </div>
+    </div>
+    <button data-art="0" data-full="art-scream.jpg" data-title-en="After Munch — The Scream" data-title-ua="За Мунком — Крик" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-cursor="1" aria-label="Open: After Munch — The Scream" style="border:none; padding:0; cursor:pointer; background:var(--ink); position:relative; min-height:540px; overflow:hidden; display:block;" class="na-card">
+      <img class="na-img" src="art-scream.jpg" alt="After Munch — The Scream, oil on canvas" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 30%; display:block;">
+      <span class="na-view" style="position:absolute; left:18px; bottom:16px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:7px 12px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+    </button>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section data-screen-label="Gallery" style="padding:clamp(40px,5vw,72px) clamp(16px,4vw,56px); background:var(--paper);">
+    <div style="max-width:1320px; margin:0 auto;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:12px; margin-bottom:30px;">
+        <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,40px); letter-spacing:-0.02em; margin:0;" data-en="The wall" data-ua="Стіна">The wall</h2>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted);" data-en="↳ TAP ANY PIECE TO ENLARGE" data-ua="↳ НАТИСНИ НА РОБОТУ, ЩОБ ЗБІЛЬШИТИ">↳ TAP ANY PIECE TO ENLARGE</div>
+      </div>
+
+      <div id="na-grid">
+
+        <button data-art="1" data-full="art-shutters.jpg" data-title-en="After Janiaczyk — Blue Shutters" data-title-ua="За Жаніачиком — Блакитні віконниці" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-accent="#E1251B" data-cursor="1" aria-label="Open: Blue Shutters" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden;"><img class="na-img" src="art-shutters.jpg" alt="Blue Shutters — oil on canvas" style="width:100%; display:block;"></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#E1251B;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="After Janiaczyk — Blue Shutters" data-ua="За Жаніачиком — Блакитні віконниці">After Janiaczyk — Blue Shutters</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on canvas" data-ua="Олія, полотно">Oil on canvas</span></span></span>
+        </button>
+
+        <button data-art="2" data-full="art-river.jpg" data-title-en="Mountain River" data-title-ua="Гірська річка" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-accent="#1E3FCF" data-cursor="1" aria-label="Open: Mountain River" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden;"><img class="na-img" src="art-river.jpg" alt="Mountain River — oil on canvas" style="width:100%; display:block;"></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#1E3FCF;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="Mountain River" data-ua="Гірська річка">Mountain River</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on canvas" data-ua="Олія, полотно">Oil on canvas</span></span></span>
+        </button>
+
+        <button data-art="3" data-full="art-tree.jpg" data-title-en="Gloomy Day" data-title-ua="Похмурий день" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-accent="#F2C200" data-cursor="1" aria-label="Open: Bare Tree, Grey Day" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden;"><img class="na-img" src="art-tree.jpg" alt="Bare Tree, Grey Day — oil on canvas" style="width:100%; display:block;"></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#F2C200;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="Gloomy Day" data-ua="Похмурий день">Gloomy Day</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on canvas" data-ua="Олія, полотно">Oil on canvas</span></span></span>
+        </button>
+
+        <button data-art="4" data-full="art-winter.jpg" data-title-en="Winter Pines" data-title-ua="Зимові сосни" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-accent="#14110B" data-cursor="1" aria-label="Open: Winter Pines" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden;"><img class="na-img" src="art-winter.jpg" alt="Winter Pines — oil on canvas" style="width:100%; display:block;"></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#14110B;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="Winter Pines" data-ua="Зимові сосни">Winter Pines</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on canvas" data-ua="Олія, полотно">Oil on canvas</span></span></span>
+        </button>
+
+        <button data-art="5" data-full="art-swim.jpg" data-title-en="Open Water Swimmers — self-portrait" data-title-ua="Плавці на відкритій воді — автопортрет" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-accent="#E1251B" data-cursor="1" aria-label="Open: Open Water" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden; position:relative;"><img class="na-img" src="art-swim.jpg" alt="Open Water, on the easel — oil on canvas" style="width:100%; display:block;"><span style="position:absolute; left:12px; top:12px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#14110B; background:#F2C200; padding:5px 9px;" data-en="IN THE STUDIO" data-ua="У СТУДІЇ">IN THE STUDIO</span></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#E1251B;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="Open Water Swimmers" data-ua="Плавці на відкритій воді">Open Water Swimmers</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on canvas" data-ua="Олія, полотно">Oil on canvas</span></span></span>
+        </button>
+
+        <button data-art="6" data-full="art-sculpture.jpg" data-title-en="Flamingo in the City" data-title-ua="Фламінго у місті" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-accent="#1E3FCF" data-cursor="1" aria-label="Open: Red Arc, Grey City" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden;"><img class="na-img" src="art-sculpture.jpg" alt="Red Arc, Grey City — oil on canvas" style="width:100%; display:block;"></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#1E3FCF;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="Flamingo in the City" data-ua="Фламінго у місті">Flamingo in the City</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on canvas" data-ua="Олія, полотно">Oil on canvas</span></span></span>
+        </button>
+
+        <button data-art="7" data-full="art-autumn.jpg" data-title-en="Autumn by the Water" data-title-ua="Осінь біля води" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-accent="#F2C200" data-cursor="1" aria-label="Open: Cabin, Autumn Lake" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden;"><img class="na-img" src="art-autumn.jpg" alt="Cabin, Autumn Lake — oil on canvas" style="width:100%; display:block;"></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#F2C200;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="Autumn by the Water" data-ua="Осінь біля води">Autumn by the Water</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on canvas" data-ua="Олія, полотно">Oil on canvas</span></span></span>
+        </button>
+
+        <button data-art="8" data-full="art-coast.jpg" data-title-en="Sea Stacks &amp; Gorse" data-title-ua="Морські скелі та дрік" data-medium-en="Oil on board" data-medium-ua="Олія, картон" data-accent="#14110B" data-cursor="1" aria-label="Open: Sea Stacks &amp; Gorse" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden;"><img class="na-img" src="art-coast.jpg" alt="Sea Stacks &amp; Gorse — oil on canvas" style="width:100%; display:block;"></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#14110B;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="Sea Stacks &amp; Gorse" data-ua="Морські скелі та дрік">Sea Stacks &amp; Gorse</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on board" data-ua="Олія, картон">Oil on board</span></span></span>
+        </button>
+
+        <button data-art="9" data-full="art-chicago.jpg" data-title-en="Chicago, Looking Up" data-title-ua="Чикаго, дивлячись угору" data-medium-en="Oil on canvas" data-medium-ua="Олія, полотно" data-accent="#F2C200" data-cursor="1" aria-label="Open: Chicago, Looking Up" class="na-card" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); background:var(--surface); padding:0; cursor:pointer; position:relative; overflow:hidden;">
+          <span style="display:block; overflow:hidden;"><img class="na-img" src="art-chicago.jpg" alt="Chicago, Looking Up — oil on canvas" style="width:100%; display:block;"></span>
+          <span class="na-view" style="position:absolute; left:14px; bottom:64px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:#F4F1E8; background:rgba(8,6,3,.55); padding:6px 11px;" data-en="VIEW ↗" data-ua="ДИВИТИСЬ ↗">VIEW ↗</span>
+          <span style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-top:2px solid var(--rule);"><span style="width:9px; height:9px; flex:none; background:#F2C200;"></span><span style="flex:1;"><span style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.01em;" data-en="Chicago, Looking Up" data-ua="Чикаго, дивлячись угору">Chicago, Looking Up</span><span style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px;" data-en="Oil on canvas" data-ua="Олія, полотно">Oil on canvas</span></span></span>
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING ===== -->
+  <section style="border-top:5px solid var(--rule); background:#14110B; color:#F4F1E8; padding:clamp(40px,5vw,72px) clamp(24px,4vw,60px);">
+    <div style="max-width:1320px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
+      <div>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#c5cffb;" data-en="ENOUGH PAINT" data-ua="ДОСИТЬ ФАРБИ">ENOUGH PAINT</div>
+        <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.6vw,48px); line-height:0.98; letter-spacing:-0.02em; margin:12px 0 0; max-width:18ch;" data-en="Back to the&lt;br&gt;actual work." data-ua="Повернутись до&lt;br&gt;справжньої роботи.">Back to the<br>actual work.</h2>
+      </div>
+      <a href="index.html#works" data-cta="1" data-cursor="1" data-en="See the design work →" data-ua="Подивитись дизайн →" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:clamp(15px,1.6vw,19px); background:#F4F1E8; color:#14110B; border-radius:44px; padding:14px 28px; transition:background-color .18s, color .18s, transform .1s;">See the design work →</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="background:var(--surface); color:var(--ink); border-top:5px solid var(--rule); padding:40px clamp(20px,5vw,64px); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+    <a href="index.html" data-cursor="1" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:15px;">VLAD FILON</a>
+    <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted);" data-en="Dublin, Ireland · © 2026" data-ua="Дублін, Ірландія · © 2026">Dublin, Ireland · © 2026</span>
+  </footer>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div id="na-lightbox" role="dialog" aria-modal="true" aria-label="Painting viewer" style="position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center; padding:clamp(16px,4vw,56px);">
+    <div id="na-lb-bg" style="position:absolute; inset:0; background:rgba(8,6,3,.92);"></div>
+    <button id="na-lb-prev" aria-label="Previous" data-cursor="1" style="position:absolute; left:clamp(10px,2vw,28px); top:50%; transform:translateY(-50%); z-index:3; width:52px; height:52px; border:2px solid rgba(244,241,232,.4); background:rgba(8,6,3,.35); color:#F4F1E8; border-radius:50%; cursor:pointer; font-size:20px;">‹</button>
+    <button id="na-lb-next" aria-label="Next" data-cursor="1" style="position:absolute; right:clamp(10px,2vw,28px); top:50%; transform:translateY(-50%); z-index:3; width:52px; height:52px; border:2px solid rgba(244,241,232,.4); background:rgba(8,6,3,.35); color:#F4F1E8; border-radius:50%; cursor:pointer; font-size:20px;">›</button>
+    <button id="na-lb-close" aria-label="Close" data-cursor="1" style="position:absolute; right:clamp(14px,3vw,34px); top:clamp(14px,3vw,30px); z-index:3; width:46px; height:46px; border:2px solid rgba(244,241,232,.4); background:rgba(8,6,3,.35); color:#F4F1E8; border-radius:50%; cursor:pointer; font-size:17px;">✕</button>
+    <figure style="position:relative; z-index:2; margin:0; max-width:100%; max-height:100%; display:flex; flex-direction:column; align-items:center; gap:16px;">
+      <img id="na-lb-img" src="art-scream.jpg" alt="" style="max-width:100%; max-height:78vh; object-fit:contain; border:3px solid #F4F1E8; display:block;">
+      <figcaption style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; justify-content:center; color:#F4F1E8;">
+        <span id="na-lb-counter" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; color:#c5cffb;">01 / 08</span>
+        <span id="na-lb-title" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em;">After Munch — The Scream</span>
+        <span id="na-lb-medium" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:rgba(244,241,232,.7);">Oil on canvas</span>
+      </figcaption>
+    </figure>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = document.getElementById('na-root');
+    if (!root) return;
+    const reduce = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (_) { return false; } })();
+
+    /* theme (shared vf-theme) */
+    const themeBtn = document.getElementById('na-theme'), themeIcon = document.getElementById('na-theme-icon');
+    let theme = 'light';
+    try { theme = localStorage.getItem('vf-theme') || 'light'; } catch (_) {}
+    const applyTheme = () => { root.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀' : '☾'; };
+    applyTheme();
+    if (themeBtn) themeBtn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('vf-theme', theme); } catch (_) {} applyTheme(); });
+
+    /* custom cursor ring */
+    const ring = document.createElement('div');
+    ring.style.cssText = 'position:fixed; left:0; top:0; width:12px; height:12px; margin-left:-6px; margin-top:-6px; border:1.5px solid var(--rule); border-radius:50%; pointer-events:none; z-index:120; opacity:0; transition:width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode:difference;';
+    root.appendChild(ring);
+    let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry;
+    addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; ring.style.opacity = '1'; });
+    const loop = () => { rx += (tx-rx)*0.25; ry += (ty-ry)*0.25; ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); };
+    loop();
+    const grow = () => { ring.style.width='40px'; ring.style.height='40px'; ring.style.marginLeft='-20px'; ring.style.marginTop='-20px'; };
+    const shrink = () => { ring.style.width='12px'; ring.style.height='12px'; ring.style.marginLeft='-6px'; ring.style.marginTop='-6px'; };
+    root.querySelectorAll('[data-cursor],a,button').forEach(el => { el.addEventListener('mouseenter', grow); el.addEventListener('mouseleave', shrink); });
+
+    /* nav + cta hovers */
+    root.querySelectorAll('#na-nav a[data-sec], #na-nav #na-lang').forEach(el => {});
+    root.querySelectorAll('#na-nav a[style*="var(--red)"]').forEach(el => { el.style.transition = 'filter .15s'; el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; }); el.addEventListener('mouseleave', () => { el.style.filter = 'none'; }); });
+    root.querySelectorAll('#na-nav a[data-sec]').forEach(el => { el.style.transition = 'color .15s'; el.addEventListener('mouseenter', () => { el.style.color = 'var(--red)'; }); el.addEventListener('mouseleave', () => { el.style.color = ''; }); });
+    root.querySelectorAll('[data-cta]').forEach(el => {
+      el.addEventListener('mouseenter', () => { el.style.background = 'var(--red)'; el.style.color = '#F4F1E8'; el.style.transform = 'translateY(-1px)'; });
+      el.addEventListener('mouseleave', () => { el.style.background = '#F4F1E8'; el.style.color = '#14110B'; el.style.transform = 'none'; });
+    });
+
+    /* scroll reveal */
+    const reveals = [...root.querySelectorAll('[data-reveal]')];
+    if (reduce) { reveals.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); }
+    else {
+      reveals.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(22px)'; el.style.transition = 'opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)'; });
+      const show = (el) => { if (el.dataset.revealDone) return; el.dataset.revealDone = '1'; el.style.opacity = '1'; el.style.transform = 'translateY(0)'; };
+      if ('IntersectionObserver' in window) { const io = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } }), { threshold: 0.1 }); reveals.forEach(el => io.observe(el)); }
+      setTimeout(() => reveals.forEach(el => { el.dataset.revealDone = '1'; el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }), 1500);
+    }
+
+    /* ===== LIGHTBOX ===== */
+    const cards = [...root.querySelectorAll('[data-art]')].sort((a,b) => (+a.dataset.art) - (+b.dataset.art));
+    const lb = document.getElementById('na-lightbox');
+    const lbImg = document.getElementById('na-lb-img');
+    const lbTitle = document.getElementById('na-lb-title');
+    const lbMedium = document.getElementById('na-lb-medium');
+    const lbCounter = document.getElementById('na-lb-counter');
+    let cur = -1;
+    const pad2 = (n) => (n < 10 ? '0' + n : '' + n);
+    const render = (i) => {
+      const c = cards[i]; if (!c) return;
+      lbImg.src = c.dataset.full;
+      lbImg.alt = (this.lang === 'ua' ? c.dataset.titleUa : c.dataset.titleEn) || '';
+      lbTitle.textContent = (this.lang === 'ua' ? c.dataset.titleUa : c.dataset.titleEn) || '';
+      lbMedium.textContent = (this.lang === 'ua' ? c.dataset.mediumUa : c.dataset.mediumEn) || '';
+      lbCounter.textContent = pad2(i + 1) + ' / ' + pad2(cards.length);
+    };
+    const open = (i) => { cur = i; render(i); lb.style.display = 'flex'; document.body.style.overflow = 'hidden'; };
+    const close = () => { lb.style.display = 'none'; document.body.style.overflow = ''; };
+    const go = (d) => { if (cur < 0) return; cur = (cur + d + cards.length) % cards.length; render(cur); };
+    cards.forEach((c, i) => c.addEventListener('click', () => open(i)));
+    document.getElementById('na-lb-close').addEventListener('click', close);
+    document.getElementById('na-lb-bg').addEventListener('click', close);
+    document.getElementById('na-lb-next').addEventListener('click', () => go(1));
+    document.getElementById('na-lb-prev').addEventListener('click', () => go(-1));
+    addEventListener('keydown', (e) => {
+      if (lb.style.display !== 'flex') return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') go(1);
+      else if (e.key === 'ArrowLeft') go(-1);
+    });
+
+    /* EN / UA */
+    this.lang = 'en';
+    try { document.documentElement.setAttribute('lang', 'en'); } catch (_) {}
+    const applyLang = () => {
+      try { document.documentElement.setAttribute('lang', this.lang); } catch (_) {}
+      root.querySelectorAll('[data-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua') : el.getAttribute('data-en'); if (v != null) el.innerHTML = v; });
+      const en = document.getElementById('na-lang-en'), ua = document.getElementById('na-lang-ua');
+      if (en && ua) { en.style.opacity = this.lang === 'en' ? '1' : '.4'; ua.style.opacity = this.lang === 'ua' ? '1' : '.4'; }
+      if (cur >= 0 && lb.style.display === 'flex') render(cur);
+    };
+    const langBtn = document.getElementById('na-lang');
+    if (langBtn) langBtn.addEventListener('click', () => { this.lang = this.lang === 'en' ? 'ua' : 'en'; applyLang(); });
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  #vf-root {
+    --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --line:#14110B; --rule:#14110B; --muted:#6f6a59; --hair:#d3ccba; --stone:#DEDCD6;
+    --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; --portrait-bg:#F2C200;
+  }
+  #vf-root[data-theme="dark"] {
+    --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --line:#080603; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; --portrait-bg:#14110B;
+  }
+  #vf-modal {
+    --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --line:#14110B; --rule:#14110B; --muted:#6f6a59; --hair:#d3ccba; --stone:#DEDCD6;
+    --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200;
+  }
+  #vf-modal[data-theme="dark"] {
+    --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --line:#080603; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19;
+  }
+  ::selection { background: #E1251B; color: #fff; }
+  a { color: inherit; text-decoration: none; }
+  [data-block]:focus-visible { outline: 3px solid var(--blue); outline-offset: -3px; }
+  #vf-root button:focus-visible, #vf-root a:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    #vf-root *, #vf-modal *, #vf-privacy * { transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+  }
+  #vf-root { background: var(--paper); }
+  input, textarea { font-family: 'Hanken Grotesk','Manrope',sans-serif; }
+  @keyframes vfHintBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  @keyframes vfHintPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(229,0,156,0.55); } 50% { box-shadow: 0 0 0 7px rgba(229,0,156,0); } }
+  #vf-hint-pill { animation: vfHintBob 2.4s ease-in-out infinite, vfHintPulse 2.4s ease-in-out infinite; }
+
+  /* mobile-qa */
+  @media (max-width:768px){
+    #vf-root section, #vf-root footer{ padding-left:20px !important; padding-right:20px !important; }
+    /* hero: hide interactive grid, show static De Stijl stack */
+    #vf-root #top{ height:auto !important; min-height:0 !important; padding:0 !important; }
+    #vf-root #vf-stage{ display:none !important; }
+    #vf-root #vf-hero-m{ display:flex !important; }
+    #vf-root [style*="grid-template-columns"]:not([data-cjm]){ grid-template-columns:1fr !important; }
+    #vf-root [style*="repeat(3"]:not([data-cjm]), #vf-root [style*="repeat(4"]:not([data-cjm]){ grid-template-columns:repeat(2,1fr) !important; }
+    #vf-root [style*="padding:88px 48px"], #vf-root [style*="padding:80px 48px"], #vf-root [style*="padding:78px 48px"], #vf-root [style*="padding:64px 48px"], #vf-root [style*="padding:62px 48px"], #vf-root [style*="padding:60px 48px"], #vf-root [style*="padding:56px 48px"], #vf-root [style*="padding:30px 28px"]{ padding-left:20px !important; padding-right:20px !important; }
+    #vf-root #vf-worklist a{ grid-template-columns:38px 1fr !important; column-gap:14px !important; }
+    #vf-root #vf-worklist [data-meta], #vf-root #vf-worklist [data-arrow]{ display:none !important; }
+    #vf-root #vf-modal [style*="grid-template-columns"]{ grid-template-columns:1fr !important; }
+  }
+
+  /* ae-remap */
+  [style*="Archivo Expanded"]{ font-family:'Archivo','Manrope',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
+
+  /* worklist hover — CSS-driven (immune to React re-renders) */
+  #vf-worklist a{ transition:background .25s ease, padding-left .25s ease, color .25s ease; }
+  #vf-worklist a:hover{ background:var(--rowc,#1E3FCF) !important; color:var(--rowink,#F4F1E8) !important; padding-left:30px !important; }
+  #vf-worklist a:hover [data-meta]{ color:var(--rowink,#F4F1E8) !important; }
+  #vf-worklist a:hover > span:first-child{ color:var(--rowink,#F4F1E8) !important; opacity:.62; }
+  #vf-worklist a:hover [data-arrow]{ opacity:1 !important; }
+  #vf-worklist a:hover [data-detail]{ max-height:260px !important; opacity:1 !important; margin-top:14px !important; }
+
+  /* faq accordion — resting state via CSS (data-open); open/close animated with WAAPI in JS (immune to re-render transition restarts) */
+  #vf-faq [data-faq-a]{ max-height:0; overflow:hidden; }
+  #vf-faq [data-faq-item][data-open="1"] [data-faq-a]{ max-height:1000px; }
+  #vf-faq [data-faq-item][data-open="1"] [data-faq-sign]{ transform:rotate(45deg) !important; }
+  #vf-faq [data-faq-q]:hover [data-faq-sign]{ color:var(--ink) !important; }
+
+  /* about — collapsible */
+  #vf-about-panel{ max-height:0; overflow:hidden; }
+  #about[data-aopen="1"] #vf-about-panel{ max-height:4400px; }
+  #about[data-aopen="1"] [data-about-sign]{ transform:rotate(45deg) !important; }
+  #vf-about-btn:hover [data-about-sign]{ color:var(--ink) !important; }
+
+  /* endurance — bar fills + viewer state (CSS-driven, immune to React re-renders) */
+  #vf-endurance [data-fill]{ width:0; }
+  #vf-endurance[data-run="1"] [data-fill="london"]{ width:86%; }
+  #vf-endurance[data-run="1"] [data-fill="chicago"]{ width:19%; }
+  #vf-endurance[data-run="1"] [data-fill="orta"]{ width:66%; }
+  #vf-endurance [data-slot]{ opacity:0; pointer-events:none; }
+  #vf-endurance[data-active="london"] [data-slot="london"],
+  #vf-endurance[data-active="chicago"] [data-slot="chicago"],
+  #vf-endurance[data-active="orta"] [data-slot="orta"]{ opacity:1; pointer-events:auto; }
+  #vf-endurance [data-slot="orta"] [data-orta-img]{ opacity:0; }
+  #vf-endurance [data-slot="orta"] [data-orta-img]:first-child{ opacity:1; }
+  #vf-endurance[data-frame="1"] [data-slot="orta"] [data-orta-img]:first-child{ opacity:0; }
+  #vf-endurance[data-frame="1"] [data-slot="orta"] [data-orta-img]:last-child{ opacity:1; }
+  #vf-endurance [data-orta-dots]{ opacity:0; }
+  #vf-endurance[data-active="orta"] [data-orta-dots]{ opacity:1; }
+  #vf-endurance [data-orta-dots] [data-dot="1"]{ opacity:.38; }
+  #vf-endurance[data-frame="1"] [data-orta-dots] [data-dot="0"]{ opacity:.38; }
+  #vf-endurance[data-frame="1"] [data-orta-dots] [data-dot="1"]{ opacity:1; }
+  #vf-endurance [data-cap]{ opacity:0; }
+  #vf-endurance[data-active="london"] [data-cap="london"],
+  #vf-endurance[data-active="chicago"] [data-cap="chicago"],
+  #vf-endurance[data-active="orta"] [data-cap="orta"]{ opacity:1; }
+  #vf-endurance[data-active="london"] [data-ev]:not([data-ev="london"]),
+  #vf-endurance[data-active="chicago"] [data-ev]:not([data-ev="chicago"]),
+  #vf-endurance[data-active="orta"] [data-ev]:not([data-ev="orta"]){ opacity:.55; }
+</style>
+</helmet>
+
+<div id="vf-root" style="position:relative; color:var(--ink); font-family:'Hanken Grotesk','Manrope',sans-serif; transition:background-color .4s, color .4s;">
+
+  
+
+  <!-- ===== NAV ===== -->
+  <header style="position:sticky; top:0; z-index:40; background:var(--stone); border-bottom:5px solid var(--rule); display:flex; justify-content:space-between; align-items:stretch;">
+    <a href="#top" data-cursor="1" aria-label="Vlad Filon — home" style="display:flex; align-items:center; padding:14px 22px; border-right:5px solid var(--rule);">
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--ink); color:var(--paper); font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.02em;">VF</span>
+    </a>
+    <div style="flex:1;"></div>
+    <nav id="vf-nav" style="display:flex; align-items:stretch;">
+      <a href="#works" data-cursor="1" data-en="Work" data-ua="Роботи" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Work</a>
+      <a href="#about" data-cursor="1" data-en="About" data-ua="Про мене" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">About</a>
+      <a href="#faq" data-cursor="1" data-en="FAQ" data-ua="FAQ" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">FAQ</a>
+      <a href="art.html" data-cursor="1" data-en="Not Art" data-ua="Не арт" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Not Art</a>
+      <button id="vf-theme" data-cursor="1" title="Toggle theme" style="display:flex; align-items:center; gap:7px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:14px;"><span id="vf-theme-icon">☾</span></button>
+      <button id="vf-lang" data-cursor="1" style="display:flex; align-items:center; gap:5px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;"><span id="vf-lang-en">EN</span><span style="opacity:.4;">/</span><span id="vf-lang-ua" style="opacity:.4;">UA</span></button>
+      <button data-open-talk="" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display:flex; align-items:center; padding:0 24px; font-weight:700; font-size:14px; background:var(--red); color:#F4F1E8; border:none; border-left:5px solid var(--rule); cursor:pointer;">Let’s Talk</button>
+    </nav>
+    <button id="vf-burger" data-cursor="1" aria-label="Menu" style="display:none; align-items:center; padding:0 22px; background:var(--ink); color:var(--paper); border:none; cursor:pointer; font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:13px;">MENU</button>
+  </header>
+  <div id="vf-mobile" style="display:none; position:sticky; top:60px; z-index:39; background:var(--surface); border-bottom:5px solid var(--rule);">
+    <a href="#works" data-en="Work" data-ua="Роботи" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Work</a>
+    <a href="#about" data-en="About" data-ua="Про мене" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">About</a>
+    <a href="#faq" data-en="FAQ" data-ua="FAQ" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">FAQ</a>
+    <a href="art.html" data-en="Not Art" data-ua="Не арт" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Not Art</a>
+    <button data-open-talk="" data-en="Let’s Talk →" data-ua="Зв’язок →" style="display:block; width:100%; text-align:left; padding:16px 24px; font-weight:700; background:var(--red); color:#F4F1E8; border:none; cursor:pointer;">Let’s Talk →</button>
+  </div>
+
+  <!-- ===== INTERACTIVE HERO ===== -->
+  <section id="top" data-screen-label="Hero" style="position:relative; background:var(--line); height:calc(100vh - 61px); min-height:680px; overflow:hidden; transition:background-color .4s;">
+    <div id="vf-stage" style="position:absolute; inset:6px; touch-action:none;">
+
+      <div id="vf-gridlines" style="position:absolute; inset:0; z-index:1; opacity:0; transition:opacity .2s; pointer-events:none; background-image:repeating-linear-gradient(to right, rgba(244,241,232,0.16) 0 1px, transparent 1px calc(100%/12)),repeating-linear-gradient(to bottom, rgba(244,241,232,0.16) 0 1px, transparent 1px calc(100%/8));"></div>
+      <div id="vf-preview" style="position:absolute; z-index:2; border:2px dashed #F4F1E8; opacity:0; pointer-events:none; transition:opacity .12s;"></div>
+
+      <!-- YELLOW service -->
+      <div data-block="yellow" data-col="9" data-row="6" data-w="3" data-h="2" data-mh="150" tabindex="0" role="group" aria-label="Service: Marketing Design" style="position:absolute; left:calc(75% + 3px); top:calc(75% + 3px); width:calc(25% - 6px); height:calc(25% - 6px); background:var(--yellow); color:#14110B; padding:22px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; z-index:10; cursor:grab;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.7;">04</span>
+        <div style="margin-top:auto;"><span data-en="Marketing&lt;br&gt;Design" data-ua="Маркетинг-&lt;br&gt;дизайн" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(16px,1.7vw,23px); line-height:0.98;">Marketing<br>Design</span><div data-desc="" data-en="Digital ads and promotional assets that drive engagement and align with brand strategy." data-ua="Цифрова реклама та промо-матеріали, що підвищують залученість і відповідають бренд-стратегії." style="margin-top:8px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:12.5px; line-height:1.4; opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .35s ease;">Digital ads and promotional assets that drive engagement and align with brand strategy.</div></div>
+      </div>
+
+      <!-- NAME (neutral, large) -->
+      <div data-block="name" data-col="0" data-row="0" data-w="6" data-h="4" data-mh="300" tabindex="0" role="group" aria-label="Name block. Arrow keys move, shift plus arrows resize." data-en-aria="Name block. Arrow keys move, shift plus arrows resize." data-ua-aria="Блок імені. Стрілки — рух, Shift зі стрілками — розмір." style="position:absolute; left:calc(0% + 3px); top:calc(0% + 3px); width:calc(50% - 6px); height:calc(50% - 6px); background:var(--surface); padding:38px 42px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; z-index:10; cursor:grab;">
+        <div>
+          <div data-en="Hi, I’m" data-ua="Привіт, я" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; letter-spacing:0.08em; color:var(--muted);">Hi, I’m</div>
+          <h1 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(52px,7.5vw,132px); line-height:0.82; letter-spacing:-0.035em; margin:10px 0 0; color:var(--ink);">VLAD<br>FILON</h1>
+        </div>
+        <div data-en="User Experience Designer" data-ua="Дизайнер користувацького досвіду" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:clamp(14px,1.35vw,17px); color:var(--muted); letter-spacing:0.01em;">User Experience Designer</div>
+      </div>
+
+      <!-- APPROACH (neutral, large) -->
+      <div data-block="about" data-col="0" data-row="4" data-w="6" data-h="4" data-mh="280" tabindex="0" role="group" aria-label="Approach block" style="position:absolute; left:calc(0% + 3px); top:calc(50% + 3px); width:calc(50% - 6px); height:calc(50% - 6px); background:var(--stone); padding:36px 42px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; z-index:10; cursor:grab; border:2px solid var(--rule);">
+        <div data-en="APPROACH" data-ua="ПІДХІД" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted);">APPROACH</div>
+        <p data-en="For years, I have been optimising customer and user experiences through three distinct lenses: commercial context (MBA), human-computer interaction (MSc in HCI, 2026), and a deep passion for visual design." data-ua="Роками я покращую клієнтський і користувацький досвід через три призми: комерційний контекст (MBA), взаємодію людини з компʼютером (MSc у HCI, 2026) і глибоку любов до візуального дизайну." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:clamp(15px,1.45vw,20px); line-height:1.42; color:var(--ink); margin:0;">For years, I have been optimising customer and user experiences through three distinct lenses: commercial context (MBA), human-computer interaction (MSc in HCI, 2026), and a deep passion for visual design.</p>
+      </div>
+
+      <!-- RED service -->
+      <div data-block="red" data-col="6" data-row="0" data-w="3" data-h="3" data-mh="120" tabindex="0" role="group" aria-label="Service: UX/UI &amp; Web Design" style="position:absolute; left:calc(50% + 3px); top:calc(0% + 3px); width:calc(25% - 6px); height:calc(37.5% - 6px); background:var(--red); color:#F4F1E8; padding:20px 22px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; z-index:10; cursor:grab;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.85;">01</span>
+        <div style="margin-top:auto;"><span data-en="UX/UI &amp;&lt;br&gt;Web Design" data-ua="UX/UI та&lt;br&gt;веб-дизайн" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(17px,1.7vw,23px); line-height:0.98;">UX/UI &amp;<br>Web Design</span><div data-desc="" data-en="Responsive websites, landing pages and digital interfaces — from user flows and wireframes to polished, interactive experiences optimised for real users and business goals." data-ua="Адаптивні сайти, лендінги та цифрові інтерфейси — від user flows і вайрфреймів до відпрацьованих інтерактивних рішень під реальних користувачів і бізнес-цілі." style="margin-top:8px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:12.5px; line-height:1.4; opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .35s ease;">Responsive websites, landing pages and digital interfaces — from user flows and wireframes to polished, interactive experiences optimised for real users and business goals.</div></div>
+      </div>
+
+      <!-- BLUE service -->
+      <div data-block="blue" data-col="6" data-row="3" data-w="3" data-h="3" data-mh="150" tabindex="0" role="group" aria-label="Service: Brand Identity" style="position:absolute; left:calc(50% + 3px); top:calc(37.5% + 3px); width:calc(25% - 6px); height:calc(37.5% - 6px); background:var(--blue); color:#F4F1E8; padding:22px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; z-index:10; cursor:grab;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.85;">02</span>
+        <div style="margin-top:auto;"><span data-en="Brand&lt;br&gt;Identity" data-ua="Бренд-&lt;br&gt;айдентика" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(18px,1.9vw,28px); line-height:0.98;">Brand<br>Identity</span><div data-desc="" data-en="Professional visual identities and logos that build trust and market presence." data-ua="Професійна візуальна ідентичність і логотипи, що будують довіру та присутність на ринку." style="margin-top:8px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:12.5px; line-height:1.4; opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .35s ease;">Professional visual identities and logos that build trust and market presence.</div></div>
+      </div>
+
+      <!-- YELLOW service -->
+      
+
+      <!-- BLACK service -->
+      <div data-block="black" data-col="6" data-row="6" data-w="3" data-h="2" data-mh="150" tabindex="0" role="group" aria-label="Service: Business-Driven Design" style="position:absolute; left:calc(50% + 3px); top:calc(75% + 3px); width:calc(25% - 6px); height:calc(25% - 6px); background:#14110B; color:#F4F1E8; padding:22px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; z-index:10; cursor:grab; border:2px solid var(--rule);">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.6;">03</span>
+        <div style="margin-top:auto;"><span data-en="Business-Driven&lt;br&gt;Design" data-ua="Business-Driven&lt;br&gt;Design" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(16px,1.7vw,23px); line-height:0.98;">Business-Driven<br>Design</span><div data-desc="" data-en="Grounding product decisions in commercial realities to ensure design choices drive measurable growth." data-ua="Грунтування продуктових рішень на комерційній реальності, щоб дизайн-рішення давали вимірне зростання." style="margin-top:8px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:12.5px; line-height:1.4; opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .35s ease;">Grounding product decisions in commercial realities to ensure design choices drive measurable growth.</div></div>
+      </div>
+
+      <!-- PORTRAIT (dominant mass) -->
+      <div data-block="portrait" data-col="9" data-row="0" data-w="3" data-h="6" data-mh="380" data-minw="2" data-maxw="3" data-minh="4" data-maxh="6" tabindex="0" role="group" aria-label="Portrait of Vlad Filon" style="position: absolute; left: 1032px; top: 3px; width: 336px; height: 495px; background: var(--portrait-bg); overflow: hidden; z-index: 10; cursor: grab; transition: background-color .4s">
+        <img class="vf-portrait" src="portrait-black-neutral.png" alt="Vlad Filon" draggable="false" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; pointer-events: none; user-select: none;">
+        <div data-quote="" style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; background:rgba(20,17,11,0.85); color:#F4F1E8; opacity:0; transform:translateY(10px); transition:opacity .35s ease, transform .35s ease; pointer-events:none;"><div data-qt="" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-style:italic; font-weight:500; font-size:14px; line-height:1.4;"></div><div data-qa="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:#c9c3b3; margin-top:7px;"></div></div>
+      <div id="vf-ring" style="position: fixed; left: 0; top: 0; width: 8px; height: 8px; margin-left: -6px; margin-top: -6px; border: 1.5px solid var(--rule); border-radius: 50%; pointer-events: none; z-index: 91; opacity: 0; transition: width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode: difference"></div></div>
+
+      <!-- transient controls -->
+      <div id="vf-controls" style="position:absolute; left:0; bottom:0; z-index:60; display:flex; align-items:center; gap:10px; padding:14px 16px; pointer-events:none; opacity:0; transition:opacity .35s;">
+        <span id="vf-hint-pill" style="display:inline-flex; align-items:center; gap:11px; font-family:'Space Mono','JetBrains Mono',monospace; color:#F4F1E8; background:#E5009C; border:2px solid #14110B; padding:9px 15px; white-space:nowrap;">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; background:#14110B; color:#F4F1E8; flex:none;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F4F1E8" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><polyline points="8,7 12,3 16,7"></polyline><polyline points="8,17 12,21 16,17"></polyline><polyline points="7,8 3,12 7,16"></polyline><polyline points="17,8 21,12 17,16"></polyline></svg></span>
+          <span style="display:flex; flex-direction:column; gap:2px; line-height:1.2;">
+            <span data-en="Try building your own balance in &lt;i style=&quot;font-style:italic;&quot;&gt;Composition with Red, Yellow, and Blue&lt;/i&gt;" data-ua="Спробуй побудувати власну рівновагу у &lt;i style=&quot;font-style:italic;&quot;&gt;Composition with Red, Yellow, and Blue&lt;/i&gt;" style="font-weight:700; font-size:13px; letter-spacing:0.02em;">Try building your own balance in <i style="font-style:italic;">Composition with Red, Yellow, and Blue</i></span>
+            <span data-en="Drag, resize or arrow-key the blocks" data-ua="Тягни, масштабуй або рухай стрілками" style="font-weight:400; font-size:11px; letter-spacing:0.03em; color:#ffd0ee;">Drag, resize or arrow-key the blocks</span>
+          </span>
+        </span>
+        <button id="vf-reset" data-en="↺ Restore balance" data-ua="↺ Повернути баланс" style="pointer-events:auto; font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.04em; color:#F4F1E8; background:#14110B; border:2px solid #14110B; padding:9px 13px; cursor:pointer;">↺ Restore balance</button>
+      </div>
+    </div>
+    <!-- ===== STATIC MOBILE HERO (≤768px only) ===== -->
+    <div id="vf-hero-m" style="display:none; flex-direction:column; gap:4px; background:var(--rule); padding:4px;">
+      <!-- NAME -->
+      <div style="background:var(--surface); padding:32px 22px 28px;">
+        <div data-en="Hi, I’m" data-ua="Привіт, я" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);">Hi, I’m</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(46px,17vw,82px); line-height:0.82; letter-spacing:-0.035em; margin:10px 0 0; color:var(--ink);">VLAD<br>FILON</div>
+        <div data-en="User Experience Designer" data-ua="Дизайнер користувацького досвіду" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:14px; color:var(--muted); margin-top:16px;">User Experience Designer</div>
+      </div>
+      <!-- PORTRAIT (tap to cycle a quote) -->
+      <button id="vf-mq" type="button" data-cursor="1" style="display:block; width:100%; text-align:left; border:none; padding:0; cursor:pointer; background:var(--portrait-bg); height:clamp(320px,80vw,420px); overflow:hidden; position:relative; transition:background-color .4s;">
+        <img class="vf-portrait" src="portrait-black-neutral.png" alt="Vlad Filon" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 26%; pointer-events:none;">
+        <span id="vf-mq-hint" style="position:absolute; right:12px; top:12px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#F4F1E8; background:rgba(20,17,11,0.6); padding:5px 9px;" data-en="TAP FOR A QUOTE" data-ua="ТОРКНИСЬ — ЦИТАТА">TAP FOR A QUOTE</span>
+        <span id="vf-mq-box" style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; background:rgba(20,17,11,0.85); opacity:0; transform:translateY(10px); transition:opacity .35s ease, transform .35s ease;">
+          <span id="vf-mq-t" style="display:block; font-family:'Hanken Grotesk','Manrope',sans-serif; font-style:italic; font-weight:500; font-size:14px; line-height:1.4; color:#F4F1E8;"></span>
+          <span id="vf-mq-a" style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:#c9c3b3; margin-top:7px;"></span>
+        </span>
+      </button>
+      <!-- SERVICES (1-col, tap to expand description) -->
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <button type="button" data-msvc="" data-cursor="1" style="display:block; width:100%; text-align:left; border:none; cursor:pointer; background:var(--red); color:#F4F1E8; padding:20px 18px;">
+          <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.85;">01</span><span data-msvc-ic="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:18px; line-height:1; opacity:.85;">+</span></span>
+          <span data-en="UX/UI &amp; Web Design" data-ua="UX/UI та веб-дизайн" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px; line-height:1; margin:10px 0 0;">UX/UI &amp; Web Design</span>
+          <span data-msvc-d="" style="display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><span data-en="Responsive websites, landing pages and digital interfaces — from user flows and wireframes to polished, interactive experiences optimised for real users and business goals." data-ua="Адаптивні сайти, лендінги та цифрові інтерфейси — від user flows і вайрфреймів до відпрацьованих інтерактивних рішень під реальних користувачів і бізнес-цілі." style="display:block; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:13px; line-height:1.45; padding-top:10px; opacity:.92;">Responsive websites, landing pages and digital interfaces — from user flows and wireframes to polished, interactive experiences optimised for real users and business goals.</span></span>
+        </button>
+        <button type="button" data-msvc="" data-cursor="1" style="display:block; width:100%; text-align:left; border:none; cursor:pointer; background:var(--blue); color:#F4F1E8; padding:20px 18px;">
+          <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.85;">02</span><span data-msvc-ic="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:18px; line-height:1; opacity:.85;">+</span></span>
+          <span data-en="Brand Identity" data-ua="Бренд-айдентика" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px; line-height:1; margin:10px 0 0;">Brand Identity</span>
+          <span data-msvc-d="" style="display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><span data-en="Professional visual identities and logos that build trust and market presence." data-ua="Професійна візуальна ідентичність і логотипи, що будують довіру та присутність на ринку." style="display:block; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:13px; line-height:1.45; padding-top:10px; opacity:.92;">Professional visual identities and logos that build trust and market presence.</span></span>
+        </button>
+        <button type="button" data-msvc="" data-cursor="1" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); cursor:pointer; background:#14110B; color:#F4F1E8; padding:20px 18px;">
+          <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.6;">03</span><span data-msvc-ic="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:18px; line-height:1; opacity:.6;">+</span></span>
+          <span data-en="Business-Driven Design" data-ua="Business-Driven Design" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px; line-height:1; margin:10px 0 0;">Business-Driven Design</span>
+          <span data-msvc-d="" style="display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><span data-en="Grounding product decisions in commercial realities to ensure design choices drive measurable growth." data-ua="Грунтування продуктових рішень на комерційній реальності, щоб дизайн-рішення давали вимірне зростання." style="display:block; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:13px; line-height:1.45; padding-top:10px; opacity:.92;">Grounding product decisions in commercial realities to ensure design choices drive measurable growth.</span></span>
+        </button>
+        <button type="button" data-msvc="" data-cursor="1" style="display:block; width:100%; text-align:left; border:none; cursor:pointer; background:var(--yellow); color:#14110B; padding:20px 18px;">
+          <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.7;">04</span><span data-msvc-ic="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:18px; line-height:1; opacity:.7;">+</span></span>
+          <span data-en="Marketing Design" data-ua="Маркетинг-дизайн" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px; line-height:1; margin:10px 0 0;">Marketing Design</span>
+          <span data-msvc-d="" style="display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><span data-en="Digital ads and promotional assets that drive engagement and align with brand strategy." data-ua="Цифрова реклама та промо-матеріали, що підвищують залученість і відповідають бренд-стратегії." style="display:block; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:13px; line-height:1.45; padding-top:10px; opacity:.92;">Digital ads and promotional assets that drive engagement and align with brand strategy.</span></span>
+        </button>
+      </div>
+      <!-- APPROACH -->
+      <div style="background:var(--stone); border:2px solid var(--rule); padding:24px 22px;">
+        <div data-en="APPROACH" data-ua="ПІДХІД" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted);">APPROACH</div>
+        <p data-en="For years, I have been optimising customer and user experiences through three distinct lenses: commercial context (MBA), human-computer interaction (MSc in HCI, 2026), and a deep passion for visual design." data-ua="Роками я покращую клієнтський і користувацький досвід через три призми: комерційний контекст (MBA), взаємодію людини з компʼютером (MSc у HCI, 2026) і глибоку любов до візуального дизайну." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:500; font-size:15px; line-height:1.45; color:var(--ink); margin:12px 0 0;">For years, I have been optimising customer and user experiences through three distinct lenses: commercial context (MBA), human-computer interaction (MSc in HCI, 2026), and a deep passion for visual design.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== SELECTED WORK ===== -->
+  <section id="works" data-screen-label="Work" style="background:var(--surface); color:var(--ink); border-top:5px solid var(--rule); padding:70px 48px 76px;">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:34px; flex-wrap:wrap; gap:10px;">
+      <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.2vw,56px); letter-spacing:-0.02em; margin:0;" data-en="Selected Work" data-ua="Вибрані роботи">Selected Work</h2>
+      <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted);" data-en="PORTFOLIO" data-ua="ПОРТФОЛІО">PORTFOLIO</span>
+    </div>
+    <div id="vf-worklist" style="border:2.5px solid var(--rule);">
+      <a href="mocktail-finder.html" data-work="" data-clickable="" data-color="#1E3FCF" data-ink="#F4F1E8" data-reveal="" style="--rowc:#1E3FCF; --rowink:#F4F1E8; position:relative; display:grid; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; cursor:pointer; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">01</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">Mocktail Finder</div><div data-meta="" data-en="A React Native app to find, save and create alcohol-free drink recipes." data-ua="React Native застосунок для пошуку, збереження та створення безалкогольних рецептів." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">A React Native app to find, save and create alcohol-free drink recipes.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="UX/UI Designer & React Native Developer · UX Writer" data-ua="UX/UI-дизайнер і React Native розробник · UX-копірайтер" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">UX/UI Designer & React Native Developer · UX Writer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Figma, React Native" data-ua="Figma, React Native" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Figma, React Native</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="Discovery, search &amp; filters, recipe details, favourites, add-your-own with live validation, light &amp; dark mode." data-ua="Пошук, фільтри, деталі рецепта, обране, власні рецепти з валідацією, світла й темна теми." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Discovery, search &amp; filters, recipe details, favourites, add-your-own with live validation, light &amp; dark mode.</div></div></div></div></div>
+        <span data-meta="" data-en="Mobile app" data-ua="Мобільний застосунок" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">Mobile app</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2026</span>
+        <span data-arrow="" data-en="READ →" data-ua="ЧИТАТИ →" style="font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.08em; text-align:right; white-space:nowrap; opacity:.5; transition:opacity .25s;">READ →</span>
+      </a>
+      <a href="tverdokhlib.html" data-clickable="" data-work="" data-color="#14110B" data-ink="#F4F1E8" data-reveal="" style="--rowc:#14110B; --rowink:#F4F1E8; position:relative; border-top:2.5px solid var(--rule); display:grid; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">02</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">Tverdokhlib Running Team</div><div data-meta="" data-en="Logo and visual identity system for a running club." data-ua="Логотип і система візуальної ідентичності для бігового клубу." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">Logo and visual identity system for a running club.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="Brand, Logo & Graphic Designer" data-ua="Бренд-, лого- та графічний дизайнер" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Brand, Logo & Graphic Designer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Illustrator, Photoshop, Figma" data-ua="Illustrator, Photoshop, Figma" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Illustrator, Photoshop, Figma</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="Primary logo, emblem, compact mark, colour &amp; type system, clear-space rules, social adaptation, merch mockups." data-ua="Основний логотип, емблема, компактний знак, система кольору й типографіки, відступи, адаптація для соцмереж, мерч-мокапи." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Primary logo, emblem, compact mark, colour &amp; type system, clear-space rules, social adaptation, merch mockups.</div></div></div></div></div>
+        <span data-meta="" data-en="Brand identity" data-ua="Бренд-айдентика" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">Brand identity</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2025</span>
+        <span data-arrow="" data-en="READ →" data-ua="ЧИТАТИ →" style="font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.08em; text-align:right; white-space:nowrap; opacity:.5; transition:opacity .25s;">READ →</span>
+        
+      </a>
+      <a href="race-planner.html" data-work="" data-clickable="" data-color="#E1251B" data-ink="#F4F1E8" data-reveal="" style="--rowc:#E1251B; --rowink:#F4F1E8; position:relative; border-top:2.5px solid var(--rule); display:grid; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; cursor:pointer; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">03</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">Race Planner</div><div data-meta="" data-en="Mobile app concept for discovering and registering for running events." data-ua="Концепт мобільного застосунку для пошуку та реєстрації на бігові забіги." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">Mobile app concept for discovering and registering for running events.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="UX/UI Designer · UX Writer" data-ua="UX/UI-дизайнер · UX-копірайтер" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">UX/UI Designer · UX Writer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Figma, FigJam / Lucidchart, Photoshop / Illustrator" data-ua="Figma, FigJam / Lucidchart, Photoshop / Illustrator" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Figma, FigJam / Lucidchart, Photoshop / Illustrator</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="User research, competitor analysis, race discovery, event details, sign-in &amp; registration, phone verification, password recovery." data-ua="Дослідження, аналіз конкурентів, пошук забігів, деталі події, вхід і реєстрація, верифікація телефону, відновлення пароля." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">User research, competitor analysis, race discovery, event details, sign-in &amp; registration, phone verification, password recovery.</div></div></div></div></div>
+        <span data-meta="" data-en="Mobile app" data-ua="Мобільний застосунок" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">Mobile app</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2024</span>
+        <span data-arrow="" data-en="READ →" data-ua="ЧИТАТИ →" style="font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.08em; text-align:right; white-space:nowrap; opacity:.5; transition:opacity .25s;">READ →</span>
+      </a>
+      <a href="bookworm-community.html" data-work="" data-clickable="" data-color="#E1251B" data-ink="#F4F1E8" data-reveal="" style="--rowc:#E1251B; --rowink:#F4F1E8; position:relative; border-top:2.5px solid var(--rule); display:grid; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; cursor:pointer; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">04</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">Bookworm Community</div><div data-meta="" data-en="A community platform for book lovers — explore books, write reviews, manage shelves and get personalised recommendations." data-ua="Спільнотна платформа для книголюбів — пошук книжок, відгуки, керування полицями та персональні рекомендації." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">A community platform for book lovers — explore books, write reviews, manage shelves and get personalised recommendations.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="UX/UI Designer" data-ua="UX/UI-дизайнер" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">UX/UI Designer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Figma, Illustrator, Photoshop, Google Forms, SimilarWeb" data-ua="Figma, Illustrator, Photoshop, Google Forms, SimilarWeb" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Figma, Illustrator, Photoshop, Trello</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="Research, survey, interviews, persona, JTBD, prioritisation matrix, customer journey, user flow, homepage, registration, profile, book library, friends, 404, usability testing, typography & iconography." data-ua="Дослідження, опитування, інтерв'ю, персона, JTBD, матриця пріоритизації, CJM, юзер-флоу, головна, реєстрація, профіль, бібліотека, друзі, 404, юзабіліті-тести, типографіка й іконографіка." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Research, survey, interviews, persona, JTBD, prioritisation matrix, customer journey, user flow, homepage, registration, profile, book library, friends, 404, usability testing, typography & iconography.</div></div></div></div></div>
+        <span data-meta="" data-en="Web platform" data-ua="Веб-платформа" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">Web platform</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2024</span>
+        <span data-arrow="" data-en="READ →" data-ua="ЧИТАТИ →" style="font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.08em; text-align:right; white-space:nowrap; opacity:.5; transition:opacity .25s;">READ →</span>
+        
+      </a>
+      <a href="language-course.html" data-clickable="" data-work="" data-extra="" data-color="#1E3FCF" data-ink="#F4F1E8" style="--rowc:#1E3FCF; --rowink:#F4F1E8; position:relative; border-top:2.5px solid var(--rule); display:none; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">05</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">Language Course Landing</div><div data-meta="" data-en="Responsive landing page for English language courses." data-ua="Адаптивний лендинг для курсів англійської мови." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">Responsive landing page for English language courses.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="Web Designer · UX Writer" data-ua="Веб-дизайнер · UX-копірайтер" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Web Designer · UX Writer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Figma, Photoshop / Illustrator" data-ua="Figma, Photoshop / Illustrator" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Figma, Photoshop / Illustrator</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="Hero, UI kit, course packages, teacher profiles, application form, testimonials, responsive layout, clear CTA." data-ua="Hero, UI-kit, пакети курсів, профілі викладачів, форма заявки, відгуки, адаптивний макет, чіткий CTA." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Hero, UI kit, course packages, teacher profiles, application form, testimonials, responsive layout, clear CTA.</div></div></div></div></div>
+        <span data-meta="" data-en="Landing page" data-ua="Лендинг" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">Landing page</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2025</span>
+        <span data-arrow="" data-en="READ →" data-ua="ЧИТАТИ →" style="font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.08em; text-align:right; white-space:nowrap; opacity:.5; transition:opacity .25s;">READ →</span>
+      </a>
+      <a data-work="" data-extra="" data-color="#1E3FCF" data-ink="#F4F1E8" data-reveal="" style="--rowc:#1E3FCF; --rowink:#F4F1E8; position:relative; border-top:2.5px solid var(--rule); display:none; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">06</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">IT Smart School</div><div data-meta="" data-en="SaaS dashboard concept for an IT-education platform — performance, attendance, scheduling and progress in one structured system." data-ua="Концепт SaaS-дашборду для IT-освітньої платформи — успішність, відвідуваність, розклад і прогрес у єдиній системі." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">SaaS dashboard concept for an IT-education platform — performance, attendance, scheduling and progress in one structured system.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="UX/UI Designer" data-ua="UX/UI-дизайнер" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">UX/UI Designer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Figma, Illustrator, Photoshop" data-ua="Figma, Illustrator, Photoshop" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Figma, Illustrator, Photoshop</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="Student & teacher dashboards, calendar system, performance tracking, attendance overview, scheduling, personas, modular grid, interface hierarchy, colour system." data-ua="Дашборди студента й викладача, календар, відстеження успішності, огляд відвідуваності, розклад, персони, модульна сітка, ієрархія інтерфейсу, система кольору." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Student & teacher dashboards, calendar system, performance tracking, attendance overview, scheduling, personas, modular grid, interface hierarchy, colour system.</div></div></div></div></div>
+        <span data-meta="" data-en="SaaS dashboard" data-ua="SaaS-дашборд" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">SaaS dashboard</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2024</span>
+        
+        
+      </a>
+      <a data-work="" data-extra="" data-color="#F2C200" data-ink="#14110B" data-reveal="" style="--rowc:#F2C200; --rowink:#14110B; position:relative; border-top:2.5px solid var(--rule); display:none; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">07</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">Maria Prymachenko Landing</div><div data-meta="" data-en="A landing page for a charity auction of Maria Prymachenko's paintings in support of the Armed Forces of Ukraine — bold folk-art visual language." data-ua="Лендинг благодійного аукціону картин Марії Примаченко на підтримку ЗСУ — сміливий народно-мистецький візуал." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">A landing page for a charity auction of Maria Prymachenko's paintings in support of the Armed Forces of Ukraine — bold folk-art visual language.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="Web & UI Designer" data-ua="Веб- та UI-дизайнер" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Web & UI Designer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Figma, Illustrator, Photoshop" data-ua="Figma, Illustrator, Photoshop" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Figma, Illustrator, Photoshop</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="Folk-art-inspired style, Kyiv Type Sans & Serif, adaptive layouts, donation-focused hero, painting presentation, registration flow, contact section, 404, Ukrainian cultural identity." data-ua="Стиль на основі народного мистецтва, Kyiv Type Sans і Serif, адаптивні макети, hero з фокусом на донати, презентація картин, реєстрація, контакти, 404, українська культурна ідентичність." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Folk-art-inspired style, Kyiv Type Sans & Serif, adaptive layouts, donation-focused hero, painting presentation, registration flow, contact section, 404, Ukrainian cultural identity.</div></div></div></div></div>
+        <span data-meta="" data-en="Landing page" data-ua="Лендинг" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">Landing page</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2024</span>
+        
+        
+      </a>
+      <a href="my-eco-pharmacy.html" data-clickable="" data-work="" data-extra="" data-color="#14110B" data-ink="#F4F1E8" data-reveal="" style="--rowc:#14110B; --rowink:#F4F1E8; position:relative; border-top:2.5px solid var(--rule); display:none; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">08</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">Pharmacy Brand System</div><div data-meta="" data-en="Strategic branding for a Ukrainian pharmacy — sustainability, trust and social responsibility across physical and digital touchpoints." data-ua="Стратегічний брендинг української аптеки — сталість, довіра й соціальна відповідальність на фізичних і цифрових точках контакту." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">Strategic branding for a Ukrainian pharmacy — sustainability, trust and social responsibility across physical and digital touchpoints.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="Brand Identity & Graphic Designer · Brand Marketer" data-ua="Дизайнер бренд-айдентики та графіки · Бренд-маркетолог" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Brand Identity & Graphic Designer · Brand Marketer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Illustrator, Photoshop, Figma, Trello" data-ua="Illustrator, Photoshop, Figma, Trello" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Illustrator, Photoshop, Figma, Trello</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="Market research, customer journey, sustainability positioning, naming logic, logo construction, colour psychology, typography, clear-space rules, advertising & signage mockups, merch, brand-consistency & misuse rules." data-ua="Дослідження ринку, CJM, позиціювання сталості, логіка нейму, побудова лого, психологія кольору, типографіка, clear-space, реклама й вивіски, мерч, правила консистентності й помилкового використання." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Market research, customer journey, sustainability positioning, naming logic, logo construction, colour psychology, typography, clear-space rules, advertising & signage mockups, merch, brand-consistency & misuse rules.</div></div></div></div></div>
+        <span data-meta="" data-en="Brand identity" data-ua="Бренд-айдентика" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">Brand identity</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2021</span>
+        
+        
+              <span data-arrow="" data-en="READ →" data-ua="ЧИТАТИ →" style="font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.08em; text-align:right; white-space:nowrap; opacity:.5; transition:opacity .25s;">READ →</span>
+      </a>
+      <a data-work="" data-extra="" data-color="#E1251B" data-ink="#F4F1E8" data-reveal="" style="--rowc:#E1251B; --rowink:#F4F1E8; position:relative; border-top:2.5px solid var(--rule); display:none; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">09</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">Pharmacy Prescription Reservation</div><div data-meta="" data-en="A reservation flow letting pharmacy customers find medicine, check availability and reserve products for in-store pickup — connecting online behaviour with real pharmacy operations." data-ua="Флоу резервування, що дає клієнтам аптеки знайти ліки, перевірити наявність і зарезервувати товар для отримання в аптеці — поєднує онлайн-поведінку з реальними операціями аптеки." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">A reservation flow letting pharmacy customers find medicine, check availability and reserve products for in-store pickup — connecting online behaviour with real pharmacy operations.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="Customer Experience & Service Flow Designer" data-ua="Дизайнер клієнтського досвіду та сервісних флоу" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Customer Experience & Service Flow Designer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="FigJam / Miro, Google Sheets" data-ua="FigJam / Miro, Google Sheets" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">FigJam / Miro, Google Sheets</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="Medicine search, availability check, pharmacy selection, prescription handling, reservation-form logic, pickup confirmation, customer notifications, repeat-order scenario, error & empty states, staff-side service considerations." data-ua="Пошук ліків, перевірка наявності, вибір аптеки, обробка рецептів, логіка форми резервування, підтвердження отримання, сповіщення клієнта, сценарій повторного замовлення, стани помилок і порожні стани, врахування роботи персоналу." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Medicine search, availability check, pharmacy selection, prescription handling, reservation-form logic, pickup confirmation, customer notifications, repeat-order scenario, error & empty states, staff-side service considerations.</div></div></div></div></div>
+        <span data-meta="" data-en="Service design" data-ua="Сервіс-дизайн" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">Service design</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">2022</span>
+        
+        
+      </a>
+      <a data-work="" data-extra="" data-color="#F2C200" data-ink="#14110B" data-reveal="" style="--rowc:#F2C200; --rowink:#14110B; position:relative; border-top:2.5px solid var(--rule); display:none; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; background:var(--surface); overflow:hidden;">
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">10</span>
+        <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">MARI CRM</div><div data-meta="" data-en="MARI — Metrics, Analytics, Reports &amp; Innovations: a modern marketing-analytics SaaS with reporting, dashboards and responsive landings." data-ua="MARI — Metrics, Analytics, Reports &amp; Innovations: сучасний SaaS маркетингової аналітики зі звітами, дашбордами й адаптивними лендингами." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">MARI — Metrics, Analytics, Reports &amp; Innovations: a modern marketing-analytics SaaS with reporting, dashboards and responsive landings.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="UX/UI & Web Designer · UX Writer" data-ua="UX/UI- та веб-дизайнер · UX-копірайтер" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">UX/UI & Web Designer · UX Writer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Relume, Figma, AI copywriting, Photoshop" data-ua="Relume, Figma, AI-копірайтинг, Photoshop" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Relume, Figma, AI copywriting, Photoshop</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="SaaS positioning, dashboard concept, wireframes, UI kit, responsive landings, pricing, blog / resources, usability findings." data-ua="SaaS-позиціонування, концепт дашборда, вайрфрейми, UI-kit, адаптивні лендинги, прайсинг, блог / ресурси, висновки тестів." style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">SaaS positioning, dashboard concept, wireframes, UI kit, responsive landings, pricing, blog / resources, usability findings.</div></div></div></div></div>
+        <span data-meta="" data-en="SaaS platform" data-ua="SaaS-платформа" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">SaaS platform</span>
+        <span data-meta="" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--muted);">—</span>
+        
+        
+      </a>
+    
+    </div>
+    <button id="vf-showall" data-cursor="1" data-en="Show more ↓" data-ua="Більше ↓" style="margin-top:18px; font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:13px; letter-spacing:0.04em; color:var(--ink); background:transparent; border:2px solid var(--rule); border-radius:44px; padding:11px 22px; cursor:pointer;">Show more ↓</button>
+    </section>
+
+  <!-- ===== ABOUT (personal, collapsible) ===== -->
+  <section id="about" data-screen-label="About" style="background:var(--rule); border-top:5px solid var(--rule); display:flex; flex-direction:column; gap:5px;">
+
+    <!-- trigger header -->
+    <button id="vf-about-btn" data-cursor="1" aria-expanded="false" style="display:flex; align-items:center; gap:24px; width:100%; background:var(--surface); border:none; text-align:left; padding:42px 48px; cursor:pointer; color:var(--ink);">
+      <div style="flex:1;">
+        <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(30px,4vw,56px); line-height:0.98; letter-spacing:-0.025em; margin:0;" data-en="More personal" data-ua="Більше особистого">More personal</h2>
+      </div>
+      <span data-about-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:40px; line-height:1; color:var(--muted);">+</span>
+    </button>
+
+    <!-- collapsible panel -->
+    <div id="vf-about-panel">
+      <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:5px; border-top:1.5px solid var(--hair);">
+
+        <!-- left: the human -->
+        <div style="background:var(--hair); display:flex; flex-direction:column; gap:1px;">
+
+          <!-- 2×2 facts grid -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:1px; flex:1;">
+
+            <!-- NAME -->
+            <div style="background:var(--surface); padding:30px 32px; display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#E1251B; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="NAME" data-ua="ІМ’Я">NAME</span></div>
+              <div style="display:flex; align-items:baseline; flex-wrap:wrap; gap:6px 12px; margin-top:14px;">
+                <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(22px,2.2vw,30px); letter-spacing:-0.02em;">Vladyslav</span>
+                <span style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:16px; color:var(--muted);" data-en="— Vlad, for short." data-ua="— Vlad, скорочено.">— Vlad, for short.</span>
+              </div>
+              <button id="vf-pron" data-cursor="1" aria-label="Hear pronunciation" style="margin-top:16px; align-self:flex-start; display:inline-flex; align-items:center; gap:8px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; background:transparent; border:2px solid var(--ink); border-radius:40px; padding:5px 13px; cursor:pointer; color:var(--ink);">
+                <span>/vlɑːd/</span>
+                <span aria-hidden="true" style="font-size:14px; line-height:1;">🔊</span>
+              </button>
+            </div>
+
+            <!-- LOCATION -->
+            <div style="background:var(--surface); padding:30px 32px;">
+              <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#1E3FCF; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="LOCATION" data-ua="ЛОКАЦІЯ">LOCATION</span></div>
+              <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); margin:14px 0 0;" data-en="I love travelling the world, but right now I’m based in Dublin, Ireland." data-ua="Я люблю подорожувати світом, але зараз базуюся у Дубліні, Ірландія.">I love travelling the world, but right now I’m based in Dublin, Ireland.</p>
+              <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); margin:8px 0 0;"><span data-en="By the way, you’re " data-ua="До речі, ти за ">By the way, you’re </span><span id="vf-dist2" style="font-weight:800; color:var(--blue); white-space:nowrap;">—</span><span data-en=" from my desk. The distance could be long or short, but for great projects, it doesn’t exist." data-ua=" від мого робочого столу. Відстань може бути великою чи малою, але для крутих проєктів її не існує."> from my desk. The distance could be long or short, but for great projects, it doesn’t exist.</span></p>
+              <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-top:9px; opacity:0.75;" data-en="* roughly, based on your IP address" data-ua="* приблизно, за твоєю IP-адресою">* roughly, based on your IP address</div>
+            </div>
+
+            <!-- OUTSIDE WORK -->
+            <div style="background:var(--surface); padding:30px 32px;">
+              <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#F2C200; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="OUTSIDE WORK" data-ua="ПОЗА РОБОТОЮ">OUTSIDE WORK</span></div>
+              <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); margin:14px 0 0;" data-en="Running and swimming keep me sane and reset my brain — and my wife is right there for most of it. The full story is just below." data-ua="Біг і плавання тримають менталку в тонусі й перезавантажують мозок — а дружина поруч майже в усьому. Повна історія — трохи нижче.">Running and swimming keep me sane and reset my brain — and my wife is right there for most of it. The full story is just below.</p>
+            </div>
+
+            <!-- ART -->
+            <div style="background:var(--surface); padding:30px 32px;">
+              <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#14110B; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="ART" data-ua="АРТ">ART</span></div>
+              <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); margin:14px 0 0;"><span data-en="I look for inspiration in art. Sometimes I just pick up the brushes and start my therapy — painting bad " data-ua="Я шукаю натхнення в мистецтві. Іноді я просто беру до рук пензлі й починаю свою терапію — малюю погані ">I look for inspiration in art. Sometimes I just pick up the brushes and start my therapy — painting bad </span><a href="art.html" data-cursor="1" style="color:var(--blue); border-bottom:2px solid var(--blue); padding-bottom:1px; font-weight:700; text-decoration:none;" data-en="paintings" data-ua="картини">paintings</a><span data-en=" and giving them to my loved ones, even when they resist." data-ua=" й дарую їх своїм близьким, навіть якщо вони чинять супротив."> and giving them to my loved ones, even when they resist.</span></p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- right: pet -->
+        <div style="position:relative; background:#F2C200; min-height:480px; overflow:hidden; display:flex; flex-direction:column;">
+          <span style="position:absolute; top:26px; right:28px; z-index:2; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(15px,1.3vw,20px); letter-spacing:-0.01em; color:#14110B; text-align:right; max-width:55%;" data-en="I’m a cat person." data-ua="Я котолюб.">I’m a cat person.</span>
+          <img id="vf-cat" src="cat-vlad.png" alt="My cat" style="margin-top:auto; width:86%; max-width:360px; align-self:center; display:block;">
+          <span style="position:absolute; bottom:20px; left:28px; z-index:2; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; color:#14110B; opacity:0.7;" data-en="My cat" data-ua="Мій кіт">My cat</span>
+        </div>
+
+      </div>
+
+      <!-- ===== ENDURANCE — beyond the desk ===== -->
+      <div id="vf-endurance" data-active="london" style="border-top:5px solid var(--rule); background:var(--rule);">
+        <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:5px; background:var(--rule);">
+
+          <!-- DATA SIDE -->
+          <div style="background:var(--surface); padding:clamp(22px,4vw,42px); display:flex; flex-direction:column; gap:clamp(26px,3vw,34px);">
+
+            <div style="display:flex; flex-direction:column; gap:13px;">
+              <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#E1251B; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="BEYOND THE DESK" data-ua="ПОЗА РОБОТОЮ">BEYOND THE DESK</span></div>
+              <h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,38px); line-height:1.02; letter-spacing:-0.02em; margin:0;" data-en="Off the screen, I chase finish lines." data-ua="Поза екраном я біжу до фінішів.">Off the screen, I chase finish lines.</h3>
+              <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); opacity:.82; margin:0; max-width:54ch;" data-en="Three open goals keep me moving — or at least keep me tired: run all six World Marathon Majors, break three hours (the clock disagrees, so far), and swim the Strait of Gibraltar before common sense talks me out of it. Pick an event — see the time and the finish-line photo where I look anything but happy." data-ua="Три відкриті цілі тримають мене в русі — або принаймні у втомі: пробігти всі шість World Marathon Majors, вибігти з трьох годин (поки що годинник проти) і переплисти Гібралтарську протоку, доки здоровий глузд мене не відмовив. Обери подію — побачиш час і фото на фініші, де я виглядаю будь-як, тільки не щасливо.">Three open goals keep me moving — or at least keep me tired: run all six World Marathon Majors, break three hours (the clock disagrees, so far), and swim the Strait of Gibraltar before common sense talks me out of it. Pick an event — see the time and the finish-line photo where I look anything but happy.</p>
+            </div>
+
+            <!-- MAJORS -->
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#F2C200; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="WORLD MARATHON MAJORS" data-ua="WORLD MARATHON MAJORS">WORLD MARATHON MAJORS</span></div>
+                <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; color:var(--muted);" data-en="2 / 6 DONE" data-ua="2 / 6 ПРОЙДЕНО">2 / 6 DONE</span>
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                <div style="display:flex; flex-direction:column; gap:5px; flex:1 1 84px; min-width:84px; border:2px solid var(--hair); padding:9px 11px 8px;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted);" data-en="Tokyo" data-ua="Токіо">Tokyo</span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted); opacity:.55;">—:—:—</span></div>
+                <div style="display:flex; flex-direction:column; gap:5px; flex:1 1 84px; min-width:84px; border:2px solid var(--hair); padding:9px 11px 8px;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted);" data-en="Boston" data-ua="Бостон">Boston</span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted); opacity:.55;">—:—:—</span></div>
+                <div data-ev="london" style="display:flex; flex-direction:column; gap:5px; flex:1 1 84px; min-width:84px; background:#E1251B; padding:9px 11px 8px; transition:opacity .25s;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:#F4F1E8;" data-en="London" data-ua="Лондон">London</span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; font-weight:700; color:#F4F1E8;">3:04:14</span></div>
+                <div style="display:flex; flex-direction:column; gap:5px; flex:1 1 84px; min-width:84px; border:2px solid var(--hair); padding:9px 11px 8px;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted);" data-en="Berlin" data-ua="Берлін">Berlin</span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted); opacity:.55;">—:—:—</span></div>
+                <div data-ev="chicago" style="display:flex; flex-direction:column; gap:5px; flex:1 1 84px; min-width:84px; background:#14110B; padding:9px 11px 8px; transition:opacity .25s;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:#F4F1E8;" data-en="Chicago" data-ua="Чикаго">Chicago</span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; font-weight:700; color:#F4F1E8;">3:24:20</span></div>
+                <div style="display:flex; flex-direction:column; gap:5px; flex:1 1 84px; min-width:84px; border:2px solid var(--hair); padding:9px 11px 8px;"><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted);" data-en="New York" data-ua="Нью-Йорк">New York</span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted); opacity:.55;">—:—:—</span></div>
+              </div>
+            </div>
+
+            <!-- SUB-3 -->
+            <div style="display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#E1251B; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="THE SUB-3 PROJECT" data-ua="ПРОЄКТ SUB-3">THE SUB-3 PROJECT</span></div>
+                <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; color:#E1251B;" data-en="GOAL · 3:00:00" data-ua="ЦІЛЬ · 3:00:00">GOAL · 3:00:00</span>
+              </div>
+              <div style="position:relative; margin-top:16px; display:flex; flex-direction:column; gap:9px;">
+                <div style="position:absolute; top:-3px; bottom:-3px; right:calc(clamp(64px,16vw,92px) + 10px); width:3px; background:#E1251B; z-index:2;"></div>
+                <div data-ev="london" style="transition:opacity .25s; display:flex; align-items:center; gap:10px;">
+                  <span style="width:clamp(58px,15vw,80px); flex:none; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--ink);" data-en="LONDON" data-ua="ЛОНДОН">LONDON</span>
+                  <div style="flex:1; position:relative; height:24px; background:var(--hair);"><div data-fill="london" style="position:absolute; left:0; top:0; bottom:0; background:#E1251B;"></div></div>
+                  <span style="width:clamp(64px,16vw,92px); flex:none; text-align:right; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:04:14</span>
+                </div>
+                <div data-ev="chicago" style="transition:opacity .25s; display:flex; align-items:center; gap:10px;">
+                  <span style="width:clamp(58px,15vw,80px); flex:none; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--ink);" data-en="CHICAGO" data-ua="ЧИКАГО">CHICAGO</span>
+                  <div style="flex:1; position:relative; height:24px; background:var(--hair);"><div data-fill="chicago" style="position:absolute; left:0; top:0; bottom:0; background:#14110B;"></div></div>
+                  <span style="width:clamp(64px,16vw,92px); flex:none; text-align:right; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:24:20</span>
+                </div>
+              </div>
+              <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.5; color:var(--ink); opacity:.7; margin:12px 0 0;" data-en="The red line is sub-3:00:00. London — my best — sits 4 min 14 sec short of it." data-ua="Червона лінія — sub-3:00:00. Лондон — мій найкращий — лише за 4 хв 14 с від неї.">The red line is sub-3:00:00. London — my best — sits 4 min 14 sec short of it.</p>
+            </div>
+
+            <!-- SWIM -->
+            <div style="display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#1E3FCF; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="OPEN WATER" data-ua="ВІДКРИТА ВОДА">OPEN WATER</span></div>
+                <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; color:#1E3FCF;" data-en="GOAL · GIBRALTAR 22 KM" data-ua="ЦІЛЬ · ГІБРАЛТАР 22 КМ">GOAL · GIBRALTAR 22 KM</span>
+              </div>
+              <div style="position:relative; margin-top:16px; display:flex; flex-direction:column; gap:9px;">
+                <div style="position:absolute; top:-3px; bottom:-3px; right:calc(clamp(64px,16vw,92px) + 10px); width:3px; background:#1E3FCF; z-index:2;"></div>
+                <div data-ev="orta" style="transition:opacity .25s; display:flex; align-items:center; gap:10px;">
+                  <span style="width:clamp(58px,15vw,80px); flex:none; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--ink);" data-en="LAKE ORTA" data-ua="ОЗ. ОРТА">LAKE ORTA</span>
+                  <div style="flex:1; position:relative; height:24px; background:var(--hair);"><div data-fill="orta" style="position:absolute; left:0; top:0; bottom:0; background:#1E3FCF;"></div></div>
+                  <span style="width:clamp(64px,16vw,92px); flex:none; text-align:right; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">14.5 KM</span>
+                </div>
+              </div>
+              <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:13px; line-height:1.5; color:var(--ink); opacity:.7; margin:12px 0 0;" data-en="14.5 km across Lake Orta, Italy in 04:16:40 — my longest swim yet. Gibraltar is 7.5 km further." data-ua="14.5 км через озеро Орта, Італія за 04:16:40 — поки що найдовший заплив. До Гібралтару ще 7.5 км.">14.5 km across Lake Orta, Italy in 04:16:40 — my longest swim yet. Gibraltar is 7.5 km further.</p>
+            </div>
+
+          </div>
+
+          <!-- VIEWER -->
+          <div style="background:#14110B; position:relative; min-height:clamp(360px,42vw,470px); overflow:hidden;">
+            <img data-slot="london" src="end-london.png" alt="London Marathon — with my wife" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%;">
+            <img data-slot="chicago" src="end-chicago.png" alt="Chicago Marathon finish" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:50% 36%;">
+            <div data-slot="orta" style="position:absolute; inset:0; width:100%; height:100%;">
+              <img data-orta-img src="end-orta-solo.png" alt="Oceanman Lago d’Orta" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 28%;">
+              <img data-orta-img src="end-orta.png" alt="Lake Orta open water" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 26%;">
+            </div>
+
+            <div style="position:absolute; top:18px; left:20px; z-index:4; font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#F4F1E8; opacity:.5; pointer-events:none;" data-en="NOW SHOWING" data-ua="ЗАРАЗ ПОКАЗАНО">NOW SHOWING</div>
+            <div data-orta-dots style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
+
+            <div data-cap="london" style="position:absolute; left:0; right:0; bottom:0; padding:38px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#F4604E;" data-en="LONDON MARATHON · PB" data-ua="ЛОНДОНСЬКИЙ МАРАФОН · PB">LONDON MARATHON · PB</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">03:04:14</div>
+              <div style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:14px; color:#F4F1E8; opacity:.75; margin-top:8px;" data-en="4 min 14 sec from the three-hour wall." data-ua="4 хв 14 с до стіни трьох годин.">4 min 14 sec from the three-hour wall.</div>
+            </div>
+            <div data-cap="chicago" style="position:absolute; left:0; right:0; bottom:0; padding:38px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%);.35) 72%, rgba(8,6,3,0)); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#F2C200;" data-en="CHICAGO MARATHON" data-ua="ЧИКАЗЬКИЙ МАРАФОН">CHICAGO MARATHON</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">03:24:20</div>
+            </div>
+            <div data-cap="orta" style="position:absolute; left:0; right:0; bottom:0; padding:38px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%);) 72%, rgba(8,6,3,0)); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#5B8DEF;" data-en="LAKE ORTA, ITALY · OPEN WATER" data-ua="ОЗЕРО ОРТА, ІТАЛІЯ · ВІДКРИТА ВОДА">LAKE ORTA, ITALY · OPEN WATER</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">14.5 KM<span style="font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:clamp(13px,1.3vw,17px); letter-spacing:0.02em; opacity:.82; margin-left:11px; vertical-align:middle;">04:16:40</span></div>
+              <div style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:14px; color:#F4F1E8; opacity:.75; margin-top:8px;" data-en="It’s really just for fun." data-ua="Це справді просто заради фану.">It’s really just for fun.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== VOLUNTEERING & FUNDRAISING ===== -->
+      <div id="vf-fund" style="border-top:5px solid var(--rule); background:#1E3FCF; color:#F4F1E8; padding:clamp(30px,4.5vw,52px) clamp(22px,4vw,42px); display:flex; flex-direction:column; gap:clamp(16px,2vw,22px);">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#F2C200; flex:none;"></span><span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em; color:#F4F1E8; opacity:.85;" data-en="VOLUNTEERING &amp; FUNDRAISING" data-ua="ВОЛОНТЕРСТВО ТА ЗБІР">VOLUNTEERING &amp; FUNDRAISING</span></div>
+        <h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3.2vw,42px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:18ch;" data-en="I run for more than a finish line." data-ua="Я біжу не лише заради фінішу.">I run for more than a finish line.</h3>
+        <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.35vw,18px); line-height:1.6; color:#F4F1E8; opacity:.92; margin:0; max-width:60ch;" data-en="Alongside design, I volunteer and raise funds for causes close to me. My fundraising page is open right now — and you can also support Ukraine directly through UNITED24. Because a personal best feels better when the run does some good, too." data-ua="Окрім дизайну, я волонтерю та збираю кошти на важливі для мене цілі. Моя сторінка збору відкрита прямо зараз — а ще ти можеш підтримати Україну напряму через UNITED24. Бо особистий рекорд приємніший, коли біг ще й робить добро.">Alongside design, I volunteer and raise funds for causes close to me. My fundraising page is open right now — and you can also support Ukraine directly through UNITED24. Because a personal best feels better when the run does some good, too.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:6px;">
+          <a href="https://eventmaster.ie/fundraising/pages/VF75998197" target="_blank" rel="noopener noreferrer" data-cursor="1" style="display:inline-flex; align-items:center; gap:8px; background:#F4F1E8; color:#14110B; font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:14px; letter-spacing:0.02em; padding:13px 22px; border:2px solid #F4F1E8;" style-hover="background:#F2C200; border-color:#F2C200;" data-en="My fundraising page →" data-ua="Моя сторінка збору →">My fundraising page →</a>
+          <a href="https://u24.gov.ua/uk" target="_blank" rel="noopener noreferrer" data-cursor="1" style="display:inline-flex; align-items:center; gap:8px; background:transparent; color:#F4F1E8; font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:14px; letter-spacing:0.02em; padding:13px 22px; border:2px solid #F4F1E8;" style-hover="background:#F4F1E8; color:#1E3FCF;" data-en="Support UNITED24 →" data-ua="Підтримати UNITED24 →">Support UNITED24 →</a>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" data-screen-label="FAQ" style="background:var(--surface); color:var(--ink); border-top:5px solid var(--rule); padding:72px 48px 80px;">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:30px; flex-wrap:wrap; gap:10px;">
+      <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.2vw,56px); letter-spacing:-0.02em; margin:0;" data-en="Questions, answered" data-ua="Питання та відповіді">Questions, answered</h2>
+      <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:var(--muted);" data-en="FAQ — 09" data-ua="FAQ — 09">FAQ — 09</span>
+    </div>
+
+    <div id="vf-faq" style="border-bottom:1.5px solid var(--hair);">
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--red); min-width:34px;">01</span>
+          <span data-en="What kind of projects do you work on?" data-ua="Над якими проєктами ти працюєш?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">What kind of projects do you work on?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="I work on UX/UI design, websites, landing pages, digital interfaces, brand identity, visual communication, and service-related design problems. I’m especially interested in projects where design has to connect user needs, business goals, and a clear visual system." data-ua="Я працюю над UX/UI дизайном, сайтами, лендингами, цифровими інтерфейсами, бренд-айдентикою, візуальною комунікацією та сервісними дизайн-задачами. Особливо мені цікаві проєкти, де дизайн має поєднати потреби користувачів, бізнес-цілі та чітку візуальну систему." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">I work on UX/UI design, websites, landing pages, digital interfaces, brand identity, visual communication, and service-related design problems. I’m especially interested in projects where design has to connect user needs, business goals, and a clear visual system.</p>
+        </div></div>
+      </div>
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--blue); min-width:34px;">02</span>
+          <span data-en="Can you design a website from scratch?" data-ua="Чи можеш зробити сайт з нуля?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">Can you design a website from scratch?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="Yes. I can help with the structure, user flow, wireframes, visual design, responsive layouts, interactive prototype, and handoff for development. If needed, I can also help prepare the content structure and visual direction before the design stage." data-ua="Так. Допоможу зі структурою, користувацькими сценаріями, вайрфреймами, візуальним дизайном, адаптивними макетами, інтерактивним прототипом і передачею в розробку. За потреби також допоможу підготувати структуру контенту й візуальний напрям ще до етапу дизайну." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">Yes. I can help with the structure, user flow, wireframes, visual design, responsive layouts, interactive prototype, and handoff for development. If needed, I can also help prepare the content structure and visual direction before the design stage.</p>
+        </div></div>
+      </div>
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--ink); min-width:34px;">03</span>
+          <span data-en="Do you only design interfaces, or also branding?" data-ua="Ти лише про інтерфейси чи також брендинг?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">Do you only design interfaces, or also branding?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="I can work with both. My background includes brand systems, visual identity, logo, marketing design, and customer experience. This helps me keep interfaces visually consistent and connected to the brand, rather than treating each screen as a separate design piece." data-ua="Працюю і з тим, і з тим. Мій досвід охоплює бренд-системи, візуальну айдентику, логотипи, маркетинговий дизайн і клієнтський досвід. Це допомагає тримати інтерфейси візуально цілісними та пов’язаними з брендом, а не сприймати кожен екран як окремий шматок дизайну." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">I can work with both. My background includes brand systems, visual identity, logo, marketing design, and customer experience. This helps me keep interfaces visually consistent and connected to the brand, rather than treating each screen as a separate design piece.</p>
+        </div></div>
+      </div>
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--red); min-width:34px;">04</span>
+          <span data-en="Can you improve an existing website or product?" data-ua="Чи можеш покращити наявний сайт або продукт?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">Can you improve an existing website or product?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="Yes. I can review the current structure, user journey, visual hierarchy, navigation, content, and interface consistency. After that, I can suggest practical improvements or redesign the key screens and flows." data-ua="Так. Можу проаналізувати поточну структуру, користувацький шлях, візуальну ієрархію, навігацію, контент та узгодженість інтерфейсу. Після цього запропоную практичні покращення або переробку ключових екранів і сценаріїв." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">Yes. I can review the current structure, user journey, visual hierarchy, navigation, content, and interface consistency. After that, I can suggest practical improvements or redesign the key screens and flows.</p>
+        </div></div>
+      </div>
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--blue); min-width:34px;">05</span>
+          <span data-en="What do you usually deliver?" data-ua="Що зазвичай отримує клієнт?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">What do you usually deliver?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="Depending on the project, deliverables may include user flows, wireframes, responsive interface designs, interactive prototypes, UI components, visual identity elements, presentation materials, and design documentation for developers." data-ua="Залежно від проєкту, результати можуть включати користувацькі сценарії, вайрфрейми, адаптивні дизайни інтерфейсів, інтерактивні прототипи, UI-компоненти, елементи візуальної айдентики, презентаційні матеріали та дизайн-документацію для розробників." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">Depending on the project, deliverables may include user flows, wireframes, responsive interface designs, interactive prototypes, UI components, visual identity elements, presentation materials, and design documentation for developers.</p>
+        </div></div>
+      </div>
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--ink); min-width:34px;">06</span>
+          <span data-en="Do you develop websites as well?" data-ua="Чи розробляєш сайти також?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">Do you develop websites as well?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="Yes. I can take a website from idea and structure to design, front-end implementation, and launch. The exact approach depends on the project. For some sites I handle the design and build myself; if it needs advanced development, custom integrations, or specific technical expertise, I collaborate with specialised developers and keep the design direction consistent.&lt;br&gt;&lt;br&gt;Share the idea, goals, and current stage — and I’ll suggest the most suitable way to move forward." data-ua="Так. Можу провести сайт від ідеї та структури до дизайну, front-end реалізації та запуску. Конкретний підхід залежить від проєкту. Для деяких сайтів роблю і дизайн, і збірку самостійно; якщо потрібна складніша розробка, кастомні інтеграції чи специфічна технічна експертиза — співпрацюю зі спеціалізованими розробниками й тримаю дизайн-напрям цілісним.&lt;br&gt;&lt;br&gt;Поділись ідеєю, цілями та поточним етапом — і я запропоную найкращий шлях далі." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">Yes. I can take a website from idea and structure to design, front-end implementation, and launch. The exact approach depends on the project. For some sites I handle the design and build myself; if it needs advanced development, custom integrations, or specific technical expertise, I collaborate with specialised developers and keep the design direction consistent.<br><br>Share the idea, goals, and current stage — and I’ll suggest the most suitable way to move forward.</p>
+        </div></div>
+      </div>
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--red); min-width:34px;">07</span>
+          <span data-en="Can you work remotely?" data-ua="Чи працюєш віддалено?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">Can you work remotely?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="Yes. I’m based in Dublin, Ireland, and I can work remotely with clients and teams in different locations. Communication can be organised through email, video calls, shared documents, and project-management tools." data-ua="Так. Я базуюся в Дубліні, Ірландія, і можу працювати віддалено з клієнтами та командами в різних локаціях. Комунікацію можна організувати через email, відеодзвінки, спільні документи та інструменти управління проєктами." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">Yes. I’m based in Dublin, Ireland, and I can work remotely with clients and teams in different locations. Communication can be organised through email, video calls, shared documents, and project-management tools.</p>
+        </div></div>
+      </div>
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--blue); min-width:34px;">08</span>
+          <span data-en="How can I start a project with you?" data-ua="Як почати проєкт із тобою?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">How can I start a project with you?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="The easiest way is to send a short message through the Let’s Talk form — tell me what you’re working on and what stage it’s at. I’ll then ask you to fill in a short brief, and from there suggest the best next step: a short call, an estimate, or a clear plan." data-ua="Найпростіше — надіслати коротке повідомлення через форму «Зв’язок»: розкажи, над чим працюєш і на якому етапі. Далі я попрошу заповнити короткий бриф і запропоную найкращий крок: короткий дзвінок, оцінку або чіткий план." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">The easiest way is to send a short message through the Let’s Talk form — tell me what you’re working on and what stage it’s at. I’ll then ask you to fill in a short brief, and from there suggest the best next step: a short call, an estimate, or a clear plan.</p>
+        </div></div>
+      </div>
+
+      <div data-faq-item style="border-top:1.5px solid var(--hair);">
+        <button data-faq-q aria-expanded="false" data-cursor="1" style="display:flex; align-items:center; gap:22px; width:100%; background:transparent; border:none; text-align:left; padding:26px 4px; cursor:pointer; color:var(--ink);">
+          <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; color:var(--ink); min-width:34px;">09</span>
+          <span data-en="Are you available for full-time or contract work?" data-ua="Чи відкритий до full-time або контрактної роботи?" style="flex:1; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,2vw,24px); letter-spacing:-0.01em; line-height:1.2;">Are you available for full-time or contract work?</span>
+          <span data-faq-sign style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:28px; line-height:1; color:var(--muted);">+</span>
+        </button>
+        <div data-faq-a><div>
+          <p data-en="Yes. I’m open to product companies, agencies, and in-house teams. I’m based in Dublin and can work remotely, hybrid, or on-site depending on the position." data-ua="Так. Я відкритий до продуктових компаній, агенцій та in-house команд. Базуюся в Дубліні й можу працювати віддалено, гібридно або в офісі — залежно від позиції." style="margin:0; padding:0 0 30px 56px; max-width:760px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:clamp(15px,1.4vw,18px); line-height:1.62; color:var(--ink); opacity:.86;">Yes. I’m open to product companies, agencies, and in-house teams. I’m based in Dublin and can work remotely, hybrid, or on-site depending on the position.</p>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FINAL CTA ===== -->
+  <section id="cta" data-screen-label="CTA" style="background:var(--blue); color:#F4F1E8; border-top:5px solid var(--rule); padding:88px 48px 80px;">
+    <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#c5cffb;" data-en="NEXT STEP" data-ua="НАСТУПНИЙ КРОК">NEXT STEP</span>
+    <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(42px,7.5vw,116px); line-height:0.86; letter-spacing:-0.03em; margin:14px 0 0;" data-en="Let’s make&lt;br&gt;something balanced." data-ua="Зробімо щось&lt;br&gt;збалансоване.">Let’s make<br>something balanced.</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; margin-top:38px;">
+      <button data-open-talk="" data-cursor="1" data-en="Start a project →" data-ua="Почати проєкт →" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:clamp(16px,1.8vw,21px); background:#F4F1E8; color:#14110B; border:none; border-radius:44px; padding:14px 28px; cursor:pointer;">Start a project →</button>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer data-screen-label="Footer" style="background:var(--surface); color:var(--ink); border-top:5px solid var(--rule); padding:56px 48px 40px;">
+    <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:48px; align-items:start;">
+      <div>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted); margin-bottom:18px;" data-en="ELSEWHERE" data-ua="ДЕ ЩЕ">ELSEWHERE</div>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <a href="cv-vlad-filon.pdf" download="Vlad-Filon-CV.pdf" target="_blank" rel="noopener noreferrer" data-cursor="1" data-pill="1" data-en="Download CV ↓" data-ua="Завантажити CV ↓" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:600; font-size:15px; border:2px solid var(--ink); border-radius:40px; padding:9px 18px;">Download CV ↓</a>
+          <a href="mailto:filon.design.ux@gmail.com" data-cursor="1" data-pill="1" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:600; font-size:15px; border:2px solid var(--ink); border-radius:40px; padding:9px 18px;">Email ↗</a>
+          <a href="https://www.linkedin.com/in/vladyslav-filon" data-cursor="1" data-pill="1" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:600; font-size:15px; border:2px solid var(--ink); border-radius:40px; padding:9px 18px;">LinkedIn ↗</a>
+          <a href="https://github.com/Vladyslav-XD?tab=repositories" target="_blank" rel="noopener noreferrer" data-cursor="1" data-pill="1" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:600; font-size:15px; border:2px solid var(--ink); border-radius:40px; padding:9px 18px;">GitHub ↗</a>
+        </div>
+      </div>
+      <div style="border:2px solid var(--ink); padding:24px; display:flex; gap:22px; align-items:center;">
+        <img src="wa-qr.png" alt="WhatsApp QR code" style="width:124px; height:124px; flex:none; background:#F4F1E8; border:2px solid #14110B; display:block; padding:6px; object-fit:contain;">
+        <div>
+          <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;">WhatsApp</div>
+          <div data-en="Scan the code — or just tap below." data-ua="Скануй код — або просто тисни нижче." style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; line-height:1.5; color:var(--muted); margin:6px 0 14px; max-width:200px;">Scan the code — or just tap below.</div>
+          <a id="vf-wa-foot" href="https://wa.me/353874919855" target="_blank" rel="noopener noreferrer" data-cursor="1" data-en="Message me on WhatsApp →" data-ua="Написати у WhatsApp →" style="display:inline-block; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:14px; background:#1E7A4D; color:#F4F1E8; border-radius:999px; padding:9px 18px;">Message me on WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:46px; padding-top:22px; border-top:1.5px solid var(--hair); flex-wrap:wrap; gap:10px;">
+      <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
+        <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:15px;">VLAD FILON</span>
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted);">© 2026</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+        <button id="vf-privacy-open" data-cursor="1" data-en="Privacy" data-ua="Приватність" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted); background:transparent; border:none; padding:0; cursor:pointer; letter-spacing:0.02em;">Privacy</button>
+        <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted);" data-en="Dublin, Ireland" data-ua="Дублін, Ірландія">Dublin, Ireland</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== LET'S TALK MODAL ===== -->
+  <div id="vf-modal" role="dialog" aria-modal="true" aria-label="Start a project" style="position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center; padding:24px;">
+    <div id="vf-modal-bg" style="position:absolute; inset:0; background:rgba(10,8,5,0.7);"></div>
+    <div style="position:relative; width:min(860px,100%); max-height:92vh; overflow:auto; background:var(--surface); color:var(--ink); border:3px solid var(--rule); display:grid; grid-template-columns:300px 1fr;">
+      <!-- left rail -->
+      <div style="background:var(--blue); color:#F4F1E8; padding:34px 30px; display:flex; flex-direction:column; justify-content:space-between; min-height:460px;">
+        <div>
+          <div id="vf-step-ind" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; border:1.5px solid #F4F1E8; border-radius:40px; padding:5px 12px; display:inline-block;">1 / 2 STEPS</div>
+          <h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:34px; line-height:0.95; letter-spacing:-0.02em; margin:26px 0 0;" data-en="Let’s create&lt;br&gt;something." data-ua="Створімо&lt;br&gt;щось разом.">Let’s create<br>something.</h3>
+        </div>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; line-height:1.7; color:#c5cffb;">filon.design.ux@gmail.com<br>Dublin · Ireland</div>
+      </div>
+      <!-- form -->
+      <div style="padding:34px 34px 30px; position:relative;">
+        <button id="vf-modal-close" aria-label="Close" data-cursor="1" style="position:absolute; right:18px; top:16px; width:36px; height:36px; border:2px solid var(--rule); background:transparent; color:var(--ink); border-radius:50%; cursor:pointer; font-size:16px;">✕</button>
+        <!-- STEP 1 -->
+        <div data-step="1">
+          <h4 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:26px; margin:6px 0 24px;" data-en="Your contact details" data-ua="Твої контакти">Your contact details</h4>
+          <label for="vf-f-name" style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--blue); margin-bottom:6px;">YOUR NAME *</label>
+          <input id="vf-f-name" type="text" style="width:100%; padding:10px 0; background:transparent; border:none; border-bottom:2px solid var(--rule); color:var(--ink); font-size:18px; outline:none; margin-bottom:22px;">
+          <label for="vf-f-email" style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--blue); margin-bottom:6px;">EMAIL *</label>
+          <input id="vf-f-email" type="email" style="width:100%; padding:10px 0; background:transparent; border:none; border-bottom:2px solid var(--rule); color:var(--ink); font-size:18px; outline:none; margin-bottom:22px;">
+          <label for="vf-f-company" style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--blue); margin-bottom:6px;">COMPANY</label>
+          <input id="vf-f-company" type="text" style="width:100%; padding:10px 0; background:transparent; border:none; border-bottom:2px solid var(--rule); color:var(--ink); font-size:18px; outline:none; margin-bottom:30px;">
+          <button id="vf-next" data-cursor="1" data-en="Continue →" data-ua="Далі →" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:16px; background:var(--blue); color:#F4F1E8; border:none; border-radius:44px; padding:13px 26px; cursor:pointer;">Continue →</button>
+          <div id="vf-err1" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--red); margin-top:14px; display:none;" data-en="Please add your name and a valid email." data-ua="Додай ім’я та коректний email.">Please add your name and a valid email.</div>
+        </div>
+        <!-- STEP 2 -->
+        <div data-step="2" style="display:none;">
+          <h4 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:26px; margin:6px 0 24px;" data-en="Share your idea" data-ua="Розкажи про ідею">Share your idea</h4>
+          <label for="vf-f-idea" style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--blue); margin-bottom:6px;">PROJECT IDEA *</label>
+          <textarea id="vf-f-idea" rows="3" style="width:100%; padding:10px 0; background:transparent; border:none; border-bottom:2px solid var(--rule); color:var(--ink); font-size:17px; outline:none; resize:vertical; margin-bottom:26px;"></textarea>
+          <label style="display:block; font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--blue); margin-bottom:12px;" data-en="BUDGET RANGE" data-ua="БЮДЖЕТ">BUDGET RANGE</label>
+          <div id="vf-budgets" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;">
+            <button data-budget="&lt; €1k" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; padding:9px 14px; border:2px solid var(--rule); background:transparent; color:var(--ink); cursor:pointer;">&lt; €1k</button>
+            <button data-budget="€1–2k" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; padding:9px 14px; border:2px solid var(--rule); background:transparent; color:var(--ink); cursor:pointer;">€1–2k</button>
+            <button data-budget="€2–5k" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; padding:9px 14px; border:2px solid var(--rule); background:transparent; color:var(--ink); cursor:pointer;">€2–5k</button>
+            <button data-budget="Let’s discuss" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; padding:9px 14px; border:2px solid var(--rule); background:transparent; color:var(--ink); cursor:pointer;" data-en="Let’s discuss" data-ua="Обговоримо">Let’s discuss</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+            <button id="vf-back" data-cursor="1" data-en="← Back" data-ua="← Назад" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:15px; background:transparent; color:var(--ink); border:2px solid var(--rule); border-radius:44px; padding:12px 22px; cursor:pointer;">← Back</button>
+            <button id="vf-send" data-cursor="1" data-en="Send message →" data-ua="Надіслати →" style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:16px; background:var(--red); color:#F4F1E8; border:none; border-radius:44px; padding:13px 26px; cursor:pointer;">Send message →</button>
+          </div>
+          <div id="vf-err2" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--red); margin-top:14px; display:none;" data-en="Please describe your idea briefly." data-ua="Опиши ідею коротко.">Please describe your idea briefly.</div>
+        </div>
+        <!-- DONE -->
+        <div data-step="done" style="display:none; min-height:300px; display:none; flex-direction:column; justify-content:center;">
+          <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:30px; line-height:1.05;" data-en="Your mail app is opening…" data-ua="Поштовий застосунок відкривається…">Your mail app is opening…</div>
+          <p style="font-weight:500; font-size:16px; line-height:1.55; color:var(--muted); margin:16px 0 0; max-width:380px;" data-en="A pre-filled email to filon.design.ux@gmail.com just opened. Hit send and I’ll get back to you soon." data-ua="Відкрився лист до filon.design.ux@gmail.com з усіма деталями. Натисни «надіслати» — і я скоро відповім.">A pre-filled email to filon.design.ux@gmail.com just opened. Hit send and I’ll get back to you soon.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRIVACY MODAL ===== -->
+  <div id="vf-privacy" role="dialog" aria-modal="true" aria-label="Privacy" style="position:fixed; inset:0; z-index:101; display:none; align-items:center; justify-content:center; padding:24px;">
+    <div id="vf-privacy-bg" style="position:absolute; inset:0; background:rgba(10,8,5,0.7);"></div>
+    <div style="position:relative; width:min(660px,100%); max-height:90vh; overflow:auto; background:var(--surface); color:var(--ink); border:3px solid var(--rule); padding:36px 38px 32px;">
+      <button id="vf-privacy-close" aria-label="Close" data-cursor="1" style="position:absolute; right:18px; top:16px; width:36px; height:36px; border:2px solid var(--rule); background:transparent; color:var(--ink); border-radius:50%; cursor:pointer; font-size:16px;">✕</button>
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:var(--blue);" data-en="PRIVACY" data-ua="ПРИВАТНІСТЬ">PRIVACY</div>
+      <h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,4vw,34px); line-height:0.98; letter-spacing:-0.02em; margin:12px 38px 8px 0;" data-en="How your data&lt;br&gt;is handled" data-ua="Як я поводжуся&lt;br&gt;з даними">How your data<br>is handled</h3>
+      <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:15px; line-height:1.6; color:var(--muted); margin:0 0 6px; max-width:54ch;" data-en="This is a personal portfolio. I keep data handling minimal, manual and transparent — here is exactly what happens." data-ua="Це особисте портфоліо. Я обробляю дані мінімально, вручну й прозоро — ось що саме відбувається.">This is a personal portfolio. I keep data handling minimal, manual and transparent — here is exactly what happens.</p>
+
+      <div style="display:grid; grid-template-columns:140px 1fr; gap:8px 18px; padding:18px 0 4px;">
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--ink); padding-top:16px; border-top:1.5px solid var(--hair);" data-en="WHAT I COLLECT" data-ua="ЯКІ ДАНІ">WHAT I COLLECT</div>
+        <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:15px; line-height:1.55; margin:0; padding-top:16px; border-top:1.5px solid var(--hair);" data-en="Only what you choose to send when you contact me — your name, email, optional company and your message. Nothing else." data-ua="Лише те, що ти сам надсилаєш, коли пишеш мені — імʼя, email, за бажанням компанію та твоє повідомлення. Більше нічого.">Only what you choose to send when you contact me — your name, email, optional company and your message. Nothing else.</p>
+
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--ink); padding-top:16px; border-top:1.5px solid var(--hair);" data-en="WHERE IT GOES" data-ua="КУДИ ВОНИ ЙДУТЬ">WHERE IT GOES</div>
+        <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:15px; line-height:1.55; margin:0; padding-top:16px; border-top:1.5px solid var(--hair);" data-en="The contact form stores nothing on this site — it simply opens your own email app with a pre-filled message to filon.design.ux@gmail.com. Your enquiry lives only in our email exchange." data-ua="Форма нічого не зберігає на сайті — вона просто відкриває твій поштовий застосунок із готовим листом на filon.design.ux@gmail.com. Твоє звернення існує лише в нашому листуванні.">The contact form stores nothing on this site — it simply opens your own email app with a pre-filled message to filon.design.ux@gmail.com. Your enquiry lives only in our email exchange.</p>
+
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--ink); padding-top:16px; border-top:1.5px solid var(--hair);" data-en="ON THIS DEVICE" data-ua="НА ЦЬОМУ ПРИСТРОЇ">ON THIS DEVICE</div>
+        <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:15px; line-height:1.55; margin:0; padding-top:16px; border-top:1.5px solid var(--hair);" data-en="The site remembers your theme, language and hero layout in your browser (localStorage). These never leave your device and are never sent anywhere." data-ua="Сайт памʼятає твою тему, мову й розкладку героя у браузері (localStorage). Ці дані не залишають пристрій і нікуди не надсилаються.">The site remembers your theme, language and hero layout in your browser (localStorage). These never leave your device and are never sent anywhere.</p>
+
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--ink); padding-top:16px; border-top:1.5px solid var(--hair);" data-en="NO TRACKING" data-ua="БЕЗ ВІДСТЕЖЕННЯ">NO TRACKING</div>
+        <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:15px; line-height:1.55; margin:0; padding-top:16px; border-top:1.5px solid var(--hair);" data-en="No analytics, no advertising cookies, no third-party trackers." data-ua="Жодної аналітики, рекламних кукі чи сторонніх трекерів.">No analytics, no advertising cookies, no third-party trackers.</p>
+
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--ink); padding-top:16px; border-top:1.5px solid var(--hair);" data-en="YOUR RIGHTS" data-ua="ТВОЇ ПРАВА">YOUR RIGHTS</div>
+        <p style="font-family:'Hanken Grotesk','Manrope',sans-serif; font-size:15px; line-height:1.55; margin:0; padding-top:16px; border-top:1.5px solid var(--hair);" data-en="Email filon.design.ux@gmail.com any time to see or delete anything you have sent me." data-ua="Напиши на filon.design.ux@gmail.com будь-коли, щоб переглянути або видалити все, що ти надсилав.">Email filon.design.ux@gmail.com any time to see or delete anything you have sent me.</p>
+      </div>
+
+      <p style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin:22px 0 0; padding-top:16px; border-top:1.5px solid var(--hair);" data-en="Based in Dublin, Ireland · Last updated June 2026" data-ua="Дублін, Ірландія · Оновлено: червень 2026">Based in Dublin, Ireland · Last updated June 2026</p>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;ua&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;staticHero&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = document.getElementById('vf-root');
+    if (!root) return;
+
+    /* ---------- THEME ---------- */
+    const themeBtn = document.getElementById('vf-theme');
+    const themeIcon = document.getElementById('vf-theme-icon');
+    let theme = 'light';
+    try { theme = localStorage.getItem('vf-theme') || this.props.theme || 'light'; } catch (_) { theme = this.props.theme || 'light'; }
+    let portraitExpr = 'neutral';
+    const currentShirt = () => theme === 'dark' ? 'yellow' : 'black';
+    const setPortrait = () => { const want = 'portrait-' + currentShirt() + '-' + portraitExpr + '.png'; root.querySelectorAll('.vf-portrait').forEach(im => { if (!im.src.endsWith(want)) im.src = want; }); };
+    ['black-neutral','black-smile','yellow-neutral','yellow-smile'].forEach(n => { const i = new Image(); i.src = 'portrait-' + n + '.png'; });
+    const applyTheme = () => { root.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); const _m = document.getElementById('vf-modal'); if (_m) _m.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀' : '☾'; setPortrait(); };
+    root.querySelectorAll('.vf-portrait').forEach(im => {
+      const host = im.parentElement; if (!host) return;
+      host.addEventListener('mouseenter', () => { portraitExpr = 'smile'; setPortrait(); });
+      host.addEventListener('mouseleave', () => { portraitExpr = 'neutral'; setPortrait(); });
+    });
+    applyTheme();
+    if (themeBtn) themeBtn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('vf-theme', theme); } catch (_) {} applyTheme(); });
+
+    /* ---------- cursor ring ---------- */
+    const ring = document.getElementById('vf-ring');
+    if (ring) { ring.style.left = '0'; ring.style.top = '0'; }
+    let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry;
+    addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; if (ring) ring.style.opacity = '1'; });
+    const ringLoop = () => { rx += (tx-rx)*0.25; ry += (ty-ry)*0.25; if (ring) ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(ringLoop); };
+    ringLoop();
+    const grow = () => { if (ring) { ring.style.width='40px'; ring.style.height='40px'; ring.style.marginLeft='-20px'; ring.style.marginTop='-20px'; } };
+    const shrink = () => { if (ring) { ring.style.width='12px'; ring.style.height='12px'; ring.style.marginLeft='-6px'; ring.style.marginTop='-6px'; } };
+    root.querySelectorAll('[data-cursor],[data-work],[data-block],a,button').forEach(el => { el.addEventListener('mouseenter', grow); el.addEventListener('mouseleave', shrink); });
+
+    /* ---------- mobile nav ---------- */
+    const burger = document.getElementById('vf-burger'), navLinks = document.getElementById('vf-nav'), mobile = document.getElementById('vf-mobile');
+    let menuOpen = false;
+    const syncNav = () => { const m = innerWidth < 900; if (navLinks) navLinks.style.display = m ? 'none' : 'flex'; if (burger) burger.style.display = m ? 'flex' : 'none'; if (!m && mobile) { mobile.style.display = 'none'; menuOpen = false; } };
+    if (burger) burger.addEventListener('click', () => { menuOpen = !menuOpen; if (mobile) mobile.style.display = menuOpen ? 'block' : 'none'; });
+    if (mobile) mobile.querySelectorAll('a,button').forEach(a => a.addEventListener('click', () => { menuOpen = false; mobile.style.display = 'none'; }));
+    syncNav(); addEventListener('resize', syncNav);
+
+    /* ---------- WhatsApp ---------- */
+    const wa = document.getElementById('vf-wa'); const waNum = (this.props.whatsapp || '').replace(/[^0-9]/g,''); if (wa && waNum) wa.href = 'https://wa.me/' + waNum;
+
+    /* ---------- INTERACTIVE HERO ---------- */
+    const stage = document.getElementById('vf-stage'), section = document.getElementById('top');
+    if (stage && !(this.props.staticHero ?? false)) {
+      const COLS = 12, ROWS = 8, GAP = 6;
+      const gridlines = document.getElementById('vf-gridlines'), preview = document.getElementById('vf-preview'), controls = document.getElementById('vf-controls');
+      const blockEls = [...stage.querySelectorAll('[data-block]')];
+      const DEFAULTS = {}, state = {}; let zTop = 10;
+      blockEls.forEach(el => { const id = el.dataset.block; DEFAULTS[id] = { col:+el.dataset.col, row:+el.dataset.row, w:+el.dataset.w, h:+el.dataset.h }; state[id] = { ...DEFAULTS[id] }; });
+      try {
+        const saved = JSON.parse(localStorage.getItem('vf-hero-v6') || 'null');
+        if (saved) {
+          // build candidate layout from saved (falling back to defaults per block)
+          const cand = {};
+          blockEls.forEach(el => { const id = el.dataset.block; cand[id] = Object.assign({}, DEFAULTS[id], saved[id] || {}); });
+          const ids = Object.keys(cand);
+          const inBounds = (s) => Number.isFinite(s.col) && Number.isFinite(s.row) && Number.isFinite(s.w) && Number.isFinite(s.h) && s.w >= 1 && s.h >= 1 && s.col >= 0 && s.row >= 0 && s.col + s.w <= COLS && s.row + s.h <= ROWS;
+          const overlaps = (a, b) => a.col < b.col + b.w && b.col < a.col + a.w && a.row < b.row + b.h && b.row < a.row + a.h;
+          let valid = ids.every(id => inBounds(cand[id]));
+          for (let i = 0; valid && i < ids.length; i++) for (let j = i + 1; valid && j < ids.length; j++) if (overlaps(cand[ids[i]], cand[ids[j]])) valid = false;
+          // only adopt the saved layout if it's still a clean, in-grid composition
+          if (valid) { blockEls.forEach(el => Object.assign(state[el.dataset.block], cand[el.dataset.block])); }
+          else { try { localStorage.removeItem('vf-hero-v6'); } catch (_) {} }
+        }
+      } catch (_) {}
+      const save = () => { try { localStorage.setItem('vf-hero-v6', JSON.stringify(state)); } catch (_) {} const r = document.getElementById('vf-reset'); if (r) r.style.display = 'inline-block'; };
+      const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+      const isMobile = () => innerWidth < 900;
+      const cellSize = () => { const r = stage.getBoundingClientRect(); return { cw: r.width / COLS, ch: r.height / ROWS }; };
+      const place = (el, s) => { const { cw, ch } = cellSize(); el.style.left = (s.col*cw + GAP/2)+'px'; el.style.top = (s.row*ch + GAP/2)+'px'; el.style.width = (s.w*cw - GAP)+'px'; el.style.height = (s.h*ch - GAP)+'px'; };
+
+      const render = () => {
+        if (isMobile()) {
+          section.style.height = 'auto'; stage.style.position = 'static'; stage.style.inset = 'auto';
+          const order = ['name','portrait','about','red','blue','yellow','black'];
+          order.forEach((id, i) => { const el = stage.querySelector(`[data-block="${id}"]`); if (!el) return; el.style.position = 'relative'; el.style.left='auto'; el.style.top='auto'; el.style.width='100%'; el.style.height = (+el.dataset.mh || 160)+'px'; el.style.marginBottom = GAP+'px'; el.style.order = i; });
+          stage.style.display = 'flex'; stage.style.flexDirection = 'column'; stage.style.padding = '6px';
+          if (gridlines) gridlines.style.display = 'none';
+          return;
+        }
+        section.style.height = ''; stage.style.position = 'absolute'; stage.style.inset = '6px'; stage.style.display = 'block'; stage.style.padding = '0';
+        if (gridlines) gridlines.style.display = 'block';
+        blockEls.forEach(el => { el.style.position = 'absolute'; el.style.marginBottom = '0'; place(el, state[el.dataset.block]); });
+        stage.querySelectorAll('.vf-portrait').forEach(im => { im.style.width = '100%'; im.style.height = '100%'; im.style.inset = '0'; });
+      };
+
+      blockEls.forEach(el => {
+        const rh = document.createElement('div'); rh.dataset.resize = '1';
+        rh.style.cssText = 'position:absolute;right:0;bottom:0;width:24px;height:24px;cursor:nwse-resize;z-index:5;touch-action:none;';
+        const grip = document.createElement('div'); grip.style.cssText = 'position:absolute;right:5px;bottom:5px;width:10px;height:10px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;opacity:0;transition:opacity .18s;';
+        rh.appendChild(grip); el.appendChild(rh);
+        el.addEventListener('mouseenter', () => { if (!isMobile()) grip.style.opacity = '0.5'; });
+        el.addEventListener('mouseleave', () => { grip.style.opacity = '0'; });
+      });
+
+      /* transient controls */
+      let ctlTimer = null;
+      const showCtl = () => { if (controls && !isMobile()) controls.style.opacity = '1'; };
+      const hideCtl = () => { if (controls) controls.style.opacity = '0'; };
+      const showEdit = (on) => { if (gridlines && !isMobile()) gridlines.style.opacity = on ? '1' : '0'; if (preview) preview.style.opacity = on ? '1' : '0'; };
+      const showPreview = (s) => { if (!preview) return; const { cw, ch } = cellSize(); preview.style.left = (s.col*cw + GAP/2)+'px'; preview.style.top = (s.row*ch + GAP/2)+'px'; preview.style.width = (s.w*cw - GAP)+'px'; preview.style.height = (s.h*ch - GAP)+'px'; };
+      section.addEventListener('mouseenter', showCtl);
+      section.addEventListener('mouseleave', () => { clearTimeout(ctlTimer); ctlTimer = setTimeout(hideCtl, 400); });
+      section.addEventListener('focusin', showCtl);
+      section.addEventListener('focusout', () => { clearTimeout(ctlTimer); ctlTimer = setTimeout(hideCtl, 400); });
+
+      blockEls.forEach(el => {
+        const id = el.dataset.block;
+        let mode = null, sx = 0, sy = 0, base = null, target = null;
+        el.addEventListener('pointerdown', (e) => {
+          if (isMobile()) return;
+          mode = e.target.closest('[data-resize]') ? 'resize' : 'move';
+          sx = e.clientX; sy = e.clientY; base = { ...state[id] }; target = null;
+          el.style.zIndex = Math.min(++zTop, 45); el.style.cursor = mode === 'move' ? 'grabbing' : 'nwse-resize'; el.style.transition = 'none';
+          showCtl(); showEdit(true); showPreview(state[id]);
+          try { el.setPointerCapture(e.pointerId); } catch (_) {}
+          try { el.focus({ preventScroll: true }); } catch (_) { el.focus(); }
+          document.body.style.userSelect = 'none'; e.preventDefault();
+        });
+        el.addEventListener('pointermove', (e) => {
+          if (!mode || isMobile()) return;
+          const { cw, ch } = cellSize();
+          const dCol = Math.round((e.clientX - sx)/cw), dRow = Math.round((e.clientY - sy)/ch);
+          if (mode === 'move') {
+            el.style.left = (base.col*cw + GAP/2 + (e.clientX - sx))+'px'; el.style.top = (base.row*ch + GAP/2 + (e.clientY - sy))+'px';
+            target = { col: clamp(base.col + dCol, 0, COLS - state[id].w), row: clamp(base.row + dRow, 0, ROWS - state[id].h) };
+            showPreview({ ...state[id], ...target });
+          } else {
+            const c = { minw:+(el.dataset.minw||1), maxw:+(el.dataset.maxw||COLS), minh:+(el.dataset.minh||1), maxh:+(el.dataset.maxh||ROWS) };
+            const nw = clamp(base.w + dCol, c.minw, Math.min(c.maxw, COLS - state[id].col)), nh = clamp(base.h + dRow, c.minh, Math.min(c.maxh, ROWS - state[id].row));
+            el.style.width = (nw*cw - GAP)+'px'; el.style.height = (nh*ch - GAP)+'px';
+            target = { w: nw, h: nh }; showPreview({ ...state[id], ...target });
+          }
+        });
+        const overlapCells = (a, b) => { const x = Math.max(0, Math.min(a.col+a.w, b.col+b.w) - Math.max(a.col, b.col)); const y = Math.max(0, Math.min(a.row+a.h, b.row+b.h) - Math.max(a.row, b.row)); return x * y; };
+        const up = () => {
+          if (!mode) return;
+          if (mode === 'move' && target) {
+            const drop = { col: target.col, row: target.row, w: state[id].w, h: state[id].h };
+            let best = null, bestOv = 0;
+            blockEls.forEach(o => { const oid = o.dataset.block; if (oid === id) return; const ov = overlapCells(drop, state[oid]); if (ov > bestOv) { bestOv = ov; best = oid; } });
+            if (best && bestOv >= 1) {  // dropped onto another block → swap POSITIONS only, each keeps its own size
+              const bs = state[best];
+              const myCol = clamp(bs.col, 0, COLS - state[id].w), myRow = clamp(bs.row, 0, ROWS - state[id].h);
+              const theirCol = clamp(base.col, 0, COLS - bs.w), theirRow = clamp(base.row, 0, ROWS - bs.h);
+              state[id].col = myCol; state[id].row = myRow;
+              bs.col = theirCol; bs.row = theirRow;
+              blockEls.forEach(o => { o.style.transition = 'left .26s cubic-bezier(.5,0,.2,1), top .26s, width .26s, height .26s'; });
+              render(); save(); el.style.cursor = 'grab'; showEdit(false); mode = null; return;
+            }
+          }
+          if (target) Object.assign(state[id], target); target = null;
+          el.style.transition = 'left .18s cubic-bezier(.5,0,.2,1), top .18s, width .18s, height .18s';
+          place(el, state[id]); el.style.cursor = 'grab'; showEdit(false); save(); mode = null;
+        };
+        el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+
+        let kT = null;
+        el.addEventListener('keydown', (e) => {
+          if (isMobile()) return;
+          const s = state[id]; let handled = true;
+          const c = { minw:+(el.dataset.minw||1), maxw:+(el.dataset.maxw||COLS), minh:+(el.dataset.minh||1), maxh:+(el.dataset.maxh||ROWS) };
+          if (e.key === 'ArrowLeft')  { if (e.shiftKey) s.w = clamp(s.w-1,c.minw,Math.min(c.maxw,COLS-s.col)); else s.col = clamp(s.col-1,0,COLS-s.w); }
+          else if (e.key === 'ArrowRight'){ if (e.shiftKey) s.w = clamp(s.w+1,c.minw,Math.min(c.maxw,COLS-s.col)); else s.col = clamp(s.col+1,0,COLS-s.w); }
+          else if (e.key === 'ArrowUp')   { if (e.shiftKey) s.h = clamp(s.h-1,c.minh,Math.min(c.maxh,ROWS-s.row)); else s.row = clamp(s.row-1,0,ROWS-s.h); }
+          else if (e.key === 'ArrowDown') { if (e.shiftKey) s.h = clamp(s.h+1,c.minh,Math.min(c.maxh,ROWS-s.row)); else s.row = clamp(s.row+1,0,ROWS-s.h); }
+          else handled = false;
+          if (handled) { e.preventDefault(); el.style.transition = 'left .12s, top .12s, width .12s, height .12s'; place(el, s); showCtl(); showEdit(true); showPreview(s); save(); clearTimeout(kT); kT = setTimeout(() => showEdit(false), 800); }
+        });
+        el.addEventListener('focus', () => { if (!isMobile()) { showCtl(); showEdit(true); showPreview(state[id]); } });
+        el.addEventListener('blur', () => showEdit(false));
+      });
+
+      render(); addEventListener('resize', render); setTimeout(render, 200);
+      // intro hint — auto-shows & pulses for first-time visitors; afterwards still appears (calm) on hero hover
+      const pill = document.getElementById('vf-hint-pill');
+      let hintSeen = false;
+      try { hintSeen = !!localStorage.getItem('vf-hint-seen'); } catch (_) {}
+      const retireHint = () => { if (pill) { pill.style.animation = 'none'; pill.style.display = 'none'; } try { localStorage.setItem('vf-hint-seen', '1'); } catch (_) {} };
+      const armRetire = () => {
+        section.addEventListener('pointerdown', retireHint, { once: true });
+        section.addEventListener('keydown', (e) => { if (e.key.startsWith('Arrow')) retireHint(); }, { once: true });
+      };
+      if (hintSeen && pill) { pill.style.animation = 'none'; pill.style.display = 'none'; }
+      else {
+        setTimeout(() => {
+          if (controls && !isMobile()) {
+            controls.style.transition = 'none';
+            controls.style.opacity = '1';
+            requestAnimationFrame(() => { controls.style.transition = 'opacity .35s'; });
+          }
+        }, 600);
+        armRetire();
+      }
+      const reset = document.getElementById('vf-reset');
+      const isDirty = () => blockEls.some(el => { const s = state[el.dataset.block], d = DEFAULTS[el.dataset.block]; return s.col !== d.col || s.row !== d.row || s.w !== d.w || s.h !== d.h; });
+      if (reset) { reset.style.display = isDirty() ? 'inline-block' : 'none'; reset.addEventListener('click', () => { blockEls.forEach(el => { state[el.dataset.block] = { ...DEFAULTS[el.dataset.block] }; el.style.transition = 'left .3s cubic-bezier(.5,0,.2,1), top .3s, width .3s, height .3s'; }); render(); try { localStorage.setItem('vf-hero-v6', JSON.stringify(state)); } catch (_) {} reset.style.display = 'none'; if (pill) { pill.style.display = 'inline-flex'; pill.style.animation = 'vfHintBob 2.4s ease-in-out infinite, vfHintPulse 2.4s ease-in-out infinite'; } try { localStorage.setItem('vf-hint-seen', ''); } catch (_) {} armRetire(); }); }
+
+      /* portrait: a rotating design / composition quote on hover */
+      const quotes = [
+        { t: 'Dynamic equilibrium arises through relationships.', a: 'Piet Mondrian', s: 'De Stijl' },
+        { t: 'Good design is as little design as possible.', a: 'Dieter Rams', s: 'Braun' },
+        { t: 'Colour is life; for a world without colours appears to us as dead.', a: 'Johannes Itten', s: 'Bauhaus' },
+        { t: 'Pay attention to what users do, not what they say.', a: 'Jakob Nielsen', s: 'Nielsen Norman Group' },
+        { t: 'Design is the rendering of intent.', a: 'Jared Spool', s: 'UIE' },
+        { t: 'Colour is the most relative medium in art.', a: 'Josef Albers', s: 'Bauhaus' },
+        { t: 'We must design for the way people behave, not for how we wish them to behave.', a: 'Don Norman', s: '“The Design of Everyday Things”' },
+        { t: 'The purpose of business is to create and keep a customer.', a: 'Peter Drucker', s: 'Management' },
+        { t: 'Form and colour are one. Without colour there is no form.', a: 'Johannes Itten', s: '“The Art of Color”' },
+        { t: 'Design is not just what it looks like and feels like. Design is how it works.', a: 'Steve Jobs', s: 'Apple' },
+        { t: 'People don’t want a quarter-inch drill. They want a quarter-inch hole.', a: 'Theodore Levitt', s: 'Harvard Business School' },
+        { t: 'No matter how cool your interface is, less of it would be better.', a: 'Alan Cooper', s: '“The Inmates Are Running the Asylum”' },
+        { t: 'Asymmetrical, yet it stays in balance.', a: 'On Composition with Red, Yellow & Blue' },
+        { t: 'The whole is other than the sum of the parts.', a: 'Kurt Koffka', s: 'Gestalt psychology' },
+        { t: 'Dynamic equilibrium arises through relationships.', a: 'Piet Mondrian', s: 'De Stijl' },
+        { t: 'Clutter and confusion are failures of design, not attributes of information.', a: 'Edward Tufte', s: 'Information design' },
+        { t: 'Obvious always wins.', a: 'Luke Wroblewski', s: 'Google' },
+        { t: 'The deepest and truest secrets of colour effect are beheld by the heart alone.', a: 'Johannes Itten', s: '“The Art of Color”' },
+        { t: 'Don’t make me think.', a: 'Steve Krug', s: '“Don’t Make Me Think”' },
+        { t: 'The essence of strategy is choosing what not to do.', a: 'Michael Porter', s: 'Harvard Business School' },
+        { t: 'Colour exerts a direct influence upon the soul.', a: 'Wassily Kandinsky', s: 'Bauhaus' },
+        { t: 'Access by everyone regardless of disability is an essential aspect of the Web.', a: 'Tim Berners-Lee', s: 'W3C' },
+        { t: 'Customers don’t buy products; they hire them to do a job.', a: 'Clayton Christensen', s: '“The Innovator’s Dilemma”' },
+        { t: 'The details are not the details. They make the design.', a: 'Charles Eames', s: 'Eames Office' },
+        { t: 'Styles come and go. Good design is a language, not a style.', a: 'Massimo Vignelli', s: 'Vignelli Associates' },
+        { t: 'A brand is not what you say it is. It’s what they say it is.', a: 'Marty Neumeier', s: '“The Brand Gap”' },
+        { t: 'Intuition and method, subjective experience and objective principle, must be the foundations of design.', a: 'Johannes Itten', s: '“Design and Form”' },
+        { t: 'Users do not care what is inside the box, as long as the box does what they need.', a: 'Jef Raskin', s: 'Apple' },
+        { t: 'The best interface is no interface.', a: 'Golden Krishna', s: '“The Best Interface Is No Interface”' },
+        { t: 'Vertical and horizontal, colour and void — order from contrast.', a: 'De Stijl' },
+        { t: 'Typography is what language looks like.', a: 'Erik Spiekermann', s: 'FontShop' },
+        { t: 'A logo derives its meaning from the quality of the thing it symbolizes, not the other way around.', a: 'Paul Rand', s: 'Logo design' },
+        { t: 'Type well used is invisible as type.', a: 'Beatrice Warde', s: 'Monotype' },
+        { t: 'Your brand is what other people say about you when you’re not in the room.', a: 'Jeff Bezos', s: 'Amazon' },
+        { t: 'Design is thinking made visible.', a: 'Saul Bass', s: 'Title & logo design' },
+        { t: 'You are directly responsible for what you put into the world.', a: 'Mike Monteiro', s: 'Mule Design' },
+        { t: 'A logo doesn’t need to say what the company does.', a: 'Sagi Haviv', s: 'Chermayeff & Geismar & Haviv' },
+        { t: 'White space is to be regarded as an active element.', a: 'Jan Tschichold', s: 'Penguin Books' },
+        { t: 'There are three responses to design — yes, no, and WOW. Wow is the one to aim for.', a: 'Milton Glaser', s: 'I♥NY' },
+        { t: 'Products are made in the factory, but brands are created in the mind.', a: 'Walter Landor', s: 'Landor' },
+        { t: 'Recognizing the need is the primary condition for design.', a: 'Charles Eames', s: 'Eames Office' },
+        { t: 'People ignore design that ignores people.', a: 'Frank Chimero', s: 'Designer & author' },
+        { t: 'Personality is the platform for emotional connection.', a: 'Aarron Walter', s: 'Mailchimp' },
+        { t: 'We’re not designing pages, we’re designing systems of components.', a: 'Brad Frost', s: '“Atomic Design”' },
+        { t: 'Content precedes design. Design in the absence of content is decoration.', a: 'Jeffrey Zeldman', s: 'A List Apart' },
+        { t: 'A product must be valuable, usable, and feasible.', a: 'Marty Cagan', s: '“Inspired” · SVPG' },
+        { t: 'Design is the silent ambassador of your brand.', a: 'Paul Rand', s: 'IBM' },
+        { t: 'Simplicity is the ultimate sophistication.', a: 'Jony Ive', s: 'Apple' }
+      ];
+      const pBlock = stage.querySelector('[data-block="portrait"]');
+      const qEl = pBlock && pBlock.querySelector('[data-quote]');
+      let qi = 0;
+      if (pBlock && qEl) {
+        pBlock.addEventListener('mouseenter', () => { if (isMobile()) return; const q = quotes[qi % quotes.length]; qi++; qEl.querySelector('[data-qt]').textContent = '“' + q.t + '”'; qEl.querySelector('[data-qa]').textContent = '— ' + q.a + (q.s ? '   ·   ' + q.s : ''); qEl.style.opacity = '1'; qEl.style.transform = 'translateY(0)'; });
+        pBlock.addEventListener('mouseleave', () => { qEl.style.opacity = '0'; qEl.style.transform = 'translateY(10px)'; });
+      }
+
+      /* service cards: reveal description on hover */
+      ['red','blue','yellow','black'].forEach(id => {
+        const el = stage.querySelector(`[data-block="${id}"]`); if (!el) return;
+        const d = el.querySelector('[data-desc]'); if (!d) return;
+        el.addEventListener('mouseenter', () => { if (isMobile()) return; d.style.opacity = '1'; d.style.maxHeight = '110px'; });
+        el.addEventListener('mouseleave', () => { d.style.opacity = '0'; d.style.maxHeight = '0'; });
+      });
+
+      /* ---------- MOBILE static hero: tap interactions ---------- */
+      const mq = document.getElementById('vf-mq');
+      if (mq) {
+        let mqi = 0;
+        const box = document.getElementById('vf-mq-box'), qt = document.getElementById('vf-mq-t'), qa = document.getElementById('vf-mq-a'), hint = document.getElementById('vf-mq-hint');
+        mq.addEventListener('click', () => {
+          const q = quotes[mqi % quotes.length]; mqi++;
+          qt.textContent = '“' + q.t + '”';
+          qa.textContent = q.a + (q.s ? ' · ' + q.s : '');
+          box.style.opacity = '1'; box.style.transform = 'translateY(0)';
+          if (hint) hint.textContent = (document.documentElement.lang === 'uk' ? 'ЩЕ →' : 'NEXT →');
+        });
+      }
+      root.querySelectorAll('[data-msvc]').forEach(b => {
+        const d = b.querySelector('[data-msvc-d]'), ic = b.querySelector('[data-msvc-ic]');
+        b.addEventListener('click', () => {
+          const open = d.style.maxHeight && d.style.maxHeight !== '0px';
+          if (open) { d.style.maxHeight = '0'; d.style.opacity = '0'; if (ic) ic.textContent = '+'; }
+          else { d.style.maxHeight = '220px'; d.style.opacity = '1'; if (ic) ic.textContent = '–'; }
+        });
+      });
+    }
+
+    /* ---------- work rows hover — now handled by CSS :hover (see helmet) ---------- */
+
+    /* ---------- Work: show all ---------- */
+    const showAll = document.getElementById('vf-showall');
+    if (showAll) {
+      let expanded = false;
+      showAll.addEventListener('click', () => {
+        expanded = !expanded;
+        root.querySelectorAll('#vf-worklist [data-extra]').forEach(r => { r.style.display = expanded ? 'grid' : 'none'; });
+        showAll.setAttribute('data-en', expanded ? 'Show less ↑' : 'Show more ↓');
+        showAll.setAttribute('data-ua', expanded ? 'Менше ↑' : 'Більше ↓');
+        showAll.textContent = this.lang === 'ua' ? showAll.getAttribute('data-ua') : showAll.getAttribute('data-en');
+      });
+    }
+
+    /* ---------- LET'S TALK MODAL ---------- */
+    const modal = document.getElementById('vf-modal');
+    if (modal) {
+      const stepInd = document.getElementById('vf-step-ind');
+      const panes = { 1: modal.querySelector('[data-step="1"]'), 2: modal.querySelector('[data-step="2"]'), done: modal.querySelector('[data-step="done"]') };
+      let budget = '';
+      const setStep = (n) => {
+        panes[1].style.display = n === 1 ? 'block' : 'none';
+        panes[2].style.display = n === 2 ? 'block' : 'none';
+        panes.done.style.display = n === 'done' ? 'flex' : 'none';
+        if (stepInd) stepInd.textContent = (n === 'done' ? 'SENT' : (n + ' / 2 STEPS'));
+      };
+      const open = () => { modal.style.display = 'flex'; setStep(1); document.body.style.overflow = 'hidden'; const f = document.getElementById('vf-f-name'); setTimeout(() => f && f.focus(), 60); };
+      const close = () => { modal.style.display = 'none'; document.body.style.overflow = ''; };
+      root.querySelectorAll('[data-open-talk]').forEach(b => b.addEventListener('click', open));
+      if (location.hash === '#cta' || location.hash === '#talk') setTimeout(open, 350);
+      document.getElementById('vf-modal-close').addEventListener('click', close);
+      document.getElementById('vf-modal-bg').addEventListener('click', close);
+      addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.style.display === 'flex') close(); });
+      const emailOk = (v) => /.+@.+\..+/.test(v);
+      document.getElementById('vf-next').addEventListener('click', () => {
+        const nm = document.getElementById('vf-f-name').value.trim(), em = document.getElementById('vf-f-email').value.trim();
+        const err = document.getElementById('vf-err1');
+        if (!nm || !emailOk(em)) { err.style.display = 'block'; return; } err.style.display = 'none'; setStep(2);
+        const t = document.getElementById('vf-f-idea'); setTimeout(() => t && t.focus(), 60);
+      });
+      document.getElementById('vf-back').addEventListener('click', () => setStep(1));
+      modal.querySelectorAll('[data-budget]').forEach(b => b.addEventListener('click', () => {
+        budget = b.dataset.budget;
+        modal.querySelectorAll('[data-budget]').forEach(x => { x.style.background = 'transparent'; x.style.color = 'var(--ink)'; });
+        b.style.background = 'var(--blue)'; b.style.color = '#F4F1E8';
+      }));
+      document.getElementById('vf-send').addEventListener('click', () => {
+        const idea = document.getElementById('vf-f-idea').value.trim(), err = document.getElementById('vf-err2');
+        if (!idea) { err.style.display = 'block'; return; } err.style.display = 'none';
+        const nm = document.getElementById('vf-f-name').value.trim(), em = document.getElementById('vf-f-email').value.trim(), co = document.getElementById('vf-f-company').value.trim();
+        const subject = 'New project enquiry — ' + (nm || 'Website');
+        const body = `Name: ${nm}\nEmail: ${em}\nCompany: ${co || '—'}\nBudget: ${budget || '—'}\n\nProject idea:\n${idea}\n\n— sent from vladfilon.design`;
+        window.location.href = 'mailto:filon.design.ux@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        setStep('done');
+      });
+    }
+
+    /* ---------- PRIVACY MODAL ---------- */
+    const pModal = document.getElementById('vf-privacy');
+    if (pModal) {
+      const pOpen = () => { pModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; };
+      const pClose = () => { pModal.style.display = 'none'; document.body.style.overflow = ''; };
+      const pBtn = document.getElementById('vf-privacy-open');
+      if (pBtn) {
+        pBtn.addEventListener('click', pOpen);
+        pBtn.style.transition = 'color .15s ease';
+        pBtn.addEventListener('mouseenter', () => { pBtn.style.color = 'var(--red)'; });
+        pBtn.addEventListener('mouseleave', () => { pBtn.style.color = 'var(--muted)'; });
+      }
+      const pc = document.getElementById('vf-privacy-close'); if (pc) pc.addEventListener('click', pClose);
+      const pbg = document.getElementById('vf-privacy-bg'); if (pbg) pbg.addEventListener('click', pClose);
+      addEventListener('keydown', (e) => { if (e.key === 'Escape' && pModal.style.display === 'flex') pClose(); });
+    }
+
+    /* ---------- button states (hover / press; focus via CSS) ---------- */
+    const lift = (el) => {
+      el.style.transition = (el.style.transition ? el.style.transition + ', ' : '') + 'transform .14s ease, filter .15s ease, background-color .18s ease, color .18s ease';
+      el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; el.style.transform = 'translateY(-1px)'; });
+      el.addEventListener('mouseleave', () => { el.style.filter = 'none'; el.style.transform = 'none'; });
+      el.addEventListener('pointerdown', () => { el.style.transform = 'translateY(0) scale(0.97)'; });
+      const r = () => { el.style.transform = 'none'; };
+      el.addEventListener('pointerup', r); el.addEventListener('pointercancel', r);
+    };
+    root.querySelectorAll('#vf-next, #vf-send, #vf-wa, #vf-wa-foot, #vf-reset, #vf-modal-close, #vf-burger, #vf-theme, #vf-lang, #vf-mobile [data-open-talk]').forEach(lift);
+    // CTA "Start a project" — crisp invert (cream → ink), no muddy brightness filter
+    const ctaBtn = root.querySelector('#cta button');
+    if (ctaBtn) {
+      ctaBtn.style.transition = 'background-color .18s ease, color .18s ease, transform .1s ease';
+      ctaBtn.addEventListener('mouseenter', () => { ctaBtn.style.background = '#14110B'; ctaBtn.style.color = '#F4F1E8'; });
+      ctaBtn.addEventListener('mouseleave', () => { ctaBtn.style.background = '#F4F1E8'; ctaBtn.style.color = '#14110B'; ctaBtn.style.transform = 'none'; });
+      ctaBtn.addEventListener('pointerdown', () => { ctaBtn.style.transform = 'scale(0.97)'; });
+      const cr = () => { ctaBtn.style.transform = 'none'; };
+      ctaBtn.addEventListener('pointerup', cr); ctaBtn.addEventListener('pointercancel', cr);
+    }
+    // header Let's Talk — crisp invert to ink, no muddy brightness filter
+    const headTalk = root.querySelector('#vf-nav [data-open-talk]');
+    if (headTalk) {
+      headTalk.style.transition = 'background-color .18s ease, color .18s ease, transform .1s ease';
+      headTalk.addEventListener('mouseenter', () => { headTalk.style.background = 'var(--ink)'; headTalk.style.color = 'var(--paper)'; });
+      headTalk.addEventListener('mouseleave', () => { headTalk.style.background = 'var(--red)'; headTalk.style.color = '#F4F1E8'; headTalk.style.transform = 'none'; });
+      headTalk.addEventListener('pointerdown', () => { headTalk.style.transform = 'scale(0.97)'; });
+      const hr = () => { headTalk.style.transform = 'none'; };
+      headTalk.addEventListener('pointerup', hr); headTalk.addEventListener('pointercancel', hr);
+    }
+    // bordered pills → fill on hover
+    root.querySelectorAll('footer a[data-pill], #vf-back, #vf-showall').forEach(el => {
+      el.style.transition = 'background-color .18s ease, color .18s ease, transform .12s ease';
+      el.addEventListener('mouseenter', () => { el.style.background = 'var(--ink)'; el.style.color = 'var(--paper)'; });
+      el.addEventListener('mouseleave', () => { el.style.background = 'transparent'; el.style.color = 'var(--ink)'; });
+      el.addEventListener('pointerdown', () => { el.style.transform = 'scale(0.97)'; });
+      const r = () => { el.style.transform = 'none'; };
+      el.addEventListener('pointerup', r); el.addEventListener('pointercancel', r);
+    });
+    // nav links → accent on hover
+    root.querySelectorAll('#vf-nav a, #vf-mobile a').forEach(el => {
+      if (el.hasAttribute('data-open-talk')) return;
+      el.style.transition = 'color .15s ease';
+      el.addEventListener('mouseenter', () => { el.style.color = 'var(--red)'; });
+      el.addEventListener('mouseleave', () => { el.style.color = ''; });
+    });
+
+    /* ---------- scroll reveal ---------- */
+    const noMotion = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (_) { return false; } })();
+    const reveals = [...root.querySelectorAll('[data-reveal]')];
+    if (noMotion) {
+      reveals.forEach(el => { el.dataset.revealDone = '1'; el.style.opacity = '1'; el.style.transform = 'none'; });
+    } else {
+    reveals.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)'; });
+    const show = (el) => { if (el.dataset.revealDone) return; el.dataset.revealDone = '1'; el.style.opacity = '1'; el.style.transform = 'translateY(0)'; };
+    const sweep = () => { const h = innerHeight; reveals.forEach(el => { if (el.dataset.revealDone) return; const r = el.getBoundingClientRect(); if (r.top < h*0.92 && r.bottom > 0) show(el); }); };
+    if ('IntersectionObserver' in window) { const io = new IntersectionObserver((es) => { es.forEach(en => { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } }); }, { threshold: 0.12 }); reveals.forEach(el => io.observe(el)); }
+    sweep(); addEventListener('scroll', sweep, { passive: true }); addEventListener('resize', sweep); setTimeout(sweep, 400);
+    setTimeout(() => reveals.forEach(el => { el.dataset.revealDone = '1'; el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }), 1500);
+    }
+
+    /* ---------- language ---------- */
+    this.lang = (this.props.lang === 'ua') ? 'ua' : 'en';
+    const applyLang = () => {
+      try { document.documentElement.setAttribute('lang', this.lang); } catch (_) {}
+      root.querySelectorAll('[data-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua') : el.getAttribute('data-en'); if (v != null) el.innerHTML = v; });
+      root.querySelectorAll('[data-en-aria]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua-aria') : el.getAttribute('data-en-aria'); if (v != null) el.setAttribute('aria-label', v); });
+      const en = document.getElementById('vf-lang-en'), ua = document.getElementById('vf-lang-ua');
+      if (en && ua) { en.style.opacity = this.lang === 'en' ? '1' : '.4'; ua.style.opacity = this.lang === 'ua' ? '1' : '.4'; }
+    };
+    const lb = document.getElementById('vf-lang');
+    if (lb) lb.addEventListener('click', () => { this.lang = this.lang === 'en' ? 'ua' : 'en'; applyLang(); if (this._renderDist2) this._renderDist2(); });
+    if (this.lang === 'ua') applyLang();
+    else { try { document.documentElement.setAttribute('lang', 'en'); } catch (_) {} }
+
+    /* ---------- FAQ accordion (data-open resting state, CSS) ---------- */
+    const faqQs = Array.from(root.querySelectorAll('[data-faq-q]'));
+    faqQs.forEach((q) => {
+      q.addEventListener('click', () => {
+        const item = q.closest('[data-faq-item]');
+        const isOpen = item.getAttribute('data-open') === '1';
+        faqQs.forEach((o) => {
+          const it = o.closest('[data-faq-item]');
+          it.removeAttribute('data-open');
+          o.setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) { item.setAttribute('data-open', '1'); q.setAttribute('aria-expanded', 'true'); }
+      });
+    });
+
+    /* ---------- name pronunciation ---------- */
+    const aboutSec = document.getElementById('about');
+    const aboutBtn = document.getElementById('vf-about-btn');
+    let vfEndAnimated = false;
+    const vfAnimateEndurance = () => {
+      if (vfEndAnimated) return; vfEndAnimated = true;
+      const e = document.getElementById('vf-endurance');
+      if (e) e.setAttribute('data-run', '1');
+    };
+    if (aboutBtn && aboutSec) aboutBtn.addEventListener('click', () => {
+      const open = aboutSec.getAttribute('data-aopen') === '1';
+      if (open) { aboutSec.removeAttribute('data-aopen'); aboutBtn.setAttribute('aria-expanded', 'false'); }
+      else { aboutSec.setAttribute('data-aopen', '1'); aboutBtn.setAttribute('aria-expanded', 'true'); setTimeout(vfAnimateEndurance, 140); }
+    });
+    /* nav "About" → expand the panel, then scroll to it */
+    if (aboutSec) root.querySelectorAll('a[href="#about"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (aboutSec.getAttribute('data-aopen') !== '1') {
+          aboutSec.setAttribute('data-aopen', '1');
+          if (aboutBtn) aboutBtn.setAttribute('aria-expanded', 'true');
+          setTimeout(vfAnimateEndurance, 140);
+        }
+        const mob = document.getElementById('vf-mobile');
+        if (mob) mob.style.display = 'none';
+        setTimeout(() => { window.scrollTo({ top: aboutSec.getBoundingClientRect().top + window.pageYOffset - 64, behavior: 'auto' }); }, 60);
+      });
+    });
+    /* ---------- endurance viewer ---------- */
+    (function(){
+      const end = document.getElementById('vf-endurance');
+      if (!end) return;
+      const evs = [...end.querySelectorAll('[data-ev]')];
+      const slots = [...end.querySelectorAll('[data-slot]')];
+      const caps = [...end.querySelectorAll('[data-cap]')];
+      let ortaFrame = 0;
+      let prevActive = null;
+      const setActive = (ev) => {
+        if (!ev) return;
+        if (ev === 'orta' && prevActive !== 'orta') {
+          end.setAttribute('data-frame', String(ortaFrame));
+          ortaFrame = ortaFrame ? 0 : 1;
+        }
+        prevActive = ev;
+        end.setAttribute('data-active', ev);
+      };
+      evs.forEach(b => {
+        b.style.cursor = 'pointer';
+        b.setAttribute('tabindex', '0');
+        b.setAttribute('data-cursor', '1');
+        b.addEventListener('pointerenter', () => setActive(b.getAttribute('data-ev')));
+        b.addEventListener('click', () => setActive(b.getAttribute('data-ev')));
+        b.addEventListener('focus', () => setActive(b.getAttribute('data-ev')));
+      });
+      setActive('london');
+    })();
+    const pron = document.getElementById('vf-pron');
+    if (pron) pron.addEventListener('click', () => {
+      try {
+        if (!('speechSynthesis' in window)) return;
+        const u = new SpeechSynthesisUtterance('Vlad');
+        u.lang = 'en-GB'; u.rate = 0.9;
+        speechSynthesis.cancel(); speechSynthesis.speak(u);
+      } catch (e) { /* no speech support → silent */ }
+    });
+    /* ---------- cat hover: neutral → smile ---------- */
+    const catImg = document.getElementById('vf-cat');
+    if (catImg) {
+      const catBlock = catImg.parentElement;
+      const _smile = new Image(); _smile.src = 'cat-smile.png';
+      catBlock.addEventListener('mouseenter', () => { catImg.src = 'cat-smile.png'; });
+      catBlock.addEventListener('mouseleave', () => { catImg.src = 'cat-vlad.png'; });
+    }
+
+    /* ---------- distance from visitor → Dublin ---------- */
+    const distEl = document.getElementById('vf-dist');
+    const distWrap = document.getElementById('vf-dist-wrap');
+    const dist2El = document.getElementById('vf-dist2');
+    let lastDist = null;
+    const renderDist2 = () => {
+      if (!dist2El || lastDist == null) return;
+      if (lastDist === 'dublin') { dist2El.textContent = this.lang === 'ua' ? 'зовсім поруч' : 'just minutes away'; return; }
+      const km_ua = lastDist.toLocaleString('uk-UA'), km_en = lastDist.toLocaleString('en-US');
+      dist2El.textContent = (this.lang === 'ua') ? ('≈' + km_ua + ' км') : ('≈' + km_en + ' km');
+    };
+    this._renderDist2 = renderDist2;
+    const setDist = (km) => {
+      const r = Math.round(km / 5) * 5; // round to 5 km, avoids false precision
+      lastDist = r; renderDist2();
+      if (!distEl || !distWrap) return;
+      const km_ua = r.toLocaleString('uk-UA'), km_en = r.toLocaleString('en-US');
+      distEl.setAttribute('data-en', '~' + km_en + ' km away');
+      distEl.setAttribute('data-ua', '~' + km_ua + ' км звідси');
+      distEl.innerHTML = this.lang === 'ua' ? distEl.getAttribute('data-ua') : distEl.getAttribute('data-en');
+      distWrap.style.display = 'block';
+    };
+    const haversine = (la1, lo1, la2, lo2) => {
+      const R = 6371, d2r = Math.PI / 180;
+      const dLa = (la2 - la1) * d2r, dLo = (lo2 - lo1) * d2r;
+      const a = Math.sin(dLa / 2) ** 2 + Math.cos(la1 * d2r) * Math.cos(la2 * d2r) * Math.sin(dLo / 2) ** 2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    };
+    const DUBLIN = [53.3498, -6.2603];
+    const geoEndpoints = [
+      { url: 'https://ipwho.is/', pick: d => (d && d.success !== false) ? [d.latitude, d.longitude] : null },
+      { url: 'https://get.geojs.io/v1/ip/geo.json', pick: d => d ? [parseFloat(d.latitude), parseFloat(d.longitude)] : null }
+    ];
+    (async () => {
+      for (const ep of geoEndpoints) {
+        try {
+          const res = await fetch(ep.url);
+          if (!res.ok) continue;
+          const coords = ep.pick(await res.json());
+          if (!coords || !isFinite(coords[0]) || !isFinite(coords[1])) continue;
+          const km = haversine(coords[0], coords[1], DUBLIN[0], DUBLIN[1]);
+          if (km < 8) { // visitor effectively in Dublin
+            lastDist = 'dublin'; renderDist2();
+            if (distEl && distWrap) {
+              distEl.setAttribute('data-en', 'in Dublin');
+              distEl.setAttribute('data-ua', 'у Дубліні');
+              distEl.innerHTML = this.lang === 'ua' ? 'у Дубліні' : 'in Dublin';
+              distWrap.style.display = 'block';
+            }
+          } else {
+            setDist(km);
+          }
+          return; // success → stop trying
+        } catch (e) { /* try next endpoint */ }
+      }
+      /* all blocked / offline → stay hidden, no broken UI */
+    })();
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

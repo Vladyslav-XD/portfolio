@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  :root, #rp-root { --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --rule:#14110B; --muted:#8a8576; --hair:#d3ccba; --stone:#DEDCD6; --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; --mag:#E5009C; --green:#1F8A5B; --amber:#D99000; --dark:#100e0a; }
+  :root[data-theme="dark"], #rp-root[data-theme="dark"] { --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; }
+  ::selection { background:#E5009C; color:#fff; }
+  a { color:inherit; text-decoration:none; }
+  #rp-root button:focus-visible, #rp-root a:focus-visible { outline:3px solid var(--mag); outline-offset:2px; }
+  #rp-root { background:var(--paper); }
+  @keyframes rpFloat { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-12px);} }
+  [data-ob-strip]::-webkit-scrollbar, [data-prod-scroll]::-webkit-scrollbar { height:8px; }
+  [data-ob-strip]::-webkit-scrollbar-thumb, [data-prod-scroll]::-webkit-scrollbar-thumb { background:#3a342a; border-radius:8px; }
+
+  /* mobile-qa */
+  @media (max-width:768px){
+    #rp-root section, #rp-root footer{ padding-left:20px !important; padding-right:20px !important; }
+    #rp-root [style*="grid-template-columns"]:not([data-cjm]){ grid-template-columns:1fr !important; }
+    #rp-root [style*="repeat(3"]:not([data-cjm]), #rp-root [style*="repeat(4"]:not([data-cjm]){ grid-template-columns:repeat(2,1fr) !important; }
+    #rp-root [style*="padding:88px 48px"], #rp-root [style*="padding:80px 48px"], #rp-root [style*="padding:78px 48px"], #rp-root [style*="padding:64px 48px"], #rp-root [style*="padding:62px 48px"], #rp-root [style*="padding:60px 48px"], #rp-root [style*="padding:56px 48px"], #rp-root [style*="padding:30px 28px"]{ padding-left:20px !important; padding-right:20px !important; }
+  }
+
+  /* ae-remap */
+  [style*="Archivo Expanded"]{ font-family:'Archivo','Manrope',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
+</style>
+</helmet>
+
+<div id="rp-root" style="position:relative; color:var(--ink); font-family:'Hanken Grotesk','Manrope',sans-serif; transition:background-color .4s,color .4s;">
+
+  <header style="position:sticky; top:0; z-index:60; background:var(--stone); border-bottom:5px solid var(--rule); display:flex; justify-content:space-between; align-items:stretch;">
+    <a href="index.html" data-cursor="1" aria-label="Vlad Filon — home" style="display:flex; align-items:center; padding:14px 22px; border-right:5px solid var(--rule);">
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; background:var(--ink); color:var(--paper); font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.02em;">VF</span>
+    </a>
+    <a href="index.html" data-cursor="1" style="display:flex; align-items:center; padding:0 22px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px; letter-spacing:0.06em; color:var(--muted);" data-en="← All work" data-ua="← Усі роботи">← All work</a>
+    <div style="flex:1;"></div>
+    <nav id="rp-nav" style="display:flex; align-items:stretch;">
+      <a href="index.html" data-cursor="1" data-en="Work" data-ua="Роботи" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Work</a>
+      <a href="art.html" data-cursor="1" data-en="Art" data-ua="Арт" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Art</a>
+      
+      <button id="rp-theme" data-cursor="1" title="Toggle theme" style="display:flex; align-items:center; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:14px;"><span id="rp-theme-icon">☾</span></button>
+      <button id="rp-lang" data-cursor="1" style="display:flex; align-items:center; gap:5px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;"><span id="rp-lang-en">EN</span><span style="opacity:.4;">/</span><span id="rp-lang-ua" style="opacity:.4;">UA</span></button>
+      <a href="index.html" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display:flex; align-items:center; padding:0 24px; font-weight:700; font-size:14px; background:var(--red); color:#F4F1E8; border-left:5px solid var(--rule);">Let’s Talk</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section data-screen-label="Race Planner — hero" style="border-bottom:5px solid var(--rule); display:grid; grid-template-columns:1.05fr 0.95fr; gap:5px; background:var(--rule);">
+    <div style="background:var(--surface); padding:60px 48px; display:flex; flex-direction:column; justify-content:space-between; min-height:640px;">
+      <div style="display:flex; gap:10px; align-items:center; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted);">
+        <span style="width:9px; height:9px; background:var(--mag); display:inline-block;"></span>
+        <span data-en="MOBILE APP · UX / UI · DEC 2024" data-ua="МОБ. ЗАСТОСУНОК · UX / UI · ГРУ 2024">MOBILE APP · UX / UI · DEC 2024</span>
+      </div>
+      <div>
+        <h1 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(46px,6.2vw,96px); line-height:0.84; letter-spacing:-0.03em; margin:24px 0 0;">Race<br/>Planner</h1>
+        <p style="font-weight:500; font-size:clamp(17px,1.6vw,22px); line-height:1.45; color:var(--ink); max-width:480px; margin:26px 0 0;" data-en="Your personal assistant for discovering and registering for running events worldwide — choose a race, manage sign-up, and stay motivated to the start line." data-ua="Твій персональний асистент для пошуку й реєстрації на бігові забіги по всьому світу — обери старт, керуй реєстрацією та лишайся в мотивації аж до старту.">Your personal assistant for discovering and registering for running events worldwide — choose a race, manage sign-up, and stay motivated to the start line.</p>
+      </div>
+      <div style="display:flex; gap:34px; flex-wrap:wrap; margin-top:36px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px;">
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="ROLE" data-ua="РОЛЬ">ROLE</div><div style="margin-top:5px;" data-en="UX / UI Design · Logo &amp; visual identity" data-ua="UX / UI дизайн · Лого та візуальна ідентика">UX / UI Design · Logo &amp; visual identity</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="PLATFORM" data-ua="ПЛАТФОРМА">PLATFORM</div><div style="margin-top:5px;">iOS · Android</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="TYPE" data-ua="ТИП">TYPE</div><div style="margin-top:5px;" data-en="Product concept" data-ua="Концепт продукту">Product concept</div></div>
+      </div>
+    </div>
+    <div style="background:var(--red); position:relative; min-height:640px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:44px;">
+      <div style="position:absolute; inset:0; opacity:0.16; background:repeating-linear-gradient(135deg, transparent 0 26px, #F4F1E8 26px 28px);"></div>
+      <div style="position:relative; width:clamp(230px,26vw,290px); aspect-ratio:452/970; animation:rpFloat 6s ease-in-out infinite;">
+        <div style="position:absolute; inset:0; background:#0a0a0c; border-radius:46px; box-shadow:0 30px 60px rgba(0,0,0,0.4), inset 0 0 0 2px #3a3a40;"></div>
+        <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#1c1a16;">
+          <img src="rp-s-splash.png" alt="Race Planner splash screen" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
+        </div>
+        <div style="position:absolute; top:19px; left:50%; transform:translateX(-50%); width:74px; height:20px; background:#0a0a0c; border-radius:12px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="display:grid; grid-template-columns:0.8fr 1.2fr; gap:48px; align-items:start;">
+      <div>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--mag); margin-bottom:18px;">00 / ABOUT THE PROJECT</div>
+        <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,3.6vw,46px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:420px;" data-en="A tool that saves time, inspires progress and keeps runners running." data-ua="Інструмент, що економить час, надихає на прогрес і тримає бігунів у русі.">A tool that saves time, inspires progress and keeps runners running.</h2>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:22px; max-width:620px;">
+        <p data-reveal="" style="font-weight:500; font-size:17px; line-height:1.6; color:var(--ink); margin:0;" data-en="Race Planner is designed to revolutionise how runners plan and participate in events. Inspired by the challenges athletes face, the project bridges the gap between training and race day — providing a seamless platform for discovering events, simplifying registration, and enhancing motivation with personalised achievements." data-ua="Race Planner покликаний змінити те, як бігуни планують і беруть участь у забігах. Натхненний викликами, з якими стикаються спортсмени, проєкт долає розрив між тренуваннями й днем старту — даючи цілісну платформу для пошуку подій, спрощення реєстрації та підсилення мотивації персональними досягненнями.">Race Planner is designed to revolutionise how runners plan and participate in events. Inspired by the challenges athletes face, the project bridges the gap between training and race day — providing a seamless platform for discovering events, simplifying registration, and enhancing motivation with personalised achievements.</p>
+        <p data-reveal="" style="font-weight:500; font-size:17px; line-height:1.6; color:var(--muted); margin:0;" data-en="Through detailed research and collaboration with runners and race organisers, the goal was to create a tool that saves time, inspires progress, and fosters a vibrant community — ensuring every runner reaches their goals with confidence." data-ua="Через ґрунтовне дослідження та співпрацю з бігунами й організаторами забігів мета була створити інструмент, що економить час, надихає на прогрес і будує живу спільноту — щоб кожен бігун упевнено досягав своїх цілей.">Through detailed research and collaboration with runners and race organisers, the goal was to create a tool that saves time, inspires progress, and fosters a vibrant community — ensuring every runner reaches their goals with confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 PROBLEM + USER -->
+  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:0;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px; background:var(--rule);">
+      <div style="background:var(--surface); padding:64px 48px;">
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--red); margin-bottom:18px;">01 / THE PROBLEM</div>
+        <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.4vw,44px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 30px; max-width:460px;" data-en="Runners are everywhere.&lt;br&gt;The races are scattered." data-ua="Бігунів багато.&lt;br&gt;Забіги — розкидані.">Runners are everywhere.<br/>The races are scattered.</h2>
+        <div style="display:flex; flex-direction:column; gap:2px; background:var(--rule); border:2px solid var(--rule);">
+          <div data-reveal="" style="background:var(--surface); padding:18px 20px; display:flex; gap:16px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; color:var(--red); font-size:15px; min-width:24px;">01</span><span style="font-weight:600; font-size:15.5px; line-height:1.45;" data-en="Difficulty finding events that suit a runner’s goals and preferences." data-ua="Складно знайти події, що відповідають цілям і вподобанням бігуна.">Difficulty finding events that suit a runner’s goals and preferences.</span></div>
+          <div data-reveal="" style="background:var(--surface); padding:18px 20px; display:flex; gap:16px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; color:var(--blue); font-size:15px; min-width:24px;">02</span><span style="font-weight:600; font-size:15.5px; line-height:1.45;" data-en="Tedious, clunky registration processes with no saved details." data-ua="Втомливі, незручні процеси реєстрації без збережених даних.">Tedious, clunky registration processes with no saved details.</span></div>
+          <div data-reveal="" style="background:var(--surface); padding:18px 20px; display:flex; gap:16px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; color:var(--amber); font-size:15px; min-width:24px;">03</span><span style="font-weight:600; font-size:15.5px; line-height:1.45;" data-en="Lack of personalised motivation and tools to track progress." data-ua="Брак персональної мотивації та інструментів для відстеження прогресу.">Lack of personalised motivation and tools to track progress.</span></div>
+          <div data-reveal="" style="background:var(--surface); padding:18px 20px; display:flex; gap:16px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; color:var(--ink); font-size:15px; min-width:24px;">04</span><span style="font-weight:600; font-size:15.5px; line-height:1.45;" data-en="Challenges in managing travel and race-day logistics." data-ua="Складнощі з організацією поїздки та логістики дня старту.">Challenges in managing travel and race-day logistics.</span></div>
+        </div>
+      </div>
+      <div style="background:var(--mag); color:#F4F1E8; padding:64px 48px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#ffd0ee; margin-bottom:18px;" data-en="01 / THE USER" data-ua="01 / КОРИСТУВАЧ">01 / THE USER</div>
+          <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.4vw,44px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 22px;" data-en="The passionate runner." data-ua="Захоплений бігун.">The passionate runner.</h2>
+          <p style="font-weight:500; font-size:16.5px; line-height:1.6; color:#fbe6f5; margin:0;" data-en="A runner who wants a convenient app to discover events worldwide. They value intuitive filters for location, distance and date that make it easy to find races that fit — plus calendar integration and reminders so they never miss an event." data-ua="Бігун, якому потрібен зручний застосунок для пошуку подій у всьому світі. Він цінує інтуїтивні фільтри за локацією, дистанцією й датою, щоб легко знаходити «свої» забіги — а ще інтеграцію з календарем і нагадування, щоб не пропустити жодну подію.">A runner who wants a convenient app to discover events worldwide. They value intuitive filters for location, distance and date that make it easy to find races that fit — plus calendar integration and reminders so they never miss an event.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:30px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px;">
+          <span style="border:1.5px solid #F4F1E8; padding:7px 12px;" data-en="Discover" data-ua="Пошук">Discover</span>
+          <span style="border:1.5px solid #F4F1E8; padding:7px 12px;" data-en="Compare" data-ua="Порівняння">Compare</span>
+          <span style="border:1.5px solid #F4F1E8; padding:7px 12px;" data-en="Register" data-ua="Реєстрація">Register</span>
+          <span style="border:1.5px solid #F4F1E8; padding:7px 12px;" data-en="Stay motivated" data-ua="Мотивація">Stay motivated</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 GOAL + VALUE -->
+  <section data-band style="background:var(--blue); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:80px 48px; clip-path:inset(0 100% 0 0);">
+    <div style="text-align:center; max-width:920px; margin:0 auto;">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#c5cffb;">02 / PRODUCT GOAL</div>
+      <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(30px,5vw,70px); line-height:0.96; letter-spacing:-0.02em; margin:20px auto 0;" data-en="One place to find a race, register for it, and stay on track." data-ua="Одне місце, щоб знайти забіг, зареєструватися й лишатися в графіку.">One place to find a race, register for it, and stay on track.</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px; background:rgba(244,241,232,0.28); border:2px solid rgba(244,241,232,0.28); max-width:980px; margin:48px auto 0;">
+      <div style="background:var(--blue); padding:30px 28px;">
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#c5cffb; margin-bottom:14px;" data-en="VALUE · FOR RUNNERS" data-ua="ЦІННІСТЬ · ДЛЯ БІГУНІВ">VALUE · FOR RUNNERS</div>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li style="font-weight:600; font-size:16px; line-height:1.4; display:flex; gap:12px;"><span style="color:#fff; opacity:.6;">→</span><span data-en="Save time with effortless planning" data-ua="Економія часу завдяки легкому плануванню">Save time with effortless planning</span></li>
+          <li style="font-weight:600; font-size:16px; line-height:1.4; display:flex; gap:12px;"><span style="color:#fff; opacity:.6;">→</span><span data-en="Stay motivated with personalised achievements" data-ua="Мотивація через персональні досягнення">Stay motivated with personalised achievements</span></li>
+          <li style="font-weight:600; font-size:16px; line-height:1.4; display:flex; gap:12px;"><span style="color:#fff; opacity:.6;">→</span><span data-en="Build connections within the running community" data-ua="Зв’язки всередині бігової спільноти">Build connections within the running community</span></li>
+        </ul>
+      </div>
+      <div style="background:var(--blue); padding:30px 28px;">
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#c5cffb; margin-bottom:14px;" data-en="VALUE · FOR ORGANISERS" data-ua="ЦІННІСТЬ · ДЛЯ ОРГАНІЗАТОРІВ">VALUE · FOR ORGANISERS</div>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li style="font-weight:600; font-size:16px; line-height:1.4; display:flex; gap:12px;"><span style="color:#fff; opacity:.6;">→</span><span data-en="Boost event visibility" data-ua="Підвищення видимості події">Boost event visibility</span></li>
+          <li style="font-weight:600; font-size:16px; line-height:1.4; display:flex; gap:12px;"><span style="color:#fff; opacity:.6;">→</span><span data-en="Simplify registrations and participant engagement" data-ua="Спрощення реєстрацій і залучення учасників">Simplify registrations and participant engagement</span></li>
+          <li style="font-weight:600; font-size:16px; line-height:1.4; display:flex; gap:12px;"><span style="color:#fff; opacity:.6;">→</span><span data-en="Enhance participant satisfaction" data-ua="Підвищення задоволеності учасників">Enhance participant satisfaction</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 RESEARCH / COMPETITORS -->
+  <section style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--red); margin-bottom:18px;">03 / RESEARCH · COMPETITOR ANALYSIS</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,4vw,52px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:760px;" data-en="I benchmarked the apps runners already use." data-ua="Я порівняв застосунки, якими бігуни вже користуються.">I benchmarked the apps runners already use.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:660px; margin:22px 0 40px;" data-en="Before designing, I analysed leading event and activity apps across user experience, content, functionality and reviews — to find the gap none of them filled for runners." data-ua="Перед дизайном я проаналізував провідні застосунки для подій та активностей за досвідом, контентом, функціоналом і відгуками — щоб знайти прогалину, яку жоден із них не закриває для бігунів.">Before designing, I analysed leading event and activity apps across user experience, content, functionality and reviews — to find the gap none of them filled for runners.</p>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);">
+      <div data-reveal="" style="background:var(--surface); padding:24px; display:flex; flex-direction:column;">
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;">Spocort</div>
+        <p style="font-weight:500; font-size:12.5px; line-height:1.5; color:var(--muted); margin:9px 0 16px;" data-en="Athletes, coaches & fitness enthusiasts improving training and connecting with peers." data-ua="Спортсмени, тренери й любителі фітнесу, що покращують тренування та спілкуються.">Athletes, coaches & fitness enthusiasts improving training and connecting with peers.</p>
+        <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
+          <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--green);" data-en="STRENGTH" data-ua="СИЛЬНО">STRENGTH</div><p style="font-weight:500; font-size:12.5px; line-height:1.45; margin:3px 0 0;" data-en="Clear icons and imagery aid navigation." data-ua="Зрозумілі іконки та зображення допомагають навігації.">Clear icons and imagery aid navigation.</p></div>
+          <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--red);" data-en="GAP" data-ua="ПРОГАЛИНА">GAP</div><p style="font-weight:500; font-size:12.5px; line-height:1.45; color:var(--muted); margin:3px 0 0;" data-en="Interface feels overloaded for new users; event search and filtering need work." data-ua="Інтерфейс перевантажений для новачків; пошук і фільтри подій потребують доопрацювання.">Interface feels overloaded for new users; event search and filtering need work.</p></div>
+        </div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; display:flex; flex-direction:column;">
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;">Strava</div>
+        <p style="font-weight:500; font-size:12.5px; line-height:1.5; color:var(--muted); margin:9px 0 16px;" data-en="Runners, cyclists & swimmers tracking workouts and competing with friends." data-ua="Бігуни, велосипедисти й плавці, що відстежують тренування й змагаються з друзями.">Runners, cyclists & swimmers tracking workouts and competing with friends.</p>
+        <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
+          <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--green);" data-en="STRENGTH" data-ua="СИЛЬНО">STRENGTH</div><p style="font-weight:500; font-size:12.5px; line-height:1.45; margin:3px 0 0;" data-en="Intuitive, map-based design with detailed analytics and clean visuals." data-ua="Інтуїтивний дизайн на основі карт із детальною аналітикою та чистим візуалом.">Intuitive, map-based design with detailed analytics and clean visuals.</p></div>
+          <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--red);" data-en="GAP" data-ua="ПРОГАЛИНА">GAP</div><p style="font-weight:500; font-size:12.5px; line-height:1.45; color:var(--muted); margin:3px 0 0;" data-en="Focused on individual activities, not events — limited event information." data-ua="Сфокусований на індивідуальних активностях, а не подіях — обмаль інформації про забіги.">Focused on individual activities, not events — limited event information.</p></div>
+        </div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; display:flex; flex-direction:column;">
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;">AreaLive</div>
+        <p style="font-weight:500; font-size:12.5px; line-height:1.5; color:var(--muted); margin:9px 0 16px;" data-en="Athletes & fans looking for live streams and sporting events." data-ua="Спортсмени й фанати, що шукають трансляції та спортивні події.">Athletes & fans looking for live streams and sporting events.</p>
+        <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
+          <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--green);" data-en="STRENGTH" data-ua="СИЛЬНО">STRENGTH</div><p style="font-weight:500; font-size:12.5px; line-height:1.45; margin:3px 0 0;" data-en="Effective event search by location; modern, appealing visuals." data-ua="Ефективний пошук подій за локацією; сучасний привабливий візуал.">Effective event search by location; modern, appealing visuals.</p></div>
+          <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--red);" data-en="GAP" data-ua="ПРОГАЛИНА">GAP</div><p style="font-weight:500; font-size:12.5px; line-height:1.45; color:var(--muted); margin:3px 0 0;" data-en="Built for viewing, not participating; event info hard to navigate." data-ua="Створений для перегляду, а не участі; інформацію про події складно опанувати.">Built for viewing, not participating; event info hard to navigate.</p></div>
+        </div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); padding:24px; display:flex; flex-direction:column;">
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;">Eventbrite</div>
+        <p style="font-weight:500; font-size:12.5px; line-height:1.5; color:var(--muted); margin:9px 0 16px;" data-en="General public booking events of all kinds, including sports." data-ua="Широка аудиторія, що бронює події всіх типів, зокрема спортивні.">General public booking events of all kinds, including sports.</p>
+        <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
+          <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--green);" data-en="STRENGTH" data-ua="СИЛЬНО">STRENGTH</div><p style="font-weight:500; font-size:12.5px; line-height:1.45; margin:3px 0 0;" data-en="Intuitive filtering by category, date and location; up-to-date content." data-ua="Інтуїтивні фільтри за категорією, датою й локацією; актуальний контент.">Intuitive filtering by category, date and location; up-to-date content.</p></div>
+          <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--red);" data-en="GAP" data-ua="ПРОГАЛИНА">GAP</div><p style="font-weight:500; font-size:12.5px; line-height:1.45; color:var(--muted); margin:3px 0 0;" data-en="Running events aren’t a dedicated category; sport filters lack precision." data-ua="Бігові події не виділені окремо; спортивні фільтри недостатньо точні.">Running events aren’t a dedicated category; sport filters lack precision.</p></div>
+        </div>
+      </div>
+    </div>
+    <div data-reveal="" style="margin-top:30px; border:2.5px solid var(--rule); padding:26px 28px; display:flex; gap:18px; align-items:flex-start; background:var(--paper);">
+      <span style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:30px; color:var(--mag); line-height:1;">↳</span>
+      <p style="font-weight:600; font-size:17px; line-height:1.5; margin:0; max-width:780px;" data-en="The gap: none combine race discovery, in-app registration and runner motivation in one focused place. That became Race Planner’s wedge." data-ua="Прогалина: жоден не поєднує пошук забігів, реєстрацію в застосунку та мотивацію бігуна в одному сфокусованому місці. Саме це стало нішею Race Planner.">The gap: none combine race discovery, in-app registration and runner motivation in one focused place. That became Race Planner’s wedge.</p>
+    </div>
+  </section>
+
+  <!-- 04 USER FLOW (detailed + animated) -->
+  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--red); margin-bottom:18px;">04 / USER FLOW</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,4vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:760px;" data-en="From “I want to run a race” to a confirmed spot." data-ua="Від «хочу пробігти забіг» до підтвердженого місця.">From “I want to run a race” to a confirmed spot.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:660px; margin:22px 0 44px;" data-en="I mapped the full journey — discovery, registration and verification — including every decision and branch, so onboarding and event participation stay seamless." data-ua="Я змапив увесь шлях — пошук, реєстрацію та верифікацію — з кожним рішенням і відгалуженням, щоб онбординг і участь у події лишались безшовними.">I mapped the full journey — discovery, registration and verification — including every decision and branch, so onboarding and event participation stay seamless.</p>
+
+    <div style="display:flex; flex-direction:column; gap:40px;">
+      <!-- PHASE A -->
+      <div data-flow-lane style="border:2.5px solid var(--rule); background:var(--surface);">
+        <div style="display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:2.5px solid var(--rule); background:var(--paper);">
+          <span style="font-family:'Archivo Expanded',sans-serif; font-weight:900; color:var(--red); font-size:22px;">A</span>
+          <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; letter-spacing:-0.01em;" data-en="DISCOVER" data-ua="ПОШУК">DISCOVER</span>
+        </div>
+        <div style="padding:26px 22px; display:flex; flex-wrap:wrap; align-items:center; gap:12px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;">
+          <span data-flow-node style="background:var(--ink); color:var(--paper); padding:10px 14px;" data-en="Open app" data-ua="Відкрити застосунок">Open app</span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="background:var(--mag); color:#F4F1E8; padding:10px 14px;" data-en="Onboarding" data-ua="Онбординг">Onboarding</span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="display:inline-flex; align-items:center; gap:8px; background:var(--yellow); color:var(--ink); padding:10px 14px;"><span style="width:9px;height:9px;background:var(--ink);transform:rotate(45deg);display:inline-block;"></span><span data-en="Allow location?" data-ua="Дозвіл геолокації?">Allow location?</span></span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="display:flex; flex-direction:column; gap:6px;">
+            <span style="display:flex; align-items:center; gap:8px;"><span style="font-size:10px; color:var(--green); min-width:30px;" data-en="YES" data-ua="ТАК">YES</span><span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Event list near you" data-ua="Список подій поруч">Event list near you</span></span>
+            <span style="display:flex; align-items:center; gap:8px;"><span style="font-size:10px; color:var(--red); min-width:30px;" data-en="NO" data-ua="НІ">NO</span><span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Browse & filter" data-ua="Огляд і фільтр">Browse & filter</span></span>
+          </span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Select event" data-ua="Обрати подію">Select event</span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="background:var(--blue); color:#F4F1E8; padding:10px 14px;" data-en="Read event info" data-ua="Деталі події">Read event info</span>
+        </div>
+      </div>
+
+      <!-- PHASE B -->
+      <div data-flow-lane style="border:2.5px solid var(--rule); background:var(--surface);">
+        <div style="display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:2.5px solid var(--rule); background:var(--paper);">
+          <span style="font-family:'Archivo Expanded',sans-serif; font-weight:900; color:var(--blue); font-size:22px;">B</span>
+          <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; letter-spacing:-0.01em;" data-en="REGISTER" data-ua="РЕЄСТРАЦІЯ">REGISTER</span>
+        </div>
+        <div style="padding:26px 22px; display:flex; flex-wrap:wrap; align-items:center; gap:12px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;">
+          <span data-flow-node style="background:var(--ink); color:var(--paper); padding:10px 14px;" data-en="Tap “Register”" data-ua="Натиснути «Реєстрація»">Tap “Register”</span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="display:inline-flex; align-items:center; gap:8px; background:var(--yellow); color:var(--ink); padding:10px 14px;"><span style="width:9px;height:9px;background:var(--ink);transform:rotate(45deg);display:inline-block;"></span><span data-en="Have an account?" data-ua="Є акаунт?">Have an account?</span></span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="display:flex; flex-direction:column; gap:6px;">
+            <span style="display:flex; align-items:center; gap:8px;"><span style="font-size:10px; color:var(--green); min-width:30px;" data-en="YES" data-ua="ТАК">YES</span><span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Pay & confirm" data-ua="Оплата й підтвердження">Pay & confirm</span></span>
+            <span style="display:flex; align-items:center; gap:8px;"><span style="font-size:10px; color:var(--red); min-width:30px;" data-en="NO" data-ua="НІ">NO</span><span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Create account" data-ua="Створити акаунт">Create account</span></span>
+          </span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="display:flex; flex-direction:column; gap:6px; border:1.5px dashed var(--blue); padding:10px 14px;">
+            <span style="font-size:10px; color:var(--muted);" data-en="AUTHORISE VIA" data-ua="АВТОРИЗАЦІЯ ЧЕРЕЗ">AUTHORISE VIA</span>
+            <span style="display:flex; gap:8px; flex-wrap:wrap;"><span style="background:var(--paper); border:1.5px solid var(--rule); padding:4px 9px;">Telegram</span><span style="background:var(--paper); border:1.5px solid var(--rule); padding:4px 9px;">Viber</span><span style="background:var(--paper); border:1.5px solid var(--rule); padding:4px 9px;">SMS</span></span>
+          </span>
+        </div>
+      </div>
+
+      <!-- PHASE C -->
+      <div data-flow-lane style="border:2.5px solid var(--rule); background:var(--surface);">
+        <div style="display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:2.5px solid var(--rule); background:var(--paper);">
+          <span style="font-family:'Archivo Expanded',sans-serif; font-weight:900; color:var(--mag); font-size:22px;">C</span>
+          <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; letter-spacing:-0.01em;" data-en="VERIFY & CONFIRM" data-ua="ВЕРИФІКАЦІЯ">VERIFY & CONFIRM</span>
+        </div>
+        <div style="padding:26px 22px; display:flex; flex-wrap:wrap; align-items:center; gap:12px; font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;">
+          <span data-flow-node style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Enter phone" data-ua="Ввести телефон">Enter phone</span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="display:inline-flex; align-items:center; gap:8px; background:var(--yellow); color:var(--ink); padding:10px 14px;"><span style="width:9px;height:9px;background:var(--ink);transform:rotate(45deg);display:inline-block;"></span><span data-en="SMS code received?" data-ua="SMS-код отримано?">SMS code received?</span></span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Enter SMS code" data-ua="Ввести SMS-код">Enter SMS code</span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="display:inline-flex; align-items:center; gap:8px; background:var(--yellow); color:var(--ink); padding:10px 14px;"><span style="width:9px;height:9px;background:var(--ink);transform:rotate(45deg);display:inline-block;"></span><span data-en="Code correct?" data-ua="Код вірний?">Code correct?</span></span>
+          <span data-flow-arrow style="color:var(--muted); font-size:16px;">→</span>
+          <span data-flow-node style="display:inline-flex; align-items:center; gap:9px; background:var(--red); color:#F4F1E8; padding:10px 16px; font-weight:700;"><span data-en="Confirmation" data-ua="Підтвердження">Confirmation</span><span style="font-family:'Archivo Expanded',sans-serif; font-weight:900;">✓</span></span>
+          <span data-flow-node style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:18px; color:var(--mag); transform:rotate(-4deg);">DONE!</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 SOLUTION -->
+  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--red); margin-bottom:18px;">05 / THE SOLUTION</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:640px;" data-en="Four pillars.&lt;br&gt;Discover, register, motivate, manage." data-ua="Чотири опори.&lt;br&gt;Знайти, зареєструвати, мотивувати, керувати.">Four pillars.<br/>Discover, register, motivate, manage.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:640px; margin:22px 0 40px;" data-en="Race Planner addresses every challenge with four connected jobs — so a runner always knows where discovery ends and registration begins." data-ua="Race Planner закриває кожен виклик чотирма пов’язаними задачами — тож бігун завжди знає, де закінчується пошук і починається реєстрація.">Race Planner addresses every challenge with four connected jobs — so a runner always knows where discovery ends and registration begins.</p>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);">
+      <div data-reveal="" style="background:var(--surface); padding:26px; min-height:170px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--red);">01</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 8px;" data-en="Comprehensive Search" data-ua="Повний пошук">Comprehensive Search</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Find races globally, tailored to distance, date, location and goals." data-ua="Пошук забігів у світі за дистанцією, датою, локацією та цілями.">Find races globally, tailored to distance, date, location and goals.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:26px; min-height:170px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--blue);">02</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 8px;" data-en="Simplified Registration" data-ua="Проста реєстрація">Simplified Registration</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Sign up directly in the app, with saved details and clear status." data-ua="Реєстрація прямо в застосунку зі збереженими даними й чітким статусом.">Sign up directly in the app, with saved details and clear status.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:26px; min-height:170px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--mag);">03</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 8px;" data-en="Personalised Motivation" data-ua="Персональна мотивація">Personalised Motivation</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Achievements and progress tracking that keep the goal alive." data-ua="Досягнення та відстеження прогресу, що тримають ціль живою.">Achievements and progress tracking that keep the goal alive.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:26px; min-height:170px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--ink);">04</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 8px;" data-en="Race Logistics" data-ua="Логістика забігу">Race Logistics</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Budgeting and scheduling tools to manage travel and race day." data-ua="Інструменти бюджету й розкладу для поїздки та дня старту.">Budgeting and scheduling tools to manage travel and race day.</p></div>
+    </div>
+  </section>
+
+  <!-- 06 ONBOARDING — interactive carousel -->
+  <section data-screen-label="Onboarding" style="background:var(--surface); color:var(--ink); border-bottom:5px solid var(--rule); padding:80px 48px;">
+    <div data-ob-viewer style="display:grid; grid-template-columns:1fr auto; gap:clamp(40px,6vw,96px); align-items:center;">
+      <div>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--red); margin-bottom:8px;">06 / ONBOARDING</div>
+        <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; color:var(--muted); margin-bottom:26px;" data-en="Shown in the app’s own visual language" data-ua="У власній візуальній мові застосунку">Shown in the app’s own visual language</div>
+        <div style="position:relative; min-height:150px;">
+          <div data-ob-cap="0" style="position:absolute; inset:0; transition:opacity .45s, transform .45s;"><h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.4vw,44px); line-height:1.0; margin:0 0 14px;" data-en="Welcome aboard" data-ua="Ласкаво просимо">Welcome aboard</h3><p style="font-weight:500; font-size:16px; line-height:1.55; color:#5b5546; margin:0; max-width:440px;" data-en="Your personal assistant for discovering and registering for races worldwide." data-ua="Твій персональний асистент для пошуку й реєстрації на забіги по всьому світу.">Your personal assistant for discovering and registering for races worldwide.</p></div>
+          <div data-ob-cap="1" style="position:absolute; inset:0; opacity:0; transition:opacity .45s, transform .45s;"><h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.4vw,44px); line-height:1.0; margin:0 0 14px;" data-en="Find your race" data-ua="Знайди свій забіг">Find your race</h3><p style="font-weight:500; font-size:16px; line-height:1.55; color:#5b5546; margin:0; max-width:440px;" data-en="Search for races that suit you. Filter by distance, location, date and event type." data-ua="Шукай забіги, що пасують саме тобі. Фільтри за дистанцією, локацією, датою та типом.">Search for races that suit you. Filter by distance, location, date and event type.</p></div>
+          <div data-ob-cap="2" style="position:absolute; inset:0; opacity:0; transition:opacity .45s, transform .45s;"><h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.4vw,44px); line-height:1.0; margin:0 0 14px;" data-en="Know every detail" data-ua="Знай усі деталі">Know every detail</h3><p style="font-weight:500; font-size:16px; line-height:1.55; color:#5b5546; margin:0; max-width:440px;" data-en="Routes, entry conditions and reviews from other runners — all in one place." data-ua="Маршрути, умови участі та відгуки інших бігунів — усе в одному місці.">Routes, entry conditions and reviews from other runners — all in one place.</p></div>
+          <div data-ob-cap="3" style="position:absolute; inset:0; opacity:0; transition:opacity .45s, transform .45s;"><h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.4vw,44px); line-height:1.0; margin:0 0 14px;" data-en="Sign up in a tap" data-ua="Реєстрація в один тап">Sign up in a tap</h3><p style="font-weight:500; font-size:16px; line-height:1.55; color:#5b5546; margin:0; max-width:440px;" data-en="Register for your favourite events in just a few taps. No hassle, just running." data-ua="Реєструйся на улюблені події за кілька тапів. Жодних складнощів — лише біг.">Register for your favourite events in just a few taps. No hassle, just running.</p></div>
+          <div data-ob-cap="4" style="position:absolute; inset:0; opacity:0; transition:opacity .45s, transform .45s;"><h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.4vw,44px); line-height:1.0; margin:0 0 14px;" data-en="Plan your season" data-ua="Сплануй сезон">Plan your season</h3><p style="font-weight:500; font-size:16px; line-height:1.55; color:#5b5546; margin:0; max-width:440px;" data-en="Create a personal race calendar and get ready for new achievements." data-ua="Створи персональний календар забігів і готуйся до нових досягнень.">Create a personal race calendar and get ready for new achievements.</p></div>
+          <div data-ob-cap="5" style="position:absolute; inset:0; opacity:0; transition:opacity .45s, transform .45s;"><h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3.4vw,44px); line-height:1.0; margin:0 0 14px;" data-en="Your perfect run" data-ua="Твій ідеальний забіг">Your perfect run</h3><p style="font-weight:500; font-size:16px; line-height:1.55; color:#5b5546; margin:0; max-width:440px;" data-en="Just a tap away. Engaging animation and bold type reflect unstoppable momentum." data-ua="Лише один тап. Жива анімація та сміливий шрифт передають невпинний рух.">Just a tap away. Engaging animation and bold type reflect unstoppable momentum.</p></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:18px; margin-top:34px;">
+          <div style="display:flex; gap:14px;">
+            <button data-ob-prev aria-label="Previous" style="width:46px; height:46px; border-radius:50%; border:1.5px solid var(--rule); background:transparent; color:var(--ink); cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:background .15s,border-color .15s;">←</button>
+            <button data-ob-next aria-label="Next" style="width:46px; height:46px; border-radius:50%; border:1.5px solid var(--red); background:var(--red); color:#F4F1E8; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:filter .15s;">→</button>
+          </div>
+          <div data-ob-dots style="display:flex; gap:9px;">
+            <button data-ob-dot="0" aria-label="Slide 1" style="width:10px; height:10px; border-radius:50%; border:none; padding:0; background:var(--red); cursor:pointer; transition:background .2s, transform .2s;"></button>
+            <button data-ob-dot="1" aria-label="Slide 2" style="width:10px; height:10px; border-radius:50%; border:none; padding:0; background:var(--hair); cursor:pointer; transition:background .2s, transform .2s;"></button>
+            <button data-ob-dot="2" aria-label="Slide 3" style="width:10px; height:10px; border-radius:50%; border:none; padding:0; background:var(--hair); cursor:pointer; transition:background .2s, transform .2s;"></button>
+            <button data-ob-dot="3" aria-label="Slide 4" style="width:10px; height:10px; border-radius:50%; border:none; padding:0; background:var(--hair); cursor:pointer; transition:background .2s, transform .2s;"></button>
+            <button data-ob-dot="4" aria-label="Slide 5" style="width:10px; height:10px; border-radius:50%; border:none; padding:0; background:var(--hair); cursor:pointer; transition:background .2s, transform .2s;"></button>
+            <button data-ob-dot="5" aria-label="Slide 6" style="width:10px; height:10px; border-radius:50%; border:none; padding:0; background:var(--hair); cursor:pointer; transition:background .2s, transform .2s;"></button>
+          </div>
+          <span data-ob-count style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted); margin-left:4px;">01 / 06</span>
+        </div>
+      </div>
+      <div style="position:relative; width:clamp(248px,30vw,304px); aspect-ratio:452/970; flex:none; filter:drop-shadow(0 40px 60px rgba(0,0,0,0.55));">
+        <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:50px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506, 0 2px 5px rgba(20,17,11,0.14);"></div>
+        <div style="position:absolute; inset:11px; border-radius:38px; overflow:hidden; background:#1c1a16;">
+          <div data-ob-track style="display:flex; height:100%; transition:transform .55s cubic-bezier(.6,0,.2,1);">
+            <img src="rp-s-welcome.png" alt="Welcome" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img src="rp-s-find.png" alt="Find race" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img src="rp-s-event.png" alt="Event details" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img src="rp-s-signup.png" alt="Quick sign up" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img src="rp-s-season.png" alt="Plan your season" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img src="rp-s-splash.png" alt="Your perfect run" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+          </div>
+        </div>
+        <div style="position:absolute; top:21px; left:50%; transform:translateX(-50%); width:78px; height:21px; background:#0a0a0c; border-radius:13px; z-index:3;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 REGISTRATION — interactive stepper -->
+  <section data-screen-label="Sign in & Registration" style="background:var(--surface); color:var(--ink); border-bottom:5px solid var(--rule); padding:80px 48px;">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--red); margin-bottom:8px;">07 / SIGN IN, REGISTRATION &amp; RECOVERY</div>
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; color:var(--muted); margin-bottom:22px;" data-en="Shown in the app’s own visual language" data-ua="У власній візуальній мові застосунку">Shown in the app’s own visual language</div>
+    <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,4vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 12px; max-width:680px;" data-en="Effortless ways in — designed for the moments that usually break." data-ua="Легкі способи увійти — для моментів, які зазвичай ламаються.">Effortless ways in — designed for the moments that usually break.</h2>
+    <p style="font-weight:500; font-size:15px; line-height:1.6; color:#5b5546; max-width:640px; margin:0 0 42px;" data-en="Step through the real registration and recovery journeys — including incorrect-input states, so users always get immediate feedback." data-ua="Пройди реальні сценарії реєстрації та відновлення — разом зі станами помилкового вводу, щоб користувач завжди отримував зворотний зв’язок.">Step through the real registration and recovery journeys — including incorrect-input states, so users always get immediate feedback.</p>
+
+    <div style="display:grid; grid-template-columns:1fr auto; gap:clamp(40px,6vw,96px); align-items:center;">
+      <div>
+        <div style="display:flex; gap:8px; margin-bottom:30px;">
+          <button data-reg-tab="reg" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.06em; padding:9px 16px; border:1.5px solid var(--red); background:var(--red); color:#F4F1E8; cursor:pointer;" data-en="REGISTRATION" data-ua="РЕЄСТРАЦІЯ">REGISTRATION</button>
+          <button data-reg-tab="rec" style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.06em; padding:9px 16px; border:1.5px solid var(--rule); background:transparent; color:var(--ink); cursor:pointer;" data-en="PASSWORD RECOVERY" data-ua="ВІДНОВЛЕННЯ">PASSWORD RECOVERY</button>
+        </div>
+        <div data-reg-steps style="display:flex; flex-direction:column; gap:2px;"></div>
+      </div>
+      <div style="position:relative; width:clamp(250px,30vw,316px); aspect-ratio:1716/3512; flex:none;">
+        <img data-reg-scr="signin" src="rp-r-signin.png" alt="Sign in" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:1; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img data-reg-scr="create" src="rp-r-create.png" alt="Create account" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img data-reg-scr="phone" src="rp-r-phone.png" alt="Confirm phone" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img data-reg-scr="code" src="rp-r-code.png" alt="Enter SMS code" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img data-reg-scr="codeerr" src="rp-r-codeerr.png" alt="Wrong code state" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img data-reg-scr="success" src="rp-r-success.png" alt="Registration successful" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img data-reg-scr="forgot" src="rp-r-forgot.png" alt="Forgot password" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img data-reg-scr="checkemail" src="rp-r-checkemail.png" alt="Check email" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 KEY SCREENS -->
+  <section data-screen-label="App store screens" style="background:var(--surface); color:var(--ink); border-bottom:5px solid var(--rule); padding:80px 0 80px;">
+    <div style="padding:0 48px;">
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--red); margin-bottom:8px;">08 / KEY SCREENS</div>
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; color:var(--muted); margin-bottom:22px;" data-en="Shown in the app’s own visual language" data-ua="У власній візуальній мові застосунку">Shown in the app’s own visual language</div>
+      <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 12px; max-width:680px;" data-en="The product, at a glance." data-ua="Продукт з першого погляду.">The product, at a glance.</h2>
+      <p style="font-weight:500; font-size:15px; line-height:1.6; color:#5b5546; max-width:620px; margin:0 0 8px;" data-en="Discovery, registration and personalised motivation — the screens that pitch Race Planner in seconds." data-ua="Пошук, реєстрація та персональна мотивація — екрани, що презентують Race Planner за секунди.">Discovery, registration and personalised motivation — the screens that pitch Race Planner in seconds.</p>
+      <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:30px;" data-en="↔ scroll to explore" data-ua="↔ гортай, щоб переглянути">↔ scroll to explore</div>
+    </div>
+    <div data-prod-scroll style="overflow-x:auto; padding:0 48px 18px;">
+      <div style="display:flex; gap:34px; align-items:flex-start; width:max-content;">
+        <div data-k-frame style="flex:none; width:258px;">
+          <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
+            <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-home.png" alt="Discover races — home" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+          </div>
+          <div style="margin-top:18px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--red);">01</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Find your perfect race" data-ua="Знайди свій ідеальний забіг">Find your perfect race</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="Search and filter by distance, location and event type." data-ua="Пошук і фільтри за дистанцією, локацією й типом події.">Search and filter by distance, location and event type.</div></div>
+        </div>
+        <div data-k-frame style="flex:none; width:258px;">
+          <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
+            <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-schedule.png" alt="Schedule — upcoming events calendar" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+          </div>
+          <div style="margin-top:18px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--blue);">02</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Stay organised" data-ua="Тримай усе під контролем">Stay organised</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="A personal race calendar with reminders so you never miss a start." data-ua="Персональний календар забігів із нагадуваннями, щоб не пропустити старт.">A personal race calendar with reminders so you never miss a start.</div></div>
+        </div>
+        <div data-k-frame style="flex:none; width:258px;">
+          <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
+            <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-event.png" alt="Event details — London Marathon" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+          </div>
+          <div style="margin-top:18px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--mag);">03</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Know every detail" data-ua="Знай усі деталі">Know every detail</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="Routes, entry conditions and reviews from other runners." data-ua="Маршрути, умови участі та відгуки інших бігунів.">Routes, entry conditions and reviews from other runners.</div></div>
+        </div>
+        <div data-k-frame style="flex:none; width:258px;">
+          <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
+            <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-register.png" alt="Register — tickets and entry" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+          </div>
+          <div style="margin-top:18px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--ink);">04</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Fast event signup" data-ua="Швидка реєстрація на подію">Fast event signup</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="Register in-app and see exactly what your entry includes." data-ua="Реєстрація прямо в застосунку — і чітко видно, що входить у пакет.">Register in-app and see exactly what your entry includes.</div></div>
+        </div>
+        <div data-k-frame style="flex:none; width:258px;">
+          <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
+            <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-congrats.png" alt="Achievement — Marathon Master" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+          </div>
+          <div style="margin-top:18px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--red);">05</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Achieve your goals" data-ua="Досягай своїх цілей">Achieve your goals</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="Personalised milestones celebrate every finish line." data-ua="Персональні віхи святкують кожну фінішну пряму.">Personalised milestones celebrate every finish line.</div></div>
+        </div>
+        <div data-k-frame style="flex:none; width:258px;">
+          <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
+            <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-achievements.png" alt="Achievements — rewards collection" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+          </div>
+          <div style="margin-top:18px;"><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:11px; color:var(--blue);">06</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Stay inspired" data-ua="Лишайся натхненним">Stay inspired</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="A growing collection of rewards keeps the motivation alive." data-ua="Зростаюча колекція нагород тримає мотивацію живою.">A growing collection of rewards keeps the motivation alive.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section data-band style="background:var(--red); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:78px 48px; text-align:center; clip-path:inset(0 100% 0 0);">
+    <div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#ffd9d2;" data-en="LIKE WHAT YOU SEE?" data-ua="СПОДОБАЛОСЬ?">LIKE WHAT YOU SEE?</div>
+    <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(30px,5vw,68px); line-height:0.96; letter-spacing:-0.02em; margin:18px auto 0; max-width:760px;" data-en="Let’s build your product next." data-ua="Зробімо твій продукт наступним.">Let’s build your product next.</h2>
+    <a href="index.html#cta" data-cta="" data-cursor="1" data-en="Start a project →" data-ua="Почати проєкт →" style="display:inline-block; margin-top:32px; font-family:'Hanken Grotesk','Manrope',sans-serif; font-weight:700; font-size:clamp(16px,1.8vw,20px); background:#F4F1E8; color:#14110B; border-radius:44px; padding:14px 28px; transition:filter .15s, transform .14s;">Start a project →</a>
+  </section>
+
+  <!-- NEXT -->
+  <section style="background:var(--paper); padding:64px 48px;">
+    <a href="index.html" data-cursor="1" data-nextcard style="display:flex; justify-content:space-between; align-items:center; border:2.5px solid var(--rule); padding:34px 30px; gap:18px; transition:background-color .18s,color .18s;">
+      <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted);" data-en="NEXT PROJECT" data-ua="НАСТУПНИЙ ПРОЄКТ">NEXT PROJECT</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,40px); margin-top:8px;">MARI CRM</div></div>
+      <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:32px;">→</span>
+    </a>
+  </section>
+
+  <footer style="background:var(--surface); color:var(--ink); border-top:5px solid var(--rule); padding:40px 48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+    <a href="index.html" data-cursor="1" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:15px;">VLAD FILON</a>
+    <span style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; color:var(--muted);">Dublin, Ireland · © 2026</span>
+  </footer>
+
+  <div id="rp-ring" style="position:fixed; left:0; top:0; width:12px; height:12px; margin-left:-6px; margin-top:-6px; border:1.5px solid var(--mag); border-radius:50%; pointer-events:none; z-index:91; opacity:0; transition:width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode:difference;"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = document.getElementById('rp-root');
+    if (!root) return;
+    const themeBtn = document.getElementById('rp-theme'), themeIcon = document.getElementById('rp-theme-icon');
+    let theme = 'light';
+    try { theme = localStorage.getItem('vf-theme') || 'light'; } catch (_) {}
+    const applyTheme = () => { var dk = theme === 'dark' ? 'dark' : ''; root.setAttribute('data-theme', dk); document.documentElement.setAttribute('data-theme', dk); if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀' : '☾'; };
+    applyTheme();
+    if (themeBtn) themeBtn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('vf-theme', theme); } catch (_) {} applyTheme(); });
+
+    const ring = document.getElementById('rp-ring');
+    if (ring) { ring.style.left = '0'; ring.style.top = '0'; }
+    let rx = innerWidth/2, ry = innerHeight/2, tx = rx, ty = ry;
+    addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; if (ring) ring.style.opacity = '1'; });
+    const loop = () => { rx += (tx-rx)*0.25; ry += (ty-ry)*0.25; if (ring) ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); };
+    loop();
+    const grow = () => { if (ring) { ring.style.width='40px'; ring.style.height='40px'; ring.style.marginLeft='-20px'; ring.style.marginTop='-20px'; } };
+    const shrink = () => { if (ring) { ring.style.width='12px'; ring.style.height='12px'; ring.style.marginLeft='-6px'; ring.style.marginTop='-6px'; } };
+    document.querySelectorAll('[data-cursor],a,button').forEach(el => { el.addEventListener('mouseenter', grow); el.addEventListener('mouseleave', shrink); });
+
+    document.querySelectorAll('#rp-nav a[style*="var(--red)"]').forEach(el => { el.style.transition = 'filter .15s'; el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; }); el.addEventListener('mouseleave', () => { el.style.filter = 'none'; }); });
+    document.querySelectorAll('#rp-nav a:not([style*="var(--red)"])').forEach(el => { el.style.transition = 'color .15s'; el.addEventListener('mouseenter', () => { el.style.color = 'var(--mag)'; }); el.addEventListener('mouseleave', () => { el.style.color = ''; }); });
+
+    const nc = document.querySelector('[data-nextcard]');
+    if (nc) { nc.addEventListener('mouseenter', () => { nc.style.background = 'var(--ink)'; nc.style.color = 'var(--paper)'; }); nc.addEventListener('mouseleave', () => { nc.style.background = ''; nc.style.color = ''; }); }
+
+    // ---- reveal (incl. flow nodes) ----
+    document.querySelectorAll('[data-flow-lane]').forEach(lane => {
+      [...lane.querySelectorAll('[data-flow-node],[data-flow-arrow]')].forEach((el, i) => { el.setAttribute('data-reveal',''); el.dataset.flowIndex = i; });
+    });
+    // flow: focus a phase on hover (others dim) — site-accent per phase
+    (function(){
+      const lanes = [...document.querySelectorAll('[data-flow-lane]')];
+      const accents = ['var(--red)','var(--blue)','var(--mag)'];
+      lanes.forEach((lane, li) => {
+        lane.style.transition = 'opacity .25s ease, border-color .25s ease, transform .25s ease';
+        lane.addEventListener('mouseenter', () => {
+          lanes.forEach((o, oi) => { if (oi === li) { o.style.opacity = '1'; o.style.borderColor = accents[li % accents.length]; o.style.transform = 'translateX(4px)'; } else { o.style.opacity = '0.4'; } });
+        });
+        lane.addEventListener('mouseleave', () => {
+          lanes.forEach(o => { o.style.opacity = '1'; o.style.borderColor = 'var(--rule)'; o.style.transform = 'none'; });
+        });
+      });
+    })();
+    const reveals = [...document.querySelectorAll('[data-reveal]')];
+    reveals.forEach(el => {
+      let i;
+      if (el.dataset.flowIndex != null) { i = +el.dataset.flowIndex; }
+      else { const sibs = [...el.parentElement.children].filter(c => c.hasAttribute('data-reveal')); i = sibs.indexOf(el); }
+      el.dataset.revealDelay = (i > 0 ? Math.min(i, 12) * 65 : 0);
+      el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity .65s cubic-bezier(.2,.7,.2,1), transform .65s cubic-bezier(.2,.7,.2,1)';
+    });
+    const show = (el) => { if (el.dataset.revealDone) return; el.dataset.revealDone = '1'; const d = +(el.dataset.revealDelay || 0); setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, d); };
+    if ('IntersectionObserver' in window) { const io = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } }), { threshold: 0.08 }); reveals.forEach(el => io.observe(el)); }
+    const bands = [...document.querySelectorAll('[data-band]')];
+    bands.forEach(b => { b.style.transition = 'clip-path .9s cubic-bezier(.6,0,.2,1)'; });
+    if ('IntersectionObserver' in window) { const bio = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) { en.target.style.clipPath = 'inset(0 0 0 0)'; bio.unobserve(en.target); } }), { threshold: 0.2 }); bands.forEach(b => bio.observe(b)); }
+    setTimeout(() => bands.forEach(b => { b.style.clipPath = 'inset(0 0 0 0)'; }), 1800);
+    setTimeout(() => reveals.forEach(el => { el.dataset.revealDone = '1'; el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }), 1700);
+
+    // ---- ONBOARDING carousel ----
+    const obTrack = document.querySelector('[data-ob-track]');
+    const obDots = [...document.querySelectorAll('[data-ob-dot]')];
+    const obCaps = [...document.querySelectorAll('[data-ob-cap]')];
+    const obCount = document.querySelector('[data-ob-count]');
+    const obViewer = document.querySelector('[data-ob-viewer]');
+    const obN = obTrack ? obTrack.children.length : 0;
+    let obI = 0, obTimer = null;
+    const obRender = () => {
+      if (obTrack) obTrack.style.transform = `translateX(${-obI*100}%)`;
+      obDots.forEach((d, i) => { d.style.background = i === obI ? 'var(--red)' : 'var(--hair)'; d.style.transform = i === obI ? 'scale(1.25)' : 'scale(1)'; });
+      obCaps.forEach((c, i) => { const on = i === obI; c.style.opacity = on ? '1' : '0'; c.style.transform = on ? 'translateY(0)' : 'translateY(10px)'; c.style.pointerEvents = on ? 'auto' : 'none'; });
+      if (obCount) obCount.textContent = String(obI+1).padStart(2,'0') + ' / ' + String(obN).padStart(2,'0');
+    };
+    const obGo = (i) => { obI = (i + obN) % obN; obRender(); };
+    const obStart = () => { if (obTimer) return; obTimer = setInterval(() => obGo(obI+1), 4000); };
+    const obStop = () => { if (obTimer) { clearInterval(obTimer); obTimer = null; } };
+    const obKick = () => { obStop(); obStart(); };
+    const obPrev = document.querySelector('[data-ob-prev]'), obNext = document.querySelector('[data-ob-next]');
+    if (obPrev) obPrev.addEventListener('click', () => { obGo(obI-1); obKick(); });
+    if (obNext) obNext.addEventListener('click', () => { obGo(obI+1); obKick(); });
+    obDots.forEach((d, i) => d.addEventListener('click', () => { obGo(i); obKick(); }));
+    if (obPrev) { obPrev.addEventListener('mouseenter', () => { obPrev.style.background = 'var(--stone)'; obPrev.style.borderColor = 'var(--ink)'; }); obPrev.addEventListener('mouseleave', () => { obPrev.style.background = 'transparent'; obPrev.style.borderColor = 'var(--rule)'; }); }
+    if (obNext) { obNext.addEventListener('mouseenter', () => { obNext.style.filter = 'brightness(1.12)'; }); obNext.addEventListener('mouseleave', () => { obNext.style.filter = 'none'; }); }
+    if (obViewer) { obViewer.addEventListener('mouseenter', obStop); obViewer.addEventListener('mouseleave', obStart); }
+    if (obN) { obRender();
+      if ('IntersectionObserver' in window) { const obo = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) obStart(); else obStop(); }), { threshold: 0.3 }); if (obViewer) obo.observe(obViewer); }
+      else obStart();
+    }
+
+    // ---- REGISTRATION stepper ----
+    const regSets = {
+      reg: [
+        { scr:'signin', en:'Sign in', ua:'Вхід', dEn:'Email, password or social — Apple, Google or email.', dUa:'Email, пароль або соцмережі — Apple, Google чи email.' },
+        { scr:'create', en:'Create account', ua:'Створити акаунт', dEn:'Quick sign-up with email and password confirmation.', dUa:'Швидка реєстрація з email і підтвердженням пароля.' },
+        { scr:'phone', en:'Confirm phone', ua:'Підтвердити телефон', dEn:'Choose the country code and enter the phone number.', dUa:'Обери код країни та введи номер телефону.' },
+        { scr:'code', en:'Enter SMS code', ua:'Ввести SMS-код', dEn:'Enter the activation code sent to the phone.', dUa:'Введи код активації, надісланий на телефон.' },
+        { scr:'codeerr', en:'Wrong-code state', ua:'Стан «невірний код»', dEn:'A clear inline error so users can recover instantly.', dUa:'Чітка інлайн-помилка, щоб користувач одразу виправився.' },
+        { scr:'success', en:'Success', ua:'Готово', dEn:'“Welcome, Kenji!” — registration is complete.', dUa:'«Welcome, Kenji!» — реєстрація завершена.' }
+      ],
+      rec: [
+        { scr:'forgot', en:'Forgot password', ua:'Забули пароль', dEn:'Enter the email associated with your account.', dUa:'Введи email, прив’язаний до акаунта.' },
+        { scr:'checkemail', en:'Check email', ua:'Перевір пошту', dEn:'Enter the code we sent to verify and reset.', dUa:'Введи код, який ми надіслали, щоб підтвердити й скинути.' }
+      ]
+    };
+    const regStepsWrap = document.querySelector('[data-reg-steps]');
+    const regTabs = [...document.querySelectorAll('[data-reg-tab]')];
+    const regImgs = [...document.querySelectorAll('[data-reg-scr]')];
+    let regTab = 'reg', regI = 0;
+    const regShow = (name) => document.querySelectorAll('[data-reg-scr]').forEach(im => { im.style.opacity = im.getAttribute('data-reg-scr') === name ? '1' : '0'; });
+    const regRenderSteps = () => {
+      const regStepsWrap = document.querySelector('[data-reg-steps]');
+      if (!regStepsWrap) return;
+      regStepsWrap.innerHTML = '';
+      regSets[regTab].forEach((s, i) => {
+        const on = i === regI;
+        const b = document.createElement('button');
+        b.style.cssText = 'text-align:left; display:flex; gap:16px; align-items:center; padding:16px 18px; border:1.5px solid ' + (on?'var(--red)':'var(--hair)') + '; background:' + (on?'rgba(225,37,27,0.07)':'transparent') + '; color:var(--ink); cursor:pointer; transition:border-color .15s,background .15s; font-family:Archivo,sans-serif;';
+        const num = document.createElement('span');
+        num.textContent = String(i+1).padStart(2,'0');
+        num.style.cssText = 'font-family:\'Space Mono\',monospace; font-size:12px; color:' + (on?'var(--red)':'var(--muted)') + '; min-width:22px;';
+        const txt = document.createElement('span');
+        const lang = this.lang === 'ua' ? 'ua' : 'en';
+        txt.innerHTML = '<span style="display:block; font-family:\'Archivo Expanded\',sans-serif; font-weight:700; font-size:16px; line-height:1.1;">' + (lang==='ua'?s.ua:s.en) + '</span><span style="display:block; font-weight:500; font-size:13px; line-height:1.45; color:var(--muted); margin-top:5px;">' + (lang==='ua'?s.dUa:s.dEn) + '</span>';
+        b.appendChild(num); b.appendChild(txt);
+        b.addEventListener('click', () => { regI = i; regShow(s.scr); regRenderSteps(); });
+        b.addEventListener('mouseenter', () => { if (i !== regI) b.style.borderColor = 'var(--ink)'; });
+        b.addEventListener('mouseleave', () => { if (i !== regI) b.style.borderColor = 'var(--hair)'; });
+        regStepsWrap.appendChild(b);
+      });
+    };
+    const regSetTab = (t) => {
+      regTab = t; regI = 0;
+      regTabs.forEach(tb => { const on = tb.getAttribute('data-reg-tab') === t; tb.style.background = on ? 'var(--red)' : 'transparent'; tb.style.borderColor = on ? 'var(--red)' : 'var(--rule)'; tb.style.color = on ? '#F4F1E8' : 'var(--ink)'; });
+      regShow(regSets[t][0].scr); regRenderSteps();
+    };
+    regTabs.forEach(tb => tb.addEventListener('click', () => regSetTab(tb.getAttribute('data-reg-tab'))));
+    this._regRenderSteps = regRenderSteps;
+
+    // ---- language ----
+    this.lang = 'en';
+    try { this.lang = localStorage.getItem('vf-lang') || 'en'; } catch (_) {}
+    const applyLang = () => {
+      document.querySelectorAll('[data-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua') : el.getAttribute('data-en'); if (v != null) el.innerHTML = v; });
+      const en = document.getElementById('rp-lang-en'), ua = document.getElementById('rp-lang-ua');
+      if (en && ua) { en.style.opacity = this.lang === 'en' ? '1' : '.4'; ua.style.opacity = this.lang === 'ua' ? '1' : '.4'; }
+      if (this._regRenderSteps) this._regRenderSteps();
+    };
+    const initReg = () => { if (document.querySelector('[data-reg-steps]')) regSetTab('reg'); else requestAnimationFrame(initReg); };
+    initReg();
+    applyLang();
+    document.querySelectorAll('[data-cta]').forEach(el => { el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; el.style.transform = 'translateY(-1px)'; }); el.addEventListener('mouseleave', () => { el.style.filter = 'none'; el.style.transform = 'none'; }); });
+    const lb = document.getElementById('rp-lang');
+    if (lb) lb.addEventListener('click', () => { this.lang = this.lang === 'en' ? 'ua' : 'en'; try { localStorage.setItem('vf-lang', this.lang); } catch (_) {} applyLang(); });
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
