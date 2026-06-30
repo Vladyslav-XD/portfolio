@@ -428,8 +428,8 @@
 
   <!-- NEXT -->
   <section style="background:var(--paper); padding:64px 48px;">
-    <a href="index.html" data-cursor="1" data-nextcard style="display:flex; justify-content:space-between; align-items:center; border:2.5px solid var(--rule); padding:34px 30px; gap:18px; transition:background-color .18s,color .18s;">
-      <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted);" data-en="NEXT PROJECT" data-ua="НАСТУПНИЙ ПРОЄКТ">NEXT PROJECT</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,40px); margin-top:8px;">MARI CRM</div></div>
+    <a href="language-course.html" data-cursor="1" data-nextcard style="display:flex; justify-content:space-between; align-items:center; border:2.5px solid var(--rule); padding:34px 30px; gap:18px; transition:background-color .18s,color .18s;">
+      <div><div style="font-family:'Space Mono','JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted);" data-en="NEXT PROJECT" data-ua="НАСТУПНИЙ ПРОЄКТ">NEXT PROJECT</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,40px); margin-top:8px;">Language Course Landing</div></div>
       <span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:32px;">→</span>
     </a>
   </section>
@@ -445,6 +445,15 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   componentDidMount() {
+    // Next-project card: show only if the target page is actually published (uploaded)
+    (function(){
+      var c = document.querySelector('a[data-nextcard]');
+      if (!c) return;
+      var h = c.getAttribute('href') || '';
+      if (!h || h.charAt(0) === '#' || /index\.html|Vlad Filon\.dc\.html/.test(h)) return;
+      var sec = c.closest('section') || c;
+      fetch(h, { method: 'HEAD' }).then(function(r){ if (!r.ok) sec.style.display = 'none'; }).catch(function(){ sec.style.display = 'none'; });
+    })();
     const root = document.getElementById('rp-root');
     if (!root) return;
     const themeBtn = document.getElementById('rp-theme'), themeIcon = document.getElementById('rp-theme-icon');

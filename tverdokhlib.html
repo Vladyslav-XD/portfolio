@@ -381,6 +381,15 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   componentDidMount() {
+    // Next-project card: show only if the target page is actually published (uploaded)
+    (function(){
+      var c = document.querySelector('a[data-nextcard]');
+      if (!c) return;
+      var h = c.getAttribute('href') || '';
+      if (!h || h.charAt(0) === '#' || /index\.html|Vlad Filon\.dc\.html/.test(h)) return;
+      var sec = c.closest('section') || c;
+      fetch(h, { method: 'HEAD' }).then(function(r){ if (!r.ok) sec.style.display = 'none'; }).catch(function(){ sec.style.display = 'none'; });
+    })();
     const root = document.getElementById('mf-root');
     if (!root) return;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
