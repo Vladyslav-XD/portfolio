@@ -23,7 +23,7 @@
   #mf-root { background:var(--paper); }
 
   /* mobile-qa */
-  @media (max-width:768px){
+  @media (max-width:900px){
     #mf-root section, #mf-root footer{ padding-left:20px !important; padding-right:20px !important; }
     #mf-root [style*="grid-template-columns"]:not([data-cjm]){ grid-template-columns:1fr !important; }
     #mf-root [style*="repeat(3"]:not([data-cjm]), #mf-root [style*="repeat(4"]:not([data-cjm]){ grid-template-columns:repeat(2,1fr) !important; }
@@ -53,7 +53,13 @@
       <button id="mf-lang" data-cursor="1" style="display:flex; align-items:center; gap:5px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono','JetBrains Mono',monospace; font-size:13px;"><span id="mf-lang-en">EN</span><span style="opacity:.4;">/</span><span id="mf-lang-ua" style="opacity:.4;">UA</span></button>
       <a href="index.html" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display:flex; align-items:center; padding:0 24px; font-weight:700; font-size:14px; background:var(--red); color:#F4F1E8; border-left:5px solid var(--rule);">Let’s Talk</a>
     </nav>
+    <button id="mf-burger" data-cursor="1" aria-label="Menu" style="display:none; align-items:center; padding:0 22px; background:var(--ink); color:var(--paper); border:none; cursor:pointer; font-family:'Space Mono','JetBrains Mono',monospace; font-weight:700; font-size:13px;">MENU</button>
   </header>
+  <div id="mf-mobile" style="display:none; position:sticky; top:60px; z-index:39; background:var(--surface); border-bottom:5px solid var(--rule);">
+    <a href="index.html#works" data-en="Work" data-ua="Роботи" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Work</a>
+    <a href="art.html" data-en="Art" data-ua="Арт" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Art</a>
+    <a href="index.html#cta" data-en="Let’s Talk →" data-ua="Зв’язок →" style="display:block; padding:16px 24px; font-weight:700; background:var(--red); color:#F4F1E8;">Let’s Talk →</a>
+  </div>
 
   <section style="border-bottom:5px solid var(--rule); display:grid; grid-template-columns:1fr 1fr; gap:5px; background:var(--rule);">
     <div style="background:var(--surface); padding:64px 48px; display:flex; flex-direction:column; justify-content:space-between;">
@@ -214,6 +220,14 @@ class Component extends DCLogic {
     const grow = () => { if (ring) { ring.style.width='40px'; ring.style.height='40px'; ring.style.marginLeft='-20px'; ring.style.marginTop='-20px'; } };
     const shrink = () => { if (ring) { ring.style.width='12px'; ring.style.height='12px'; ring.style.marginLeft='-6px'; ring.style.marginTop='-6px'; } };
     root.querySelectorAll('[data-cursor],a,button').forEach(el => { el.addEventListener('mouseenter', grow); el.addEventListener('mouseleave', shrink); });
+
+    /* ---------- mobile nav ---------- */
+    const burger = document.getElementById('mf-burger'), navLinks = document.getElementById('mf-nav'), mobile = document.getElementById('mf-mobile');
+    let menuOpen = false;
+    const syncNav = () => { const m = innerWidth < 900; if (navLinks) navLinks.style.display = m ? 'none' : 'flex'; if (burger) burger.style.display = m ? 'flex' : 'none'; if (!m && mobile) { mobile.style.display = 'none'; menuOpen = false; } };
+    syncNav(); addEventListener('resize', syncNav);
+    if (burger) burger.addEventListener('click', () => { menuOpen = !menuOpen; if (mobile) mobile.style.display = menuOpen ? 'block' : 'none'; });
+    if (mobile) mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menuOpen = false; mobile.style.display = 'none'; }));
 
     root.querySelectorAll('#mf-nav a[style*="var(--red)"]').forEach(el => { el.style.transition = 'filter .15s'; el.addEventListener('mouseenter', () => { el.style.filter = 'brightness(0.93)'; }); el.addEventListener('mouseleave', () => { el.style.filter = 'none'; }); });
     root.querySelectorAll('#mf-nav a:not([style*="var(--red)"])').forEach(el => { el.style.transition = 'color .15s'; el.addEventListener('mouseenter', () => { el.style.color = 'var(--red)'; }); el.addEventListener('mouseleave', () => { el.style.color = ''; }); });
