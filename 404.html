@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 — Vlad Filon</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800&family=Archivo:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#F4F1E8; --ink:#14110B; --muted:#6f6a59; --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; }
+  html[data-theme="dark"]{ --paper:#0c0b07; --ink:#F4F1E8; --muted:#9a9282; }
+  html,body{ margin:0; min-height:100%; }
+  body{ background:var(--paper); color:var(--ink); font-family:'Archivo',sans-serif; overflow-x:hidden; }
+  a{ color:var(--blue); }
+  .blk{ position:absolute; border:5px solid var(--ink); transition:left 1s cubic-bezier(.6,0,.2,1), top 1s cubic-bezier(.6,0,.2,1), width 1s cubic-bezier(.6,0,.2,1), height 1s cubic-bezier(.6,0,.2,1), transform 1s cubic-bezier(.6,0,.2,1); }
+  @keyframes drift{ 0%,100%{ margin:0 0; } 50%{ margin:var(--dy,-8px) var(--dx,6px); } }
+  body:not(.fixed) .blk{ animation:drift var(--t,5s) ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce){ .blk{ animation:none !important; transition:none !important; } }
+  .center{ position:relative; z-index:5; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:14px; padding:24px; box-sizing:border-box; }
+</style>
+</head>
+<body>
+  <div class="blk" id="b1" style="left:9%; top:12%; width:120px; height:120px; background:var(--red); transform:rotate(-14deg); --dx:8px; --dy:-10px; --t:5s;"></div>
+  <div class="blk" id="b2" style="right:12%; top:16%; width:88px; height:150px; background:var(--blue); transform:rotate(9deg); --dx:-7px; --dy:8px; --t:6.2s;"></div>
+  <div class="blk" id="b3" style="left:22%; bottom:14%; width:96px; height:80px; background:var(--yellow); transform:rotate(22deg); --dx:6px; --dy:6px; --t:4.6s;"></div>
+  <div class="blk" id="b4" style="right:9%; bottom:11%; width:64px; height:64px; background:var(--ink); transform:rotate(-7deg); --dx:-8px; --dy:-6px; --t:5.6s;"></div>
+  <main class="center">
+    <div style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(84px,16vw,150px); line-height:1; letter-spacing:-0.03em;">404</div>
+    <div id="t1" style="font-family:'Space Mono',monospace; font-size:14px; letter-spacing:0.1em; font-weight:700;">THE COMPOSITION IS DISTURBED</div>
+    <div id="t2" style="color:var(--muted); font-size:15px; max-width:340px;">This page fell off the grid. The balance can still be restored.</div>
+    <button id="restore" style="margin-top:8px; background:var(--red); color:#F4F1E8; font-family:'Archivo',sans-serif; font-weight:700; font-size:15px; padding:14px 28px; border:5px solid var(--ink); cursor:pointer;">← Restore balance</button>
+  </main>
+<script>
+  try { if (localStorage.getItem('vf-theme') === 'dark') document.documentElement.setAttribute('data-theme','dark'); } catch(_){}
+  var reduced = false;
+  try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(_){}
+  document.getElementById('restore').addEventListener('click', function(){
+    if (reduced) { location.href = '/'; return; }
+    document.body.classList.add('fixed');
+    // blocks snap into a tidy top-left Mondrian stack
+    var b1=document.getElementById('b1'), b2=document.getElementById('b2'), b3=document.getElementById('b3'), b4=document.getElementById('b4');
+    [b1,b2,b3,b4].forEach(function(b){ b.style.right='auto'; b.style.bottom='auto'; var r=b.getBoundingClientRect(); b.style.left=r.left+'px'; b.style.top=r.top+'px'; });
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      b1.style.cssText += 'left:0px; top:0px; width:150px; height:150px; transform:rotate(0deg);';
+      b2.style.cssText += 'left:155px; top:0px; width:90px; height:150px; transform:rotate(0deg);';
+      b3.style.cssText += 'left:0px; top:155px; width:150px; height:90px; transform:rotate(0deg);';
+      b4.style.cssText += 'left:155px; top:155px; width:90px; height:90px; transform:rotate(0deg);';
+    }); });
+    document.getElementById('t1').textContent = 'BALANCE RESTORED';
+    document.getElementById('t2').textContent = 'Taking you back to the composition…';
+    setTimeout(function(){ location.href = '/'; }, 1400);
+  });
+</script>
+</body>
+</html>
