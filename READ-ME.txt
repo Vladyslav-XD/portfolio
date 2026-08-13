@@ -1,0 +1,14 @@
+ЩО ЦЕ
+12 файлів — усе, що змінилось для аналітики. Картинки й решта не чіпались.
+
+КУДИ
+У корінь репозиторію, поверх наявних файлів (там, де лежить index.html).
+
+ЩО ЗМІНИЛОСЬ
+vf-analytics.js   — НОВИЙ файл. Clarity ID y1t5p0bp2z уже вписаний.
+index.html        — підключення скрипта + Privacy: "NO TRACKING" -> "ANALYTICS"
+решта 10 .html    — один рядок: <script src="./vf-analytics.js" defer></script>
+
+ПІСЛЯ ДЕПЛОЮ
+Vercel -> проєкт -> Analytics -> Enable Web Analytics (якщо ще не увімкнено).
+Clarity: перші записи через ~2 години.
