@@ -1,14 +1,16 @@
-ЩО ЦЕ
-12 файлів — усе, що змінилось для аналітики. Картинки й решта не чіпались.
+ПОРТФОЛІО — ОНОВЛЕННЯ 2026-09-03 (плоский пакет, без папок)
 
-КУДИ
-У корінь репозиторію, поверх наявних файлів (там, де лежить index.html).
+КРОК 1 — ВИДАЛИТИ З РЕПО (потрапили туди помилково; кожен файл: відкрити → «…» → Delete file):
+  about.png  cart.png  contacts.png  faq.png  footer.png  hero.png  horizon.png  pricing.png  services-lit.png
+  (404.html і support.js видаляти НЕ треба — у цьому пакеті лежать їх правильні версії з попереднього коміту, вони перезапишуться в кроці 2.)
 
-ЩО ЗМІНИЛОСЬ
-vf-analytics.js   — НОВИЙ файл. Clarity ID y1t5p0bp2z уже вписаний.
-index.html        — підключення скрипта + Privacy: "NO TRACKING" -> "ANALYTICS"
-решта 10 .html    — один рядок: <script src="./vf-analytics.js" defer></script>
+КРОК 2 — ЗАВАНТАЖИТИ ПОВЕРХ (Add file → Upload files → перетягнути ВСІ файли з цієї папки, крім READ-ME.txt):
+  index.html               — головна портфоліо (~203 KB). Замінює CHARON-івський index.html, що зараз у корені.
+  404.html, support.js     — відновлені файли портфоліо (затерті версіями CHARON).
+  charon.html              — кейс CHARON.
+  charon-hero.png, charon-about.png, charon-services-lit.png, charon-pricing.png, charon-cart.png,
+  charon-faq.png, charon-contacts.png, charon-footer.png, charon-horizon.png — скріншоти кейсу.
 
-ПІСЛЯ ДЕПЛОЮ
-Vercel -> проєкт -> Analytics -> Enable Web Analytics (якщо ще не увімкнено).
-Clarity: перші записи через ~2 години.
+ЩО В КОРЕНІ МАЄ ЛИШИТИСЬ ЯК БУЛО: усі інші .html кейсів, vf-shared.js, vf-analytics.js, image-slot.js, картинки, шрифти.
+
+ПЕРЕВІРКА: відкрити сайт → головна = портфоліо Vlad Filon; /charon.html → кейс; у hero кейсу — живий CHARON із зовнішнього URL.
