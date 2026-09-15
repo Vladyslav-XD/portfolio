@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support · Mocktail Finder · Vlad Filon</title>
+<meta name="description" content="Help and frequently asked questions for the Mocktail Finder iOS app.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Support · Mocktail Finder">
+<meta property="og:description" content="Help and frequently asked questions for the Mocktail Finder iOS app.">
+<meta property="og:url" content="https://www.vladfilon.com/mocktail-finder-support.html">
+<meta property="og:image" content="https://www.vladfilon.com/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&family=Archivo:wdth,wght@125,700;125,800;125,900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  #mf-root { --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --rule:#14110B; --muted:#8a8576; --hair:#d3ccba; --stone:#DEDCD6; --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; }
+  #mf-root[data-theme="dark"] { --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; }
+  ::selection { background:#E1251B; color:#fff; }
+  a { color:inherit; text-decoration:none; }
+  #mf-root button:focus-visible, #mf-root a:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  #mf-root { background:var(--paper); min-height: 100vh; display: flex; flex-direction: column; }
+  #mf-root main { flex: 1 0 auto; }
+  @media (max-width:900px){
+    #mf-root section, #mf-root footer{ padding-left:20px !important; padding-right:20px !important; }
+  }
+  [style*="Archivo Expanded"]{ font-family:'Archivo','Hanken Grotesk',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
+</style>
+<script src="./vf-analytics.js" defer></script>
+<script src="./vf-shared.js" defer></script>
+</head>
+<body>
+<div id="mf-root" data-theme="" style="position: relative; color: var(--ink); font-family: 'Hanken Grotesk', sans-serif; transition: background-color 0.4s, color 0.4s;">
+
+  <header style="position: sticky; top: 0px; z-index: 40; background: var(--stone); border-bottom: 5px solid var(--rule); display: flex; justify-content: space-between; align-items: stretch;">
+    <a href="index.html" data-cursor="1" aria-label="Vlad Filon — home" style="display: flex; align-items: center; padding: 14px 22px; border-right: 5px solid var(--rule);">
+      <span style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: var(--ink); color: var(--paper); font-family: 'Archivo Expanded', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: -0.02em;">VF</span>
+    </a>
+    <a href="mocktail-finder.html" data-cursor="1" data-en="← Mocktail Finder" data-ua="← Mocktail Finder" style="display: flex; align-items: center; padding: 0px 22px; font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 0.06em; color: var(--muted);">← Mocktail Finder</a>
+    <div style="flex: 1 1 0%;"></div>
+    <nav id="mf-nav" style="display: flex; align-items: stretch;">
+      <a href="index.html" data-cursor="1" data-en="Work" data-ua="Роботи" style="display: flex; align-items: center; padding: 0px 20px; font-weight: 600; font-size: 14px; border-left: 1.5px solid var(--hair); transition: color 0.15s;">Work</a>
+      <a href="art.html" data-cursor="1" data-en="Paintings" data-ua="Картини" style="display: flex; align-items: center; padding: 0px 20px; font-weight: 600; font-size: 14px; border-left: 1.5px solid var(--hair); transition: color 0.15s;">Paintings</a>
+      <button id="mf-theme" data-cursor="1" title="Toggle theme" style="display: flex; align-items: center; padding: 0px 16px; background: transparent; border: none; border-left: 1.5px solid var(--hair); cursor: pointer; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 14px;"><span id="mf-theme-icon">☾</span></button>
+      <button id="mf-lang" data-cursor="1" style="display: flex; align-items: center; gap: 5px; padding: 0px 16px; background: transparent; border: none; border-left: 1.5px solid var(--hair); cursor: pointer; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 13px;"><span id="mf-lang-en">EN</span><span style="opacity: 0.4;">/</span><span id="mf-lang-ua" style="opacity: 0.4;">UA</span></button>
+      <a href="index.html#cta" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display: flex; align-items: center; padding: 0px 24px; font-weight: 700; font-size: 14px; background: var(--red); color: rgb(244, 241, 232); border-left: 5px solid var(--rule); transition: filter 0.15s;">Let’s Talk</a>
+    </nav>
+    <button id="mf-burger" data-cursor="1" aria-label="Menu" style="display: none; align-items: center; padding: 0px 22px; background: var(--ink); color: var(--paper); border: none; cursor: pointer; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 13px;">MENU</button>
+  </header>
+  <div id="mf-mobile" style="display: none; position: sticky; top: 71px; z-index: 39; background: var(--surface); border-bottom: 5px solid var(--rule);">
+    <a href="mocktail-finder.html" data-en="← Mocktail Finder" data-ua="← Mocktail Finder" style="display: block; padding: 16px 24px; font-weight: 600; border-bottom: 1.5px solid var(--hair);">← Mocktail Finder</a>
+    <a href="index.html#works" data-en="Work" data-ua="Роботи" style="display: block; padding: 16px 24px; font-weight: 600; border-bottom: 1.5px solid var(--hair);">Work</a>
+    <a href="art.html" data-en="Paintings" data-ua="Картини" style="display: block; padding: 16px 24px; font-weight: 600; border-bottom: 1.5px solid var(--hair);">Paintings</a>
+    <a href="index.html#cta" data-en="Let’s Talk →" data-ua="Зв’язок →" style="display: block; padding: 16px 24px; font-weight: 700; background: var(--red); color: rgb(244, 241, 232);">Let’s Talk →</a>
+  </div>
+
+  <main>
+  <section style="border-bottom: 5px solid var(--rule); background: var(--surface); padding: 64px 48px;">
+    <div style="max-width: 760px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: var(--muted);">MOCKTAIL FINDER · SUPPORT</div>
+      <h1 data-en="Support" data-ua="Підтримка" style="font-family: 'Archivo Expanded', sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 64px); line-height: 0.92; letter-spacing: -0.03em; margin: 20px 0 0;">Support</h1>
+      <p data-en="iOS app · version 1.0" data-ua="Застосунок для iOS · версія 1.0" style="font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--muted); margin: 22px 0 0;">iOS app · version 1.0</p>
+    </div>
+  </section>
+
+  <section style="background: var(--paper); padding: 56px 48px 80px;">
+    <div style="max-width: 760px;">
+<p style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;"><span data-en="Thanks for using Mocktail Finder. If something isn't working or you have an idea, write to" data-ua="Дякую, що користуєтесь Mocktail Finder. Якщо щось не працює або у вас є ідея, напишіть на">Thanks for using Mocktail Finder. If something isn't working or you have an idea, write to</span> <a href="mailto:filon.design.ux@gmail.com" data-cursor="1" style="border-bottom: 2px solid var(--red);">filon.design.ux@gmail.com</a> <span data-en="— I read every message and usually reply within a few days." data-ua="— я читаю кожен лист і зазвичай відповідаю протягом кількох днів.">— I read every message and usually reply within a few days.</span></p>
+<h2 data-en="Frequently asked questions" data-ua="Часті питання" style="font-family: 'Archivo Expanded', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; margin: 40px 0 14px;">Frequently asked questions</h2>
+<h3 data-en="Do I need an account?" data-ua="Чи потрібен акаунт?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Do I need an account?</h3>
+<p data-en="No. The app works without sign-up, and there are no ads." data-ua="Ні. Застосунок працює без реєстрації, і в ньому немає реклами." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">No. The app works without sign-up, and there are no ads.</p>
+<h3 data-en="Where are my favourites and my own recipes stored?" data-ua="Де зберігаються мої улюблені та власні рецепти?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Where are my favourites and my own recipes stored?</h3>
+<p data-en="On your device only. They survive app updates, but they are removed if you delete the app. They are not synced between devices yet." data-ua="Лише на вашому пристрої. Вони зберігаються після оновлень застосунку, але видаляються разом із ним. Синхронізації між пристроями поки що немає." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">On your device only. They survive app updates, but they are removed if you delete the app. They are not synced between devices yet.</p>
+<h3 data-en="Recipes won&#x27;t load. What can I do?" data-ua="Рецепти не завантажуються. Що робити?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Recipes won't load. What can I do?</h3>
+<p data-en="Recipes come from an online database, so the app needs an internet connection. Check your connection and tap &quot;Try again&quot;. If the problem continues, please email me with your iPhone model and iOS version." data-ua="Рецепти беруться з онлайн-бази, тому застосунку потрібен інтернет. Перевірте з’єднання і натисніть «Try again». Якщо проблема не зникає, напишіть мені, вказавши модель iPhone і версію iOS." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Recipes come from an online database, so the app needs an internet connection. Check your connection and tap "Try again". If the problem continues, please email me with your iPhone model and iOS version.</p>
+<h3 data-en="Can I add a photo to my own recipe?" data-ua="Чи можна додати фото до власного рецепта?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Can I add a photo to my own recipe?</h3>
+<p data-en="Yes. Tap &quot;Add Photo&quot; in the Add Recipe form and pick one from your library. The photo is stored on your device only." data-ua="Так. Натисніть «Add Photo» у формі Add Recipe і виберіть фото з галереї. Фото зберігається лише на вашому пристрої." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Yes. Tap "Add Photo" in the Add Recipe form and pick one from your library. The photo is stored on your device only.</p>
+<h3 data-en="What do the words under each drink mean?" data-ua="Що означають слова під кожним напоєм?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">What do the words under each drink mean?</h3>
+<p data-en="They describe the drink&#x27;s character — for example &quot;Iced · Citrus · Sparkling&quot; or &quot;Hot · Chocolate · Creamy&quot;. They are worked out from the recipe&#x27;s ingredients and instructions, and the same words are used as filters on the home screen." data-ua="Вони описують характер напою — наприклад «Iced · Citrus · Sparkling» або «Hot · Chocolate · Creamy». Вони визначаються за інгредієнтами та інструкцією рецепта, і ті самі слова працюють як фільтри на головному екрані." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">They describe the drink's character — for example "Iced · Citrus · Sparkling" or "Hot · Chocolate · Creamy". They are worked out from the recipe's ingredients and instructions, and the same words are used as filters on the home screen.</p>
+<h3 data-en="How do I share a recipe?" data-ua="Як поділитися рецептом?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">How do I share a recipe?</h3>
+<p data-en="Open any recipe and tap &quot;Share Recipe&quot;. The recipe is sent as text with ingredients and steps through any app you choose." data-ua="Відкрийте будь-який рецепт і натисніть «Share Recipe». Рецепт надсилається текстом з інгредієнтами та кроками через будь-який застосунок на ваш вибір." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Open any recipe and tap "Share Recipe". The recipe is sent as text with ingredients and steps through any app you choose.</p>
+<h3 data-en="Is the app free?" data-ua="Застосунок безкоштовний?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Is the app free?</h3>
+<p data-en="Yes, completely." data-ua="Так, повністю." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Yes, completely.</p>
+<h2 data-en="Privacy" data-ua="Конфіденційність" style="font-family: 'Archivo Expanded', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; margin: 40px 0 14px;">Privacy</h2>
+<p style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;"><span data-en="The app collects no personal data. Details:" data-ua="Застосунок не збирає персональних даних. Деталі:">The app collects no personal data. Details:</span> <a href="mocktail-finder-privacy.html" data-cursor="1" style="border-bottom: 2px solid var(--red);">Privacy Policy</a></p>
+    </div>
+  </section>
+  </main>
+
+  <footer style="background: var(--surface); color: var(--ink); border-top: 5px solid var(--rule); padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+    <a href="index.html" data-cursor="1" style="font-family: 'Archivo Expanded', sans-serif; font-weight: 800; font-size: 15px;">VLAD FILON</a>
+    <span style="font-family: 'Space Mono', monospace; font-size: 12px; color: var(--muted);">Dublin, Ireland · © 2026</span>
+  </footer>
+</div>
+<script>
+  (function boot() {
+    if (window.VFChrome) { VFChrome.init('mf', { theme: 1, nav: 1, navred: 1, lang: 1 }); }
+    else { setTimeout(boot, 60); }
+  })();
+</script>
+</body>
+</html>
