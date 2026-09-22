@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<script src="./assets/js/support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <meta property="og:title" content="CHARON — a funeral agency that talks about death honestly · Vlad Filon">
 <meta property="og:description" content="Concept website: dark humour as strategy, a send-off cart, ravens, a candle cursor — from research to a live site by one design engineer.">
-<meta property="og:image" content="https://www.vladfilon.com/og-cover.png">
+<meta property="og:image" content="https://www.vladfilon.com/assets/meta/og-cover.png">
 <meta name="description" content="CHARON case study — concept funeral-agency website: tone of voice as strategy, interactive atmosphere, send-off cart and tier logic. Designed and built by Vlad Filon.">
-<script src="./vf-analytics.js" defer></script>
+<script src="./assets/js/vf-analytics.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;family=Cormorant:ital,wght@0,700;1,500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
   a { color:inherit; text-decoration:none; }
   a:hover { color:inherit; }
   #ch-root button:focus-visible, #ch-root a:focus-visible { outline:3px solid var(--ch); outline-offset:2px; }
-  #ch-root { background:var(--paper); }
+  #ch-root { background:var(--paper); overflow-x:clip; }
   #ch-root [data-grid] > * { min-width:0; }
   @keyframes chFlick { 0%,100% { transform:scale(1); } 30% { transform:scaleY(1.18) scaleX(.86) rotate(-2deg); } 60% { transform:scaleY(.9) scaleX(1.08) rotate(2deg); } }
   @keyframes chFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
@@ -34,13 +34,16 @@
     #ch-root [data-mq-1col]:not([data-keep]){ grid-template-columns:1fr !important; }
     #ch-root [data-mq-2col]{ grid-template-columns:repeat(2,1fr) !important; }
     #ch-root [data-live-frame]{ height:520px !important; }
+    #ch-root section[data-screen-label="Hero"]{ grid-template-columns:1fr !important; padding-left:0 !important; padding-right:0 !important; }
+    #ch-root section[data-screen-label="Hero"] > div:first-child{ min-height:520px !important; padding:48px 20px !important; }
+    #ch-root section[data-screen-label="Hero"] > div:nth-child(2){ min-height:0 !important; }
   }
   @media (prefers-reduced-motion: reduce){
     #ch-root *, #ch-root *::before, #ch-root *::after { animation-duration:.001ms !important; transition-duration:.001ms !important; }
   }
   [style*="Archivo Expanded"]{ font-family:'Archivo','Hanken Grotesk',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
 </style>
-<script src="vf-shared.js"></script>
+<script src="assets/js/vf-shared.js"></script>
 </helmet>
 
 <template id="__bundler_thumbnail"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#0b0a0a"/><circle cx="50" cy="46" r="30" fill="#1a1030"/><g fill="none" stroke="#9d4edd" stroke-width="2.2" stroke-linejoin="round"><path d="M44 30h12l6 14-6 22H44l-6-22z"/><path d="M48 44h4"/></g><text x="50" y="86" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#9d4edd" letter-spacing="3">CHARON</text></svg></template>
@@ -87,7 +90,7 @@
         <iframe data-live-frame="1" src="https://charon-beta.vercel.app/" title="CHARON — live concept site" loading="lazy" style="display:block; width:100%; height:640px; flex:1; border:none; background:#0b0a0a;"></iframe>
       </sc-if>
       <sc-if value="{{ liveOff }}" hint-placeholder-val="{{ false }}">
-        <img src="charon-hero.png" alt="CHARON hero: “Everyone boards the boat.” and the 1 OBOL coin" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top;">
+        <img src="assets/images/charon/charon-hero.png" alt="CHARON hero: “Everyone boards the boat.” and the 1 OBOL coin" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top;">
       </sc-if>
     </div>
     <div id="ch-ring" style="position: fixed; left: 98px; top: 259px; width: 12px; height: 12px; margin-left: -6px; margin-top: -6px; border: 1.5px solid var(--rule); border-radius: 50%; pointer-events: none; z-index: 91; opacity: 0; transition: width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode: difference"></div>
@@ -188,7 +191,7 @@
           <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.12em; color:var(--muted); margin-top:auto;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</div>
           <p style="margin:0; font-size:15px; line-height:1.55;" data-en="Prove the tone in 3 seconds: preloader joke → headline → “1 OBOL”. If the humour offends, better it happens here, for free." data-ua="Довести тон за 3 секунди: жарт прелоадера → заголовок → «1 OBOL». Якщо гумор не зайде — краще тут, на першому екрані.">Prove the tone in 3 seconds: preloader joke → headline → “1 OBOL”. If the humour offends, better it happens here, for free.</p>
         </div>
-        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="charon-hero.png" alt="Hero: Everyone boards the boat, 1 OBOL coin" loading="lazy" style="display:block; width:100%; height:auto;"></div>
+        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="assets/images/charon/charon-hero.png" alt="Hero: Everyone boards the boat, 1 OBOL coin" loading="lazy" style="display:block; width:100%; height:auto;"></div>
       </div>
       <div data-reveal="" data-grid style="display:grid; grid-template-columns:minmax(260px,1fr) 2fr; gap:5px; background:var(--rule);" data-mq-1col="1">
         <div style="background:var(--paper); padding:26px 24px; display:flex; flex-direction:column; gap:14px;">
@@ -196,7 +199,7 @@
           <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.12em; color:var(--muted); margin-top:auto;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</div>
           <p style="margin:0; font-size:15px; line-height:1.55;" data-en="Manifesto + three stats. “0 client complaints” is the one smile; the rest is straight talk about what the agency does and doesn’t do." data-ua="Маніфест + три цифри. «0 скарг клієнтів» — одна усмішка; решта — пряма мова про те, що агенція робить і чого не робить.">Manifesto + three stats. “0 client complaints” is the one smile; the rest is straight talk about what the agency does and doesn’t do.</p>
         </div>
-        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="charon-about.png" alt="Philosophy section with three stats" loading="lazy" style="display:block; width:100%; height:auto;"></div>
+        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="assets/images/charon/charon-about.png" alt="Philosophy section with three stats" loading="lazy" style="display:block; width:100%; height:auto;"></div>
       </div>
       <div data-reveal="" data-grid style="display:grid; grid-template-columns:minmax(260px,1fr) 2fr; gap:5px; background:var(--rule);" data-mq-1col="1">
         <div style="background:var(--paper); padding:26px 24px; display:flex; flex-direction:column; gap:14px;">
@@ -204,7 +207,7 @@
           <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.12em; color:var(--muted); margin-top:auto;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</div>
           <p style="margin:0; font-size:15px; line-height:1.55;" data-en="15 cards, every price visible, 4 filters. Selecting lights a candle on the card — the state is the reward." data-ua="15 карток, усі ціни видимі, 4 фільтри. Вибір запалює свічку на картці — сам стан стає нагородою.">15 cards, every price visible, 4 filters. Selecting lights a candle on the card — the state is the reward.</p>
         </div>
-        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="charon-services-lit.png" alt="Services grid with three lit cards" loading="lazy" style="display:block; width:100%; height:auto;"></div>
+        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="assets/images/charon/charon-services-lit.png" alt="Services grid with three lit cards" loading="lazy" style="display:block; width:100%; height:auto;"></div>
       </div>
       <div data-reveal="" data-grid style="display:grid; grid-template-columns:minmax(260px,1fr) 2fr; gap:5px; background:var(--rule);" data-mq-1col="1">
         <div style="background:var(--paper); padding:26px 24px; display:flex; flex-direction:column; gap:14px;">
@@ -212,7 +215,7 @@
           <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.12em; color:var(--muted); margin-top:auto;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</div>
           <p style="margin:0; font-size:15px; line-height:1.55;" data-en="Tiers are “+ price” add-ons, never packages — so choosing a tier never undoes the ceremony already chosen." data-ua="Тарифи — доповнення з ціною «+», а не пакети — тож вибір тарифу ніколи не скасовує вже обрану церемонію.">Tiers are “+ price” add-ons, never packages — so choosing a tier never undoes the ceremony already chosen.</p>
         </div>
-        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="charon-pricing.png" alt="Three add-on tiers" loading="lazy" style="display:block; width:100%; height:auto;"></div>
+        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="assets/images/charon/charon-pricing.png" alt="Three add-on tiers" loading="lazy" style="display:block; width:100%; height:auto;"></div>
       </div>
       <div data-reveal="" data-grid style="display:grid; grid-template-columns:minmax(260px,1fr) 2fr; gap:5px; background:var(--rule);" data-mq-1col="1">
         <div style="background:var(--paper); padding:26px 24px; display:flex; flex-direction:column; gap:14px;">
@@ -220,7 +223,7 @@
           <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.12em; color:var(--muted); margin-top:auto;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</div>
           <p style="margin:0; font-size:15px; line-height:1.55;" data-en="Cart → three-field form, message pre-filled with the list. Objections are pre-answered in FAQ just above it." data-ua="Кошик → форма з трьох полів, повідомлення вже містить список. Заперечення зняті у FAQ одразу над нею.">Cart → three-field form, message pre-filled with the list. Objections are pre-answered in FAQ just above it.</p>
         </div>
-        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="charon-contacts.png" alt="Contact form Write into the dark" loading="lazy" style="display:block; width:100%; height:auto;"></div>
+        <div style="background:#0b0a0a; display:flex; align-items:center; padding:20px;"><img src="assets/images/charon/charon-contacts.png" alt="Contact form Write into the dark" loading="lazy" style="display:block; width:100%; height:auto;"></div>
       </div>
     </div>
 
@@ -265,7 +268,7 @@
       </div>
       <div data-reveal="" style="background:#0b0a0a; padding:22px; display:flex; flex-direction:column; gap:14px;">
         <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; color:var(--ch); color:#8c877c;" data-en="HERO · FINAL" data-ua="HERO · ФІНАЛ">HERO · FINAL</div>
-        <img src="charon-hero.png" alt="Final hero: Everyone boards the boat, 1 OBOL coin, three metrics" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid rgba(233,229,220,.12);">
+        <img src="assets/images/charon/charon-hero.png" alt="Final hero: Everyone boards the boat, 1 OBOL coin, three metrics" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid rgba(233,229,220,.12);">
       </div>
       <div data-reveal="" style="background:var(--surface); padding:22px; display:flex; flex-direction:column; gap:14px;">
         <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; color:var(--ch); color:var(--muted);" data-en="SERVICES · LOW-FI" data-ua="ПОСЛУГИ · LOW-FI">SERVICES · LOW-FI</div>
@@ -279,7 +282,7 @@
       </div>
       <div data-reveal="" style="background:#0b0a0a; padding:22px; display:flex; flex-direction:column; gap:14px;">
         <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; color:var(--ch); color:#8c877c;" data-en="SERVICES · FINAL" data-ua="ПОСЛУГИ · ФІНАЛ">SERVICES · FINAL</div>
-        <img src="charon-services-lit.png" alt="Final services grid with three selected cards" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid rgba(233,229,220,.12);">
+        <img src="assets/images/charon/charon-services-lit.png" alt="Final services grid with three selected cards" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid rgba(233,229,220,.12);">
       </div>
     </div>
   </section>
@@ -347,7 +350,7 @@
       </div>
     </div>
     <figure data-reveal="" style="margin:44px 0 0; border:2.5px solid var(--rule); background:#0b0a0a;">
-      <img src="charon-hero.png" alt="CHARON hero section: headline “Everyone boards the boat.”, the floating 1 OBOL coin and three metrics — 15 ways to go, 24/7, ∞ silence guaranteed" loading="lazy" style="display:block; width:100%; height:auto;">
+      <img src="assets/images/charon/charon-hero.png" alt="CHARON hero section: headline “Everyone boards the boat.”, the floating 1 OBOL coin and three metrics — 15 ways to go, 24/7, ∞ silence guaranteed" loading="lazy" style="display:block; width:100%; height:auto;">
       <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:#8c877c; padding:12px 16px; border-top:1px solid rgba(233,229,220,.12);" data-en="HERO · THE OBOL — FARE FOR THE FERRYMAN — FLOATS INSIDE A SLOW-SPINNING DASHED ORBIT" data-ua="HERO · ОБОЛ — ПЛАТА ПЕРЕВІЗНИКУ — ПЛАВАЄ В ПОВІЛЬНІЙ ПУНКТИРНІЙ ОРБІТІ">HERO · THE OBOL — FARE FOR THE FERRYMAN — FLOATS INSIDE A SLOW-SPINNING DASHED ORBIT</figcaption>
     </figure>
   </section>
@@ -391,7 +394,7 @@
       </div>
     </div>
     <figure data-reveal="" style="margin:44px 0 0; border:2.5px solid var(--rule); background:#0b0a0a;">
-      <img src="charon-horizon.png" alt="Cemetery horizon: a full-bleed SVG skyline of gravestones, a bare tree, a chapel and an iron fence under a violet moon, with fog drifting across the ground" loading="lazy" style="display:block; width:100%; height:auto;">
+      <img src="assets/images/charon/charon-horizon.png" alt="Cemetery horizon: a full-bleed SVG skyline of gravestones, a bare tree, a chapel and an iron fence under a violet moon, with fog drifting across the ground" loading="lazy" style="display:block; width:100%; height:auto;">
       <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:#8c877c; padding:12px 16px; border-top:1px solid rgba(233,229,220,.12);" data-en="CEMETERY HORIZON · ONE HAND-DRAWN SVG, 1440×240, BETWEEN THE HERO AND THE MANIFESTO — THE ONLY “ILLUSTRATION” ON THE SITE" data-ua="ЦВИНТАРНИЙ ГОРИЗОНТ · ОДИН НАМАЛЬОВАНИЙ ВРУЧНУ SVG 1440×240 МІЖ HERO І МАНІФЕСТОМ — ЄДИНА «ІЛЮСТРАЦІЯ» НА САЙТІ">CEMETERY HORIZON · ONE HAND-DRAWN SVG, 1440×240, BETWEEN THE HERO AND THE MANIFESTO — THE ONLY “ILLUSTRATION” ON THE SITE</figcaption>
     </figure>
   </section>
@@ -415,19 +418,19 @@
     </div>
       <figure data-reveal="" style="margin:0; background:var(--paper); display:flex; flex-direction:column; min-width:0; border:2.5px solid var(--rule);">
         <div style="padding:20px 22px 16px; min-height:70px; display:flex; gap:14px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:28px; line-height:1; color:var(--ch);">3</span><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; line-height:1.2;" data-en="Review" data-ua="Переглянь">Review</span></div>
-        <div style="background:#0b0a0a; flex:1; display:flex; align-items:flex-start; justify-content:center; padding:26px 22px;"><img src="charon-cart.png" alt="Send-off cart drawer: Cremation €2 500, Human Composting €4 800, Cryonics €62 000; 3 items; estimated total €69 300; button Arrange the send-off" loading="lazy" style="display:block; width:100%; max-width:340px; height:auto; border:1px solid rgba(233,229,220,.14);"></div>
+        <div style="background:#0b0a0a; flex:1; display:flex; align-items:flex-start; justify-content:center; padding:26px 22px;"><img src="assets/images/charon/charon-cart.png" alt="Send-off cart drawer: Cremation €2 500, Human Composting €4 800, Cryonics €62 000; 3 items; estimated total €69 300; button Arrange the send-off" loading="lazy" style="display:block; width:100%; max-width:340px; height:auto; border:1px solid rgba(233,229,220,.14);"></div>
         <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); padding:14px 16px; border-top:1.5px solid var(--hair); line-height:1.5;" data-en="RUNNING ESTIMATE · ITEMS FLY IN, A CHIME PLAYS · THE LIST PRE-FILLS THE CONTACT FORM" data-ua="ОРІЄНТОВНИЙ ПІДСУМОК · ПОЗИЦІЇ ЗАЛІТАЮТЬ, ГРАЄ ДЗВІНОЧОК · СПИСОК ПІДСТАВЛЯЄТЬСЯ У ФОРМУ">RUNNING ESTIMATE · ITEMS FLY IN, A CHIME PLAYS · THE LIST PRE-FILLS THE CONTACT FORM</figcaption>
       </figure>
     </div>
     <div data-grid style="display:grid; grid-template-columns:1fr 1fr; gap:5px; background:var(--rule); border:2.5px solid var(--rule); margin-top:44px;" data-mq-1col="1">
       <figure data-reveal="" style="margin:0; background:var(--paper); display:flex; flex-direction:column; min-width:0;">
         <div style="padding:20px 22px 16px; min-height:70px; display:flex; gap:14px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:28px; line-height:1; color:var(--ch);">1</span><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; line-height:1.2;" data-en="Pick a ceremony" data-ua="Обери церемонію">Pick a ceremony</span></div>
-        <div style="background:#0b0a0a; flex:1; display:flex; align-items:flex-start; justify-content:center; padding:22px;"><img src="charon-services-lit.png" alt="Services grid: fifteen ceremony cards with tag, price and Add; Cremation, Human Composting and Cryonics selected with lit candles" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid rgba(233,229,220,.14);"></div>
+        <div style="background:#0b0a0a; flex:1; display:flex; align-items:flex-start; justify-content:center; padding:22px;"><img src="assets/images/charon/charon-services-lit.png" alt="Services grid: fifteen ceremony cards with tag, price and Add; Cremation, Human Composting and Cryonics selected with lit candles" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid rgba(233,229,220,.14);"></div>
         <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); padding:14px 16px; border-top:1.5px solid var(--hair); line-height:1.5;" data-en="15 CARDS · 4 FILTERS · A CHOSEN CARD LIGHTS ITS CANDLE" data-ua="15 КАРТОК · 4 ФІЛЬТРИ · ОБРАНА КАРТКА ЗАПАЛЮЄ СВІЧКУ">15 CARDS · 4 FILTERS · A CHOSEN CARD LIGHTS ITS CANDLE</figcaption>
       </figure>
       <figure data-reveal="" style="margin:0; background:var(--paper); display:flex; flex-direction:column; min-width:0;">
         <div style="padding:20px 22px 16px; min-height:70px; display:flex; gap:14px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:28px; line-height:1; color:var(--ch);">2</span><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; line-height:1.2;" data-en="Stack a tier" data-ua="Додай тариф">Stack a tier</span></div>
-        <div style="background:#0b0a0a; flex:1; display:flex; align-items:flex-start; justify-content:center; padding:22px;"><img src="charon-pricing.png" alt="Three add-on tiers: Quiet Exit +€800, Final Chord +€4 500 (popular), Total Darkness +€13 000" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid rgba(233,229,220,.14);"></div>
+        <div style="background:#0b0a0a; flex:1; display:flex; align-items:flex-start; justify-content:center; padding:22px;"><img src="assets/images/charon/charon-pricing.png" alt="Three add-on tiers: Quiet Exit +€800, Final Chord +€4 500 (popular), Total Darkness +€13 000" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid rgba(233,229,220,.14);"></div>
         <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); padding:14px 16px; border-top:1.5px solid var(--hair); line-height:1.5;" data-en="“+ €4 500” ON TOP OF THE CEREMONY PRICE — THE PLUS SIGN IS THE PRICING MODEL" data-ua="«+ €4 500» ДО ЦІНИ ЦЕРЕМОНІЇ — ЗНАК «ПЛЮС» І Є ЦІНОВА МОДЕЛЬ">“+ €4 500” ON TOP OF THE CEREMONY PRICE — THE PLUS SIGN IS THE PRICING MODEL</figcaption>
       </figure>
     </div>
@@ -441,25 +444,25 @@
       
       <figure data-reveal="" style="margin:0; background:var(--paper); display:flex; flex-direction:column;">
         <div style="padding:22px 22px 0; display:flex; gap:14px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:28px; line-height:1; color:var(--ch);">1</span><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:18px; line-height:1.2;" data-en="Philosophy" data-ua="Філософія">Philosophy</span></div>
-        <div style="padding:18px 22px 22px; flex:1; display:flex; align-items:flex-start;"><img src="charon-about.png" alt="Philosophy section: “We don’t bury. We see off.” with the manifesto and three stats — 340+ souls ferried, 0 client complaints, 100% without the pomp" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid var(--hair);"></div>
+        <div style="padding:18px 22px 22px; flex:1; display:flex; align-items:flex-start;"><img src="assets/images/charon/charon-about.png" alt="Philosophy section: “We don’t bury. We see off.” with the manifesto and three stats — 340+ souls ferried, 0 client complaints, 100% without the pomp" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid var(--hair);"></div>
         <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); padding:14px 16px; border-top:1.5px solid var(--hair);" data-en="“0 CLIENT COMPLAINTS” IS THE ONE SMILE FOR THIS SCREEN" data-ua="«0 СКАРГ КЛІЄНТІВ» — ОДНА УСМІШКА ЦЬОГО ЕКРАНА">“0 CLIENT COMPLAINTS” IS THE ONE SMILE FOR THIS SCREEN</figcaption>
       </figure>
       
       <figure data-reveal="" style="margin:0; background:var(--paper); display:flex; flex-direction:column;">
         <div style="padding:22px 22px 0; display:flex; gap:14px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:28px; line-height:1; color:var(--ch);">2</span><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:18px; line-height:1.2;" data-en="Contact" data-ua="Контакт">Contact</span></div>
-        <div style="padding:18px 22px 22px; flex:1; display:flex; align-items:flex-start;"><img src="charon-contacts.png" alt="Contact section “Write into the dark”: phone, email, address, 24/7 hours and a three-field form with the button “Send across the Styx →”" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid var(--hair);"></div>
+        <div style="padding:18px 22px 22px; flex:1; display:flex; align-items:flex-start;"><img src="assets/images/charon/charon-contacts.png" alt="Contact section “Write into the dark”: phone, email, address, 24/7 hours and a three-field form with the button “Send across the Styx →”" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid var(--hair);"></div>
         <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); padding:14px 16px; border-top:1.5px solid var(--hair);" data-en="THREE FIELDS ONLY · THE CART LIST IS PRE-FILLED INTO THE MESSAGE ON CHECKOUT" data-ua="ЛИШЕ ТРИ ПОЛЯ · СПИСОК ІЗ КОШИКА ПІДСТАВЛЯЄТЬСЯ В ПОВІДОМЛЕННЯ ПРИ ОФОРМЛЕННІ">THREE FIELDS ONLY · THE CART LIST IS PRE-FILLED INTO THE MESSAGE ON CHECKOUT</figcaption>
       </figure>
       
       <figure data-reveal="" style="margin:0; background:var(--paper); display:flex; flex-direction:column;">
         <div style="padding:22px 22px 0; display:flex; gap:14px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:28px; line-height:1; color:var(--ch);">3</span><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:18px; line-height:1.2;" data-en="FAQ" data-ua="FAQ">FAQ</span></div>
-        <div style="padding:18px 22px 22px; flex:1; display:flex; align-items:flex-start;"><div style="width:100%; aspect-ratio:16/10; overflow:hidden; border:1px solid var(--hair);"><img src="charon-faq.png" alt="FAQ “Frequently asked”: Isn’t this a bit too dark? Are you a serious company? Can I plan everything in advance? Do you offer instalments? Do you really do eco-burials? Do you work at night? Is CHARON a real agency?" loading="lazy" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top;"></div></div>
+        <div style="padding:18px 22px 22px; flex:1; display:flex; align-items:flex-start;"><div style="width:100%; aspect-ratio:16/10; overflow:hidden; border:1px solid var(--hair);"><img src="assets/images/charon/charon-faq.png" alt="FAQ “Frequently asked”: Isn’t this a bit too dark? Are you a serious company? Can I plan everything in advance? Do you offer instalments? Do you really do eco-burials? Do you work at night? Is CHARON a real agency?" loading="lazy" style="display:block; width:100%; height:100%; object-fit:cover; object-position:top;"></div></div>
         <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); padding:14px 16px; border-top:1.5px solid var(--hair);" data-en="THE FIRST QUESTION IS “ISN’T THIS A BIT TOO DARK?” — THE OBJECTION HANDLED BEFORE IT IS RAISED" data-ua="ПЕРШЕ ПИТАННЯ — «ЧИ НЕ НАДТО ЦЕ ПОХМУРО?» — ЗАПЕРЕЧЕННЯ ЗНЯТЕ ДО ТОГО, ЯК ЙОГО ВИСЛОВИЛИ">THE FIRST QUESTION IS “ISN’T THIS A BIT TOO DARK?” — THE OBJECTION HANDLED BEFORE IT IS RAISED</figcaption>
       </figure>
       
       <figure data-reveal="" style="margin:0; background:var(--paper); display:flex; flex-direction:column;">
         <div style="padding:22px 22px 0; display:flex; gap:14px; align-items:baseline;"><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:28px; line-height:1; color:var(--ch);">4</span><span style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:18px; line-height:1.2;" data-en="Footer" data-ua="Футер">Footer</span></div>
-        <div style="padding:18px 22px 22px; flex:1; display:flex; align-items:flex-start;"><img src="charon-footer.png" alt="Footer: an oversized outlined CHARON wordmark, © 2026 CHARON · design protected, All souls ferried on time, Memento mori, memento vivere, crafted by Filon Experience Design" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid var(--hair);"></div>
+        <div style="padding:18px 22px 22px; flex:1; display:flex; align-items:flex-start;"><img src="assets/images/charon/charon-footer.png" alt="Footer: an oversized outlined CHARON wordmark, © 2026 CHARON · design protected, All souls ferried on time, Memento mori, memento vivere, crafted by Filon Experience Design" loading="lazy" style="display:block; width:100%; height:auto; border:1px solid var(--hair);"></div>
         <figcaption style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); padding:14px 16px; border-top:1.5px solid var(--hair);" data-en="OUTLINED WORDMARK, NO IMAGE · “MEMENTO MORI, MEMENTO VIVERE”" data-ua="КОНТУРНИЙ ЛОГОТИП, БЕЗ КАРТИНКИ · «MEMENTO MORI, MEMENTO VIVERE»">OUTLINED WORDMARK, NO IMAGE · “MEMENTO MORI, MEMENTO VIVERE”</figcaption>
       </figure>
     </div>

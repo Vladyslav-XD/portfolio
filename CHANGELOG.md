@@ -19,7 +19,7 @@ Copy every file in this folder over the repo root (same names, flat). Then push 
 - Hint: CLICK on desktop, TAP on touch
 - VIEW without ↗
 
-## cv-vlad-filon.pdf
+## assets/documents/cv-vlad-filon.pdf
 - New CV (replaces old file, same name — Download CV link unchanged)
 
 ## Case pages (bookworm-community, charon, drug-dozy, language-course, mocktail-finder, my-eco-pharmacy, race-planner, tverdokhlib)

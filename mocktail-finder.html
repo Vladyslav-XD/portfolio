@@ -7,18 +7,18 @@
 <meta property="og:title" content="Mocktail Finder — Case Study · Vlad Filon">
 <meta property="og:description" content="Mobile app case study: discover and mix non-alcoholic cocktails. UX/UI by Vlad Filon.">
 <meta property="og:url" content="https://www.vladfilon.com/mocktail-finder.html">
-<meta property="og:image" content="https://www.vladfilon.com/og-cover.png">
+<meta property="og:image" content="https://www.vladfilon.com/assets/meta/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<script src="./support.js"></script>
+<script src="./assets/js/support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-<script src="./vf-analytics.js" defer></script>
+<script src="./assets/js/vf-analytics.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
-<script src="./image-slot.js"></script>
+<script src="./assets/js/image-slot.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -27,7 +27,7 @@
   ::selection { background:#E1251B; color:#fff; }
   a { color:inherit; text-decoration:none; }
   #mf-root button:focus-visible, #mf-root a:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
-  #mf-root { background:var(--paper); }
+  #mf-root { background:var(--paper); overflow-x:clip; }
 
   /* mobile-qa */
   @media (max-width:900px){
@@ -35,6 +35,9 @@
     #mf-root [data-mq-1col]{ grid-template-columns:1fr !important; }
     #mf-root [data-mq-2col], #mf-root [data-mq-2col]{ grid-template-columns:repeat(2,1fr) !important; }
     #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad]{ padding-left:20px !important; padding-right:20px !important; }
+  }
+  @media (max-width:520px){
+    #mf-root [data-mq-2col]{ grid-template-columns:1fr !important; }
   }
 
   /* ae-remap */
@@ -82,7 +85,7 @@
       </div>
     </div>
     <div style="background:#0E5C57; position:relative; min-height:580px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:28px;">
-      <video id="mf-demo" src="mocktail-demo4.mp4" muted loop autoplay playsinline preload="auto" style="width:auto; height:100%; max-height:560px; object-fit:cover; object-position:50% 0%; aspect-ratio:1080/1895; cursor:pointer; border-radius:48px;">px;"></video>
+      <video id="mf-demo" src="assets/video/mocktail-finder/mocktail-demo4.mp4" muted loop autoplay playsinline preload="auto" style="width:auto; height:100%; max-height:560px; object-fit:cover; object-position:50% 0%; aspect-ratio:1080/1895; cursor:pointer; border-radius:48px;">px;"></video>
       <button id="mf-play" aria-label="Play video" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:74px; height:74px; border-radius:50%; border:none; background:rgba(244,241,232,0.92); color:#14110B; font-size:26px; cursor:pointer; display:none; align-items:center; justify-content:center; padding-left:5px;">▶</button>
     <div id="mf-ring" style="position: fixed; left: 98px; top: 259px; width: 12px; height: 12px; margin-left: -6px; margin-top: -6px; border: 1.5px solid var(--rule); border-radius: 50%; pointer-events: none; z-index: 91; opacity: 0; transition: width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode: difference"></div></div>
   </section>
@@ -164,18 +167,18 @@
     <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 12px; max-width:600px;" data-en="The product, screen by screen." data-ua="Продукт, екран за екраном.">The product, screen by screen.</h2>
     <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:600px; margin:0 0 40px;" data-en="Every screen ships in both light and dark mode — discovery, recipe detail, favourites and a create-your-own flow with live validation." data-ua="Кожен екран — у світлій і темній темі: пошук, деталі рецепта, обране та власний флоу створення з валідацією наживо.">Every screen ships in both light and dark mode — discovery, recipe detail, favourites and a create-your-own flow with live validation.</p>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-2col="1">
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-1.png" alt="Home" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">01 · HOME</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-8.png" alt="Home dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">02 · HOME · DARK</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-2.png" alt="Recipe ingredients" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">03 · RECIPE · INGREDIENTS</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-3.png" alt="Recipe steps" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">04 · RECIPE · STEPS</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-4.png" alt="Recipe dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">05 · RECIPE · DARK</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-5.png" alt="Favourites" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">06 · FAVOURITES</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-10.png" alt="Favourites empty" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">07 · FAVOURITES · EMPTY</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-9.png" alt="Favourites empty dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">08 · EMPTY · DARK</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-6.png" alt="Add recipe" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">09 · ADD RECIPE</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-7.png" alt="Add recipe filled" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">10 · ADD · FILLED</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-11.png" alt="Add recipe dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">11 · ADD · DARK</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="mf-12.png" alt="Add recipe validation" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">12 · ADD · VALIDATION</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-1.png" alt="Home" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">01 · HOME</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-8.png" alt="Home dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">02 · HOME · DARK</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-2.png" alt="Recipe ingredients" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">03 · RECIPE · INGREDIENTS</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-3.png" alt="Recipe steps" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">04 · RECIPE · STEPS</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-4.png" alt="Recipe dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">05 · RECIPE · DARK</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-5.png" alt="Favourites" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">06 · FAVOURITES</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-10.png" alt="Favourites empty" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">07 · FAVOURITES · EMPTY</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-9.png" alt="Favourites empty dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">08 · EMPTY · DARK</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-6.png" alt="Add recipe" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">09 · ADD RECIPE</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-7.png" alt="Add recipe filled" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">10 · ADD · FILLED</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-11.png" alt="Add recipe dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">11 · ADD · DARK</div></div>
+      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-12.png" alt="Add recipe validation" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">12 · ADD · VALIDATION</div></div>
     </div>
   </section>
 
@@ -240,6 +243,6 @@ class Component extends DCLogic {
   renderVals() { return {}; }
 }
 </script>
-<script src="vf-shared.js"></script>
+<script src="assets/js/vf-shared.js"></script>
 </body>
 </html>

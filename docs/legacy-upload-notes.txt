@@ -1,0 +1,16 @@
+ПОРТФОЛІО — ОНОВЛЕННЯ 2026-09-03 (плоский пакет, без папок)
+
+КРОК 1 — ВИДАЛИТИ З РЕПО (потрапили туди помилково; кожен файл: відкрити → «…» → Delete file):
+  about.png  cart.png  contacts.png  faq.png  footer.png  hero.png  horizon.png  pricing.png  services-lit.png
+  (404.html і assets/js/support.js видаляти НЕ треба — у цьому пакеті лежать їх правильні версії з попереднього коміту, вони перезапишуться в кроці 2.)
+
+КРОК 2 — ЗАВАНТАЖИТИ ПОВЕРХ (Add file → Upload files → перетягнути ВСІ файли з цієї папки, крім READ-ME.txt):
+  index.html               — головна портфоліо (~203 KB). Замінює CHARON-івський index.html, що зараз у корені.
+  404.html, assets/js/support.js     — відновлені файли портфоліо (затерті версіями CHARON).
+  charon.html              — кейс CHARON.
+  assets/images/charon/charon-hero.png, assets/images/charon/charon-about.png, assets/images/charon/charon-services-lit.png, assets/images/charon/charon-pricing.png, assets/images/charon/charon-cart.png,
+  assets/images/charon/charon-faq.png, assets/images/charon/charon-contacts.png, assets/images/charon/charon-footer.png, assets/images/charon/charon-horizon.png — скріншоти кейсу.
+
+ЩО В КОРЕНІ МАЄ ЛИШИТИСЬ ЯК БУЛО: усі інші .html кейсів, assets/js/vf-shared.js, assets/js/vf-analytics.js, assets/js/image-slot.js, картинки, шрифти.
+
+ПЕРЕВІРКА: відкрити сайт → головна = портфоліо Vlad Filon; /charon.html → кейс; у hero кейсу — живий CHARON із зовнішнього URL.

@@ -7,14 +7,14 @@
 <meta property="og:title" content="Drug Dozy — Smart Pill Organizer · Vlad Filon">
 <meta property="og:description" content="AI-enhanced physical interface: smart pill organiser case study by Vlad Filon.">
 <meta property="og:url" content="https://www.vladfilon.com/drug-dozy.html">
-<meta property="og:image" content="https://www.vladfilon.com/og-cover.png">
+<meta property="og:image" content="https://www.vladfilon.com/assets/meta/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<script src="./support.js"></script>
+<script src="./assets/js/support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-<script src="./vf-analytics.js" defer></script>
+<script src="./assets/js/vf-analytics.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
   ::selection { background:#1E3FCF; color:#F4F1E8; }
   a { color:inherit; text-decoration:none; }
   #dd-root button:focus-visible, #dd-root a:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
-  #dd-root { background:var(--paper); }
+  #dd-root { background:var(--paper); overflow-x:clip; }
   @keyframes dzBreath { 0%,100% { opacity:.55; transform:scale(.94); } 50% { opacity:1; transform:scale(1); } }
   @keyframes dzPulse  { 0%,100% { opacity:.6; } 50% { opacity:1; } }
   @keyframes dzBlink  { 0%,49% { opacity:1; } 50%,100% { opacity:.25; } }
@@ -34,6 +34,9 @@
     #dd-root section, #dd-root footer, #dd-root header { padding-left:20px !important; padding-right:20px !important; }
     #dd-root [data-mq-1col]:not([data-keep]){ grid-template-columns:1fr !important; }
     #dd-root [style*="repeat(3"]:not([data-keep]), #dd-root [style*="repeat(4"]:not([data-keep]){ grid-template-columns:repeat(2,1fr) !important; }
+    #dd-root section[data-screen-label="Hero"]{ grid-template-columns:1fr !important; padding-left:0 !important; padding-right:0 !important; }
+    #dd-root section[data-screen-label="Hero"] > div:first-child{ min-height:520px !important; padding:48px 20px !important; }
+    #dd-root section[data-screen-label="Hero"] > div:nth-child(2){ min-height:520px !important; padding:28px 20px !important; }
   }
   @media (prefers-reduced-motion: reduce){
     #dd-root *, #dd-root *::before, #dd-root *::after { animation-duration:.001ms !important; transition-duration:.001ms !important; }
@@ -978,6 +981,6 @@ class Component extends DCLogic {
   }
 }
 </script>
-<script src="vf-shared.js"></script>
+<script src="assets/js/vf-shared.js"></script>
 </body>
 </html>

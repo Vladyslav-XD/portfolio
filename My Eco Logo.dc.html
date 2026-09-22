@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<script src="./assets/js/support.js"></script>
 </head>
 <body>
 <x-dc>
@@ -14,10 +14,10 @@ class Component extends DCLogic {
   renderVals() {
     const mode = this.props.mode || 'color';
     const map = {
-      color: 'pharm-logo.svg',        // full colour, badge-less — light surfaces
-      reverse: 'pharm-logo-badge.svg',// white-pill badge — dark/coloured surfaces
-      mono: 'logo-mono.svg',          // single-colour ink positive
-      'mono-rev': 'logo-mono-rev.svg' // single-colour cream reverse
+      color: 'assets/images/my-eco-pharmacy/pharm-logo.svg',        // full colour, badge-less — light surfaces
+      reverse: 'assets/images/my-eco-pharmacy/pharm-logo-badge.svg',// white-pill badge — dark/coloured surfaces
+      mono: 'assets/images/brand/logo-mono.svg',          // single-colour ink positive
+      'mono-rev': 'assets/images/brand/logo-mono-rev.svg' // single-colour cream reverse
     };
     return { src: map[mode] || map.color };
   }

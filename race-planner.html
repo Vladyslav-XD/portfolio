@@ -7,14 +7,14 @@
 <meta property="og:title" content="Race Planner — Case Study · Vlad Filon">
 <meta property="og:description" content="Mobile app concept for discovering and registering for running events. UX/UI by Vlad Filon.">
 <meta property="og:url" content="https://www.vladfilon.com/race-planner.html">
-<meta property="og:image" content="https://www.vladfilon.com/og-cover.png">
+<meta property="og:image" content="https://www.vladfilon.com/assets/meta/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<script src="./support.js"></script>
+<script src="./assets/js/support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-<script src="./vf-analytics.js" defer></script>
+<script src="./assets/js/vf-analytics.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
   ::selection { background:#E5009C; color:#fff; }
   a { color:inherit; text-decoration:none; }
   #rp-root button:focus-visible, #rp-root a:focus-visible { outline:3px solid var(--mag); outline-offset:2px; }
-  #rp-root { background:var(--paper); }
+  #rp-root { background:var(--paper); overflow-x:clip; }
   @keyframes rpFloat { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-12px);} }
   [data-ob-strip]::-webkit-scrollbar, [data-prod-scroll]::-webkit-scrollbar { height:8px; }
   [data-ob-strip]::-webkit-scrollbar-thumb, [data-prod-scroll]::-webkit-scrollbar-thumb { background:#3a342a; border-radius:8px; }
@@ -90,7 +90,7 @@
       <div style="position:relative; width:clamp(230px,26vw,290px); aspect-ratio:452/970; animation:rpFloat 6s ease-in-out infinite;">
         <div style="position:absolute; inset:0; background:#0a0a0c; border-radius:46px; box-shadow:0 30px 60px rgba(0,0,0,0.4), inset 0 0 0 2px #3a3a40;"></div>
         <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#1c1a16;">
-          <img loading="lazy" src="rp-s-splash.png" alt="Race Planner splash screen" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
+          <img loading="lazy" src="assets/images/race-planner/rp-s-splash.png" alt="Race Planner splash screen" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
         </div>
         <div style="position:absolute; top:19px; left:50%; transform:translateX(-50%); width:74px; height:20px; background:#0a0a0c; border-radius:12px;"></div>
       </div>
@@ -334,12 +334,12 @@
         <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:50px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506, 0 2px 5px rgba(20,17,11,0.14);"></div>
         <div style="position:absolute; inset:11px; border-radius:38px; overflow:hidden; background:#1c1a16;">
           <div data-ob-track style="display:flex; height:100%; transition:transform .55s cubic-bezier(.6,0,.2,1);">
-            <img loading="lazy" src="rp-s-welcome.png" alt="Welcome" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
-            <img loading="lazy" src="rp-s-find.png" alt="Find race" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
-            <img loading="lazy" src="rp-s-event.png" alt="Event details" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
-            <img loading="lazy" src="rp-s-signup.png" alt="Quick sign up" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
-            <img loading="lazy" src="rp-s-season.png" alt="Plan your season" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
-            <img loading="lazy" src="rp-s-splash.png" alt="Your perfect run" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img loading="lazy" src="assets/images/race-planner/rp-s-welcome.png" alt="Welcome" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img loading="lazy" src="assets/images/race-planner/rp-s-find.png" alt="Find race" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img loading="lazy" src="assets/images/race-planner/rp-s-event.png" alt="Event details" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img loading="lazy" src="assets/images/race-planner/rp-s-signup.png" alt="Quick sign up" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img loading="lazy" src="assets/images/race-planner/rp-s-season.png" alt="Plan your season" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
+            <img loading="lazy" src="assets/images/race-planner/rp-s-splash.png" alt="Your perfect run" style="width:100%; height:100%; flex:none; object-fit:cover; object-position:top center; display:block;">
           </div>
         </div>
         <div style="position:absolute; top:21px; left:50%; transform:translateX(-50%); width:78px; height:21px; background:#0a0a0c; border-radius:13px; z-index:3;"></div>
@@ -363,14 +363,14 @@
         <div data-reg-steps style="display:flex; flex-direction:column; gap:2px;"></div>
       </div>
       <div style="position:relative; width:clamp(250px,30vw,316px); aspect-ratio:1716/3512; flex:none;">
-        <img loading="lazy" data-reg-scr="signin" src="rp-r-signin.png" alt="Sign in" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:1; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
-        <img loading="lazy" data-reg-scr="create" src="rp-r-create.png" alt="Create account" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
-        <img loading="lazy" data-reg-scr="phone" src="rp-r-phone.png" alt="Confirm phone" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
-        <img loading="lazy" data-reg-scr="code" src="rp-r-code.png" alt="Enter SMS code" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
-        <img loading="lazy" data-reg-scr="codeerr" src="rp-r-codeerr.png" alt="Wrong code state" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
-        <img loading="lazy" data-reg-scr="success" src="rp-r-success.png" alt="Registration successful" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
-        <img loading="lazy" data-reg-scr="forgot" src="rp-r-forgot.png" alt="Forgot password" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
-        <img loading="lazy" data-reg-scr="checkemail" src="rp-r-checkemail.png" alt="Check email" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img loading="lazy" data-reg-scr="signin" src="assets/images/race-planner/rp-r-signin.png" alt="Sign in" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:1; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img loading="lazy" data-reg-scr="create" src="assets/images/race-planner/rp-r-create.png" alt="Create account" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img loading="lazy" data-reg-scr="phone" src="assets/images/race-planner/rp-r-phone.png" alt="Confirm phone" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img loading="lazy" data-reg-scr="code" src="assets/images/race-planner/rp-r-code.png" alt="Enter SMS code" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img loading="lazy" data-reg-scr="codeerr" src="assets/images/race-planner/rp-r-codeerr.png" alt="Wrong code state" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img loading="lazy" data-reg-scr="success" src="assets/images/race-planner/rp-r-success.png" alt="Registration successful" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img loading="lazy" data-reg-scr="forgot" src="assets/images/race-planner/rp-r-forgot.png" alt="Forgot password" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
+        <img loading="lazy" data-reg-scr="checkemail" src="assets/images/race-planner/rp-r-checkemail.png" alt="Check email" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .4s; filter:drop-shadow(0 30px 55px rgba(20,17,11,0.30));">
       </div>
     </div>
   </section>
@@ -389,42 +389,42 @@
         <div data-k-frame style="flex:none; width:258px;">
           <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
             <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
-            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-home.png" alt="Discover races — home" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="assets/images/race-planner/rp-k-home.png" alt="Discover races — home" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
           </div>
           <div style="margin-top:18px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--red);">01</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Find your perfect race" data-ua="Знайди свій ідеальний забіг">Find your perfect race</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="Search and filter by distance, location and event type." data-ua="Пошук і фільтри за дистанцією, локацією й типом події.">Search and filter by distance, location and event type.</div></div>
         </div>
         <div data-k-frame style="flex:none; width:258px;">
           <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
             <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
-            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-schedule.png" alt="Schedule — upcoming events calendar" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="assets/images/race-planner/rp-k-schedule.png" alt="Schedule — upcoming events calendar" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
           </div>
           <div style="margin-top:18px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--blue);">02</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Stay organised" data-ua="Тримай усе під контролем">Stay organised</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="A personal race calendar with reminders so you never miss a start." data-ua="Персональний календар забігів із нагадуваннями, щоб не пропустити старт.">A personal race calendar with reminders so you never miss a start.</div></div>
         </div>
         <div data-k-frame style="flex:none; width:258px;">
           <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
             <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
-            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-event.png" alt="Event details — London Marathon" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="assets/images/race-planner/rp-k-event.png" alt="Event details — London Marathon" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
           </div>
           <div style="margin-top:18px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--mag);">03</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Know every detail" data-ua="Знай усі деталі">Know every detail</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="Routes, entry conditions and reviews from other runners." data-ua="Маршрути, умови участі та відгуки інших бігунів.">Routes, entry conditions and reviews from other runners.</div></div>
         </div>
         <div data-k-frame style="flex:none; width:258px;">
           <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
             <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
-            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-register.png" alt="Register — tickets and entry" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="assets/images/race-planner/rp-k-register.png" alt="Register — tickets and entry" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
           </div>
           <div style="margin-top:18px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--ink);">04</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Fast event signup" data-ua="Швидка реєстрація на подію">Fast event signup</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="Register in-app and see exactly what your entry includes." data-ua="Реєстрація прямо в застосунку — і чітко видно, що входить у пакет.">Register in-app and see exactly what your entry includes.</div></div>
         </div>
         <div data-k-frame style="flex:none; width:258px;">
           <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
             <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
-            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-congrats.png" alt="Achievement — Marathon Master" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="assets/images/race-planner/rp-k-congrats.png" alt="Achievement — Marathon Master" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
           </div>
           <div style="margin-top:18px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--red);">05</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Achieve your goals" data-ua="Досягай своїх цілей">Achieve your goals</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="Personalised milestones celebrate every finish line." data-ua="Персональні віхи святкують кожну фінішну пряму.">Personalised milestones celebrate every finish line.</div></div>
         </div>
         <div data-k-frame style="flex:none; width:258px;">
           <div style="position:relative; width:100%; aspect-ratio:1080/2340; filter:drop-shadow(0 26px 48px rgba(20,17,11,0.26));">
             <div style="position:absolute; inset:0; background:#0c0c0e; border-radius:46px; box-shadow:inset 0 0 0 2.5px #2a2a2e, inset 0 0 0 4px #050506;"></div>
-            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="rp-k-achievements.png" alt="Achievements — rewards collection" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+            <div style="position:absolute; inset:10px; border-radius:37px; overflow:hidden; background:#161412;"><img src="assets/images/race-planner/rp-k-achievements.png" alt="Achievements — rewards collection" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
           </div>
           <div style="margin-top:18px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--blue);">06</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px; margin-top:5px;" data-en="Stay inspired" data-ua="Лишайся натхненним">Stay inspired</div><div style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:5px; max-width:240px;" data-en="A growing collection of rewards keeps the motivation alive." data-ua="Зростаюча колекція нагород тримає мотивацію живою.">A growing collection of rewards keeps the motivation alive.</div></div>
         </div>
@@ -595,6 +595,6 @@ class Component extends DCLogic {
   renderVals() { return {}; }
 }
 </script>
-<script src="vf-shared.js"></script>
+<script src="assets/js/vf-shared.js"></script>
 </body>
 </html>
