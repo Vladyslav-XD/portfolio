@@ -158,6 +158,10 @@
     <a href="#about" data-en="About" data-ua="Про мене" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">About</a>
     <a href="#faq" data-en="FAQ" data-ua="FAQ" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">FAQ</a>
     <a href="art.html" data-en="Paintings" data-ua="Картини" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Paintings</a>
+    <div id="vf-mobile-controls" style="display:flex; align-items:stretch; border-bottom:1.5px solid var(--hair); background:var(--surface);">
+      <button id="vf-mobile-theme" data-mobile-control="theme" type="button" aria-label="Switch to dark theme" style="display:flex; flex:1; min-height:52px; align-items:center; justify-content:space-between; gap:12px; padding:12px 24px; background:transparent; color:var(--ink); border:none; border-right:1.5px solid var(--hair); cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:.06em;"><span data-en="THEME" data-ua="ТЕМА">THEME</span><span id="vf-mobile-theme-icon" aria-hidden="true">☾</span></button>
+      <button id="vf-mobile-lang" data-mobile-control="lang" type="button" aria-label="Change language to Ukrainian" style="display:flex; flex:1; min-height:52px; align-items:center; justify-content:space-between; gap:12px; padding:12px 24px; background:transparent; color:var(--ink); border:none; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:.06em;"><span data-en="LANGUAGE" data-ua="МОВА">LANGUAGE</span><span style="display:flex; align-items:center; gap:5px;"><span id="vf-mobile-lang-en" aria-hidden="true">EN</span><span aria-hidden="true" style="opacity:.4;">/</span><span id="vf-mobile-lang-ua" aria-hidden="true" style="opacity:.4;">UA</span></span></button>
+    </div>
     <button data-open-talk="" data-en="Let’s Talk →" data-ua="Зв’язок →" style="display:block; width:100%; text-align:left; padding:16px 24px; font-weight:700; background:var(--red); color:#F4F1E8; border:none; cursor:pointer;">Let’s Talk →</button>
   </div>
 
@@ -968,20 +972,23 @@ class Component extends DCLogic {
     /* ---------- THEME ---------- */
     const themeBtn = document.getElementById('vf-theme');
     const themeIcon = document.getElementById('vf-theme-icon');
+    const mobileThemeBtn = document.getElementById('vf-mobile-theme');
+    const mobileThemeIcon = document.getElementById('vf-mobile-theme-icon');
     let theme = 'light';
     try { theme = localStorage.getItem('vf-theme') || this.props.theme || 'light'; } catch (_) { theme = this.props.theme || 'light'; }
     let portraitExpr = 'neutral';
     const currentShirt = () => theme === 'dark' ? 'yellow' : 'black';
     const setPortrait = () => { const want = 'assets/images/home/portrait-' + currentShirt() + '-' + portraitExpr + '.png'; root.querySelectorAll('.vf-portrait').forEach(im => { if (!im.src.endsWith(want)) im.src = want; }); };
     ['black-neutral','black-smile','yellow-neutral','yellow-smile'].forEach(n => { const i = new Image(); i.src = 'assets/images/home/portrait-' + n + '.png'; });
-    const applyTheme = () => { root.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); const _m = document.getElementById('vf-modal'); if (_m) _m.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); if (themeIcon) themeIcon.textContent = theme === 'dark' ? '☀' : '☾'; if (themeBtn) themeBtn.setAttribute('aria-label', (this.lang === 'ua') ? (theme === 'dark' ? 'Увімкнути світлу тему' : 'Увімкнути темну тему') : (theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme')); setPortrait(); };
+    const applyTheme = () => { root.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); const _m = document.getElementById('vf-modal'); if (_m) _m.setAttribute('data-theme', theme === 'dark' ? 'dark' : ''); const _icon = theme === 'dark' ? '☀' : '☾'; if (themeIcon) themeIcon.textContent = _icon; if (mobileThemeIcon) mobileThemeIcon.textContent = _icon; const _label = (this.lang === 'ua') ? (theme === 'dark' ? 'Увімкнути світлу тему' : 'Увімкнути темну тему') : (theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'); if (themeBtn) themeBtn.setAttribute('aria-label', _label); if (mobileThemeBtn) mobileThemeBtn.setAttribute('aria-label', _label); setPortrait(); };
     root.querySelectorAll('.vf-portrait').forEach(im => {
       const host = im.parentElement; if (!host) return;
       host.addEventListener('mouseenter', () => { portraitExpr = 'smile'; setPortrait(); });
       host.addEventListener('mouseleave', () => { portraitExpr = 'neutral'; setPortrait(); });
     });
     applyTheme();
-    if (themeBtn) themeBtn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('vf-theme', theme); } catch (_) {} applyTheme(); });
+    const toggleTheme = () => { theme = theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('vf-theme', theme); } catch (_) {} applyTheme(); };
+    [themeBtn, mobileThemeBtn].forEach(btn => { if (btn) btn.addEventListener('click', toggleTheme); });
 
     /* ---------- cursor ring ---------- */
     const ring = document.getElementById('vf-ring');
@@ -999,7 +1006,7 @@ class Component extends DCLogic {
     let menuOpen = false;
     const syncNav = () => { const m = innerWidth < 900; if (navLinks) navLinks.style.display = m ? 'none' : 'flex'; if (burger) burger.style.display = m ? 'flex' : 'none'; if (mobile && burger) { const h = burger.closest('header'); if (h) mobile.style.top = h.offsetHeight + 'px'; } if (!m && mobile) { mobile.style.display = 'none'; menuOpen = false; } };
     if (burger) burger.addEventListener('click', () => { menuOpen = !menuOpen; if (mobile) mobile.style.display = menuOpen ? 'block' : 'none'; burger.setAttribute('aria-expanded', menuOpen ? 'true' : 'false'); const _ua = this.lang === 'ua'; burger.setAttribute('aria-label', menuOpen ? (_ua ? 'Закрити меню' : 'Close menu') : (_ua ? 'Відкрити меню' : 'Open menu')); });
-    if (mobile) mobile.querySelectorAll('a,button').forEach(a => a.addEventListener('click', () => { menuOpen = false; mobile.style.display = 'none'; if (burger) { burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', this.lang === 'ua' ? 'Відкрити меню' : 'Open menu'); } }));
+    if (mobile) mobile.querySelectorAll('a,button:not([data-mobile-control])').forEach(a => a.addEventListener('click', () => { menuOpen = false; mobile.style.display = 'none'; if (burger) { burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', this.lang === 'ua' ? 'Відкрити меню' : 'Open menu'); } }));
     syncNav(); addEventListener('resize', syncNav);
 
     /* ---------- WhatsApp ---------- */
@@ -1404,12 +1411,17 @@ class Component extends DCLogic {
       root.querySelectorAll('[data-aria-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-aria-ua') : el.getAttribute('data-aria-en'); if (v != null) el.setAttribute('aria-label', v); });
       root.querySelectorAll('[data-en-aria]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua-aria') : el.getAttribute('data-en-aria'); if (v != null) el.setAttribute('aria-label', v); });
       const en = document.getElementById('vf-lang-en'), ua = document.getElementById('vf-lang-ua');
+      const mobileEn = document.getElementById('vf-mobile-lang-en'), mobileUa = document.getElementById('vf-mobile-lang-ua');
       if (en && ua) { en.style.opacity = this.lang === 'en' ? '1' : '.4'; ua.style.opacity = this.lang === 'ua' ? '1' : '.4'; }
+      if (mobileEn && mobileUa) { mobileEn.style.opacity = this.lang === 'en' ? '1' : '.4'; mobileUa.style.opacity = this.lang === 'ua' ? '1' : '.4'; }
       const _lb = document.getElementById('vf-lang'); if (_lb) _lb.setAttribute('aria-label', this.lang === 'ua' ? 'Змінити мову на англійську' : 'Change language to Ukrainian');
+      const _mlb = document.getElementById('vf-mobile-lang'); if (_mlb) _mlb.setAttribute('aria-label', this.lang === 'ua' ? 'Змінити мову на англійську' : 'Change language to Ukrainian');
       const _tb = document.getElementById('vf-theme'); if (_tb) { const _dark = root.getAttribute('data-theme') === 'dark'; _tb.setAttribute('aria-label', this.lang === 'ua' ? (_dark ? 'Увімкнути світлу тему' : 'Увімкнути темну тему') : (_dark ? 'Switch to light theme' : 'Switch to dark theme')); }
+      const _mtb = document.getElementById('vf-mobile-theme'); if (_mtb) { const _dark = root.getAttribute('data-theme') === 'dark'; _mtb.setAttribute('aria-label', this.lang === 'ua' ? (_dark ? 'Увімкнути світлу тему' : 'Увімкнути темну тему') : (_dark ? 'Switch to light theme' : 'Switch to dark theme')); }
     };
-    const lb = document.getElementById('vf-lang');
-    if (lb) lb.addEventListener('click', () => { this.lang = this.lang === 'en' ? 'ua' : 'en'; applyLang(); if (this._renderDist2) this._renderDist2(); });
+    const lb = document.getElementById('vf-lang'), mobileLb = document.getElementById('vf-mobile-lang');
+    const toggleLanguage = () => { this.lang = this.lang === 'en' ? 'ua' : 'en'; applyLang(); if (this._renderDist2) this._renderDist2(); };
+    [lb, mobileLb].forEach(btn => { if (btn) btn.addEventListener('click', toggleLanguage); });
     if (this.lang === 'ua') applyLang();
     else { try { document.documentElement.setAttribute('lang', 'en'); } catch (_) {} }
 

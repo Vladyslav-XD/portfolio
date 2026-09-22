@@ -45,6 +45,78 @@
     if (mods.nav) (function () {
       var burger = document.getElementById(prefix + '-burger'), nav = document.getElementById(prefix + '-nav'), mobile = document.getElementById(prefix + '-mobile');
       var open = false;
+      if (mobile && !document.getElementById(prefix + '-mobile-controls')) {
+        var themeSource = document.getElementById(prefix + '-theme');
+        var langSource = document.getElementById(prefix + '-lang');
+        if (themeSource || langSource) {
+          var controls = document.createElement('div');
+          controls.id = prefix + '-mobile-controls';
+          controls.style.cssText = 'display:flex; align-items:stretch; border-bottom:1.5px solid var(--hair); background:var(--surface);';
+
+          var makeButton = function (id, labelEn, labelUa) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.id = prefix + '-mobile-' + id;
+            button.setAttribute('data-mobile-control', id);
+            button.style.cssText = 'display:flex; flex:1; min-height:52px; align-items:center; justify-content:space-between; gap:12px; padding:12px 24px; background:transparent; color:var(--ink); border:none; border-right:1.5px solid var(--hair); cursor:pointer; font-family:Space Mono,monospace; font-size:12px; letter-spacing:.06em;';
+            var label = document.createElement('span');
+            label.setAttribute('data-en', labelEn);
+            label.setAttribute('data-ua', labelUa);
+            label.textContent = labelEn;
+            button.appendChild(label);
+            controls.appendChild(button);
+            return button;
+          };
+
+          var mobileTheme = themeSource ? makeButton('theme', 'THEME', 'ТЕМА') : null;
+          var mobileThemeIcon = null;
+          if (mobileTheme) {
+            mobileTheme.setAttribute('aria-label', 'Toggle theme');
+            mobileThemeIcon = document.createElement('span');
+            mobileThemeIcon.id = prefix + '-mobile-theme-icon';
+            mobileThemeIcon.setAttribute('aria-hidden', 'true');
+            mobileTheme.appendChild(mobileThemeIcon);
+          }
+
+          var mobileLang = langSource ? makeButton('lang', 'LANGUAGE', 'МОВА') : null;
+          var mobileLangEn = null, mobileLangUa = null;
+          if (mobileLang) {
+            mobileLang.setAttribute('aria-label', 'Switch language');
+            var values = document.createElement('span');
+            values.style.cssText = 'display:flex; align-items:center; gap:5px;';
+            mobileLangEn = document.createElement('span');
+            mobileLangEn.textContent = 'EN';
+            var slash = document.createElement('span');
+            slash.textContent = '/';
+            slash.style.opacity = '.4';
+            mobileLangUa = document.createElement('span');
+            mobileLangUa.textContent = 'UA';
+            values.appendChild(mobileLangEn);
+            values.appendChild(slash);
+            values.appendChild(mobileLangUa);
+            mobileLang.appendChild(values);
+          }
+
+          var syncControls = function () {
+            var sourceThemeIcon = document.getElementById(prefix + '-theme-icon');
+            if (mobileThemeIcon && sourceThemeIcon) mobileThemeIcon.textContent = sourceThemeIcon.textContent;
+            var sourceEn = document.getElementById(prefix + '-lang-en');
+            var sourceUa = document.getElementById(prefix + '-lang-ua');
+            if (mobileLangEn && sourceEn) mobileLangEn.style.opacity = getComputedStyle(sourceEn).opacity;
+            if (mobileLangUa && sourceUa) mobileLangUa.style.opacity = getComputedStyle(sourceUa).opacity;
+          };
+
+          if (mobileTheme) mobileTheme.addEventListener('click', function () { themeSource.click(); setTimeout(syncControls, 0); });
+          if (mobileLang) mobileLang.addEventListener('click', function () { langSource.click(); setTimeout(syncControls, 0); });
+          if (themeSource) themeSource.addEventListener('click', function () { setTimeout(syncControls, 0); });
+          if (langSource) langSource.addEventListener('click', function () { setTimeout(syncControls, 0); });
+
+          var finalItem = mobile.lastElementChild;
+          if (finalItem) mobile.insertBefore(controls, finalItem);
+          else mobile.appendChild(controls);
+          setTimeout(syncControls, 0);
+        }
+      }
       var sync = function () { var m = innerWidth < 900; if (nav) nav.style.display = m ? 'none' : 'flex'; if (burger) burger.style.display = m ? 'flex' : 'none'; if (mobile && burger) { var h = burger.closest('header'); if (h) mobile.style.top = h.offsetHeight + 'px'; } if (!m && mobile) { mobile.style.display = 'none'; open = false; } };
       sync(); addEventListener('resize', sync);
       if (burger) burger.addEventListener('click', function () { open = !open; if (mobile) mobile.style.display = open ? 'block' : 'none'; });
