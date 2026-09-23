@@ -1,0 +1,11 @@
+# vladfilon.com
+User-agent: *
+Allow: /
+
+# Not meant for search results
+Disallow: /docs/
+Disallow: /scripts/
+Disallow: /*.md$
+Disallow: /*.dc.html$
+
+Sitemap: https://www.vladfilon.com/sitemap.xml
