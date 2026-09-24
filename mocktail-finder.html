@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mocktail Finder — Case Study · Vlad Filon</title>
+<meta name="description" content="Mocktail Finder: an iOS app for alcohol-free drinks, taken from a course project to the App Store. Case study by design engineer Vlad Filon.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mocktail Finder — Case Study · Vlad Filon">
-<meta property="og:description" content="Mobile app case study: discover and mix non-alcoholic cocktails. UX/UI by Vlad Filon.">
+<meta property="og:description" content="Mocktail Finder: an iOS app for alcohol-free drinks, taken from a course project to the App Store. Case study by design engineer Vlad Filon.">
 <meta property="og:url" content="https://www.vladfilon.com/mocktail-finder.html">
 <meta property="og:image" content="https://www.vladfilon.com/assets/meta/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -14,40 +16,60 @@
 <body>
 <x-dc>
 <helmet>
-<script src="./assets/js/vf-analytics.js" defer></script>
+<script src="./assets/js/vf-analytics.js" defer=""></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
-<script src="./assets/js/image-slot.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&amp;family=Archivo:wdth,wght@125,700;125,800;125,900&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  #mf-root { --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --rule:#14110B; --muted:#8a8576; --hair:#d3ccba; --stone:#DEDCD6; --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; }
-  #mf-root[data-theme="dark"] { --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; }
-  ::selection { background:#E1251B; color:#fff; }
+  #mf-root { --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --rule:#14110B; --muted:#6f6a59; --hair:#d3ccba; --stone:#DEDCD6; --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; --teal:#0E8C82; }
+  #mf-root[data-theme="dark"] { --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; --teal:#3fb7ab; }
+  ::selection { background:#E1251B; color:#F4F1E8; }
   a { color:inherit; text-decoration:none; }
+  a:hover { color:inherit; }
   #mf-root button:focus-visible, #mf-root a:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
   #mf-root { background:var(--paper); overflow-x:clip; }
-
-  /* mobile-qa */
+  #mf-root div, #mf-root p, #mf-root figure { min-width:0; overflow-wrap:break-word; }
+  [data-pano]::-webkit-scrollbar { height:8px; } [data-pano]::-webkit-scrollbar-thumb { background:var(--rule); }
+  @media (max-width:1100px){
+    #mf-root [data-tl]{ grid-template-columns:1fr !important; }
+    #mf-root [data-tl-stage]{ border-top:none !important; border-left:3px solid var(--rule) !important; padding:0 0 34px 30px !important; }
+    #mf-root [data-tl-stage]:last-child{ padding-bottom:0 !important; }
+    #mf-root [data-tl-dot]{ left:-10px !important; top:2px !important; }
+    #mf-root [data-mq-4col]{ grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+  }
   @media (max-width:900px){
     #mf-root section, #mf-root footer{ padding-left:20px !important; padding-right:20px !important; }
+    #mf-root section[data-mq-flush]{ padding-left:0 !important; padding-right:0 !important; }
     #mf-root [data-mq-1col]{ grid-template-columns:1fr !important; }
-    #mf-root [data-mq-2col], #mf-root [data-mq-2col]{ grid-template-columns:repeat(2,1fr) !important; }
-    #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad], #mf-root [data-mq-pad]{ padding-left:20px !important; padding-right:20px !important; }
+    #mf-root [data-mq-2col]{ grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    #mf-root [data-mq-pad]{ padding-left:20px !important; padding-right:20px !important; }
+    #mf-root [data-mq-hero]{ padding-top:44px !important; padding-bottom:44px !important; }
+    #mf-root [data-mq-heropanel]{ min-height:420px !important; padding:0 !important; }
+    #mf-root [data-screens]{ grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    #mf-root [data-screens] > :last-child:nth-child(odd){ grid-column:span 2; }
+    #mf-root [data-screens] > :last-child:nth-child(odd) img{ width:50% !important; margin:0 auto; }
+    #mf-root [data-pano] > img{ flex:0 0 220px !important; width:220px !important; scroll-snap-align:start; }
+    #mf-root [data-flow]{ flex-direction:column !important; align-items:flex-start !important; }
+    #mf-root [data-flow] > [data-arrow]{ transform:rotate(90deg); }
   }
   @media (max-width:520px){
-    #mf-root [data-mq-2col]{ grid-template-columns:1fr !important; }
+    #mf-root [data-mq-2col], #mf-root [data-mq-4col]{ grid-template-columns:1fr !important; }
   }
-
-  /* ae-remap */
+  @media (hover:none), (pointer:coarse){ #mf-root #mf-ring{ display:none !important; } }
+  @keyframes mfGlyph { 0%{opacity:0; transform:translateY(18px) scale(.82) rotate(-8deg);} 14%{opacity:1; transform:translateY(0) scale(1.06) rotate(3deg);} 22%{transform:scale(1) rotate(0);} 84%{opacity:1; transform:scale(1);} 96%,100%{opacity:0; transform:scale(.96);} }
+  @keyframes mfWord { 0%,16%{opacity:0; transform:translateY(12px);} 28%,84%{opacity:1; transform:translateY(0);} 96%,100%{opacity:0;} }
+  @keyframes mfBar { 0%,24%{transform:scaleX(0);} 80%{transform:scaleX(1); opacity:1;} 92%,100%{transform:scaleX(1); opacity:0;} }
+  @keyframes mfBubble { 0%{opacity:0; transform:translate(0,0) scale(.6);} 20%{opacity:.95;} 100%{opacity:0; transform:translate(var(--dx),-70px) scale(1);} }
+  @media (prefers-reduced-motion: reduce){ #mf-demo-slot *{ animation:none !important; opacity:1 !important; transform:none !important; } }
   [style*="Archivo Expanded"]{ font-family:'Archivo','Hanken Grotesk',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
 </style>
+<script src="./assets/js/vf-shared.js"></script>
 </helmet>
 
 <div id="mf-root" style="position:relative; color:var(--ink); font-family:'Hanken Grotesk',sans-serif; transition:background-color .4s,color .4s;">
-
-  
+  <div id="mf-ring" style="position:fixed; left:0; top:0; width:12px; height:12px; margin-left:-6px; margin-top:-6px; border:1.5px solid var(--rule); border-radius:50%; pointer-events:none; z-index:91; opacity:0; transition:width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode:difference;"></div>
 
   <header style="position:sticky; top:0; z-index:40; background:var(--stone); border-bottom:5px solid var(--rule); display:flex; justify-content:space-between; align-items:stretch;">
     <a href="index.html" data-cursor="1" aria-label="Vlad Filon — home" style="display:flex; align-items:center; padding:14px 22px; border-right:5px solid var(--rule);">
@@ -58,134 +80,334 @@
     <nav id="mf-nav" style="display:flex; align-items:stretch;">
       <a href="index.html" data-cursor="1" data-en="Work" data-ua="Роботи" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Work</a>
       <a href="art.html" data-cursor="1" data-en="Paintings" data-ua="Картини" style="display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:14px; border-left:1.5px solid var(--hair);">Paintings</a>
-      
-      <button id="mf-theme" data-cursor="1" title="Toggle theme" style="display:flex; align-items:center; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono',monospace; font-size:14px;"><span id="mf-theme-icon">☾</span></button>
-      <button id="mf-lang" data-cursor="1" style="display:flex; align-items:center; gap:5px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono',monospace; font-size:13px;"><span id="mf-lang-en">EN</span><span style="opacity:.4;">/</span><span id="mf-lang-ua" style="opacity:.4;">UA</span></button>
-      <a href="index.html" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display:flex; align-items:center; padding:0 24px; font-weight:700; font-size:14px; background:var(--red); color:#F4F1E8; border-left:5px solid var(--rule);">Let’s Talk</a>
+      <button id="mf-theme" data-cursor="1" title="Toggle theme" aria-label="Toggle theme" style="display:flex; align-items:center; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono',monospace; font-size:14px;"><span id="mf-theme-icon">☾</span></button>
+      <button id="mf-lang" data-cursor="1" aria-label="Switch language" style="display:flex; align-items:center; gap:5px; padding:0 16px; background:transparent; border:none; border-left:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono',monospace; font-size:13px;"><span id="mf-lang-en">EN</span><span style="opacity:.4;">/</span><span id="mf-lang-ua" style="opacity:.4;">UA</span></button>
+      <a href="index.html#cta" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display:flex; align-items:center; padding:0 24px; font-weight:700; font-size:14px; background:var(--red); color:#F4F1E8; border-left:5px solid var(--rule);">Let’s Talk</a>
     </nav>
     <button id="mf-burger" data-cursor="1" aria-label="Menu" style="display:none; align-items:center; padding:0 22px; background:var(--ink); color:var(--paper); border:none; cursor:pointer; font-family:'Space Mono',monospace; font-weight:700; font-size:13px;">MENU</button>
   </header>
   <div id="mf-mobile" style="display:none; position:sticky; top:60px; z-index:39; background:var(--surface); border-bottom:5px solid var(--rule);">
     <a href="index.html#works" data-en="Work" data-ua="Роботи" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Work</a>
     <a href="art.html" data-en="Paintings" data-ua="Картини" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Paintings</a>
+    <div style="display:flex; border-bottom:1.5px solid var(--hair);">
+      <button data-proxy="mf-theme" aria-label="Toggle theme" style="flex:1; display:flex; align-items:center; justify-content:center; gap:10px; min-height:52px; background:transparent; border:none; border-right:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono',monospace; font-size:13px;"><span data-proxy-icon="">☾</span><span data-en="Theme" data-ua="Тема">Theme</span></button>
+      <button data-proxy="mf-lang" aria-label="Switch language" style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px; min-height:52px; background:transparent; border:none; cursor:pointer; color:var(--ink); font-family:'Space Mono',monospace; font-size:13px;"><span data-proxy-en="">EN</span><span style="opacity:.4;">/</span><span data-proxy-ua="" style="opacity:.4;">UA</span></button>
+    </div>
     <a href="index.html#cta" data-en="Let’s Talk →" data-ua="Зв’язок →" style="display:block; padding:16px 24px; font-weight:700; background:var(--red); color:#F4F1E8;">Let’s Talk →</a>
   </div>
 
-  <section style="border-bottom:5px solid var(--rule); display:grid; grid-template-columns:1fr 1fr; gap:5px; background:var(--rule);" data-mq-1col="1">
-    <div style="background:var(--surface); padding:64px 48px; display:flex; flex-direction:column; justify-content:space-between;" data-mq-pad="1">
-      <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted);">MOBILE APP · 2026</div>
+  <section data-screen-label="Hero" data-mq-flush="1" style="border-bottom:5px solid var(--rule); display:grid; grid-template-columns:1fr 1fr; gap:5px; background:var(--rule);" data-mq-1col="1">
+    <div data-mq-pad="1" data-mq-hero="1" style="background:var(--surface); padding:64px 48px; display:flex; flex-direction:column; justify-content:space-between; gap:36px;">
+      <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+        <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted);" data-en="MOBILE APP · 2026" data-ua="МОБІЛЬНИЙ ЗАСТОСУНОК · 2026">MOBILE APP · 2026</span>
+        <span style="display:inline-flex; align-items:center; gap:8px; border:2px solid var(--rule); padding:5px 11px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; font-weight:700;"><span style="width:9px; height:9px; border-radius:50%; background:var(--teal);"></span><span data-en="LIVE ON THE APP STORE" data-ua="ВЖЕ В APP STORE">LIVE ON THE APP STORE</span></span>
+      </div>
       <div>
-        <h1 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(44px,6vw,92px); line-height:0.86; letter-spacing:-0.03em; margin:24px 0 0;">Mocktail<br>Finder</h1>
-        <p style="font-weight:500; font-size:clamp(17px,1.6vw,21px); line-height:1.45; color:var(--ink); max-width:440px; margin:24px 0 0;" data-en="Discover, save and craft 100+ alcohol-free cocktails — a calm home for mindful drinking." data-ua="Знаходь, зберігай і створюй 100+ безалкогольних коктейлів — спокійний дім для усвідомленого пиття.">Discover, save and craft 100+ alcohol-free cocktails — a calm home for mindful drinking.</p>
+        <h1 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(42px,6vw,92px); line-height:0.86; letter-spacing:-0.03em; margin:0;">Mocktail<br>Finder</h1>
+        <p style="font-weight:500; font-size:clamp(17px,1.6vw,21px); line-height:1.45; max-width:460px; margin:24px 0 0; text-wrap:pretty;" data-en="An iOS app for finding, saving and making alcohol-free drinks. I took it from a course project to the App Store — design, code and release." data-ua="iOS-застосунок, щоб знаходити, зберігати й готувати безалкогольні напої. Я провів його від курсового проєкту до App Store — дизайн, код і реліз.">An iOS app for finding, saving and making alcohol-free drinks. I took it from a course project to the App Store — design, code and release.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:30px; align-items:center;">
+          <a href="https://apps.apple.com/app/id6811610325" target="_blank" rel="noopener" data-cursor="1" data-cta="" style="display:inline-flex; align-items:center; gap:10px; background:var(--ink); color:var(--paper); border-radius:44px; padding:14px 26px; font-weight:700; font-size:16px; transition:filter .15s, transform .14s;" style-hover="transform:translateY(-2px);"><span data-en="Get it on the App Store ↗" data-ua="Завантажити в App Store ↗">Get it on the App Store ↗</span></a>
+          <a href="https://github.com/Vladyslav-XD/mocktail-finder" target="_blank" rel="noopener" data-cursor="1" style="display:inline-flex; align-items:center; border:2px solid var(--rule); border-radius:44px; padding:11px 18px; font-weight:600; font-size:14px;" style-hover="background:var(--stone);">GitHub ↗</a>
+          <a href="mocktail-finder-privacy.html" data-cursor="1" style="display:inline-flex; align-items:center; border:2px solid var(--rule); border-radius:44px; padding:11px 18px; font-weight:600; font-size:14px;" style-hover="background:var(--stone);" data-en="Privacy" data-ua="Приватність">Privacy</a>
+          <a href="mocktail-finder-support.html" data-cursor="1" style="display:inline-flex; align-items:center; border:2px solid var(--rule); border-radius:44px; padding:11px 18px; font-weight:600; font-size:14px;" style-hover="background:var(--stone);" data-en="Support" data-ua="Підтримка">Support</a>
+        </div>
       </div>
-      <div style="display:flex; gap:36px; flex-wrap:wrap; margin-top:36px; font-family:'Space Mono',monospace; font-size:12px;">
-        <div><div style="color:var(--muted); letter-spacing:0.1em;">ROLE</div><div style="margin-top:5px;">UX/UI · RN Dev</div></div>
-        <div><div style="color:var(--muted); letter-spacing:0.1em;">PLATFORM</div><div style="margin-top:5px;">iOS · Android</div></div>
-        <div><div style="color:var(--muted); letter-spacing:0.1em;">STACK</div><div style="margin-top:5px;">React Native</div></div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:18px 28px; font-family:'Space Mono',monospace; font-size:12px;">
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="ROLE" data-ua="РОЛЬ">ROLE</div><div style="margin-top:5px;" data-en="Design engineer" data-ua="Дизайн-інженер">Design engineer</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="PLATFORM" data-ua="ПЛАТФОРМА">PLATFORM</div><div style="margin-top:5px;">iOS · App Store</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="STACK" data-ua="СТЕК">STACK</div><div style="margin-top:5px;">Expo · React Native · TypeScript</div></div>
+        <div><div style="color:var(--muted); letter-spacing:0.1em;" data-en="YEAR" data-ua="РІК">YEAR</div><div style="margin-top:5px;">2026</div></div>
       </div>
     </div>
-    <div style="background:#0E5C57; position:relative; min-height:580px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:28px;">
-      <video id="mf-demo" src="assets/video/mocktail-finder/mocktail-demo4.mp4" muted loop autoplay playsinline preload="auto" style="width:auto; height:100%; max-height:560px; object-fit:cover; object-position:50% 0%; aspect-ratio:1080/1895; cursor:pointer; border-radius:48px;">px;"></video>
-      <button id="mf-play" aria-label="Play video" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:74px; height:74px; border-radius:50%; border:none; background:rgba(244,241,232,0.92); color:#14110B; font-size:26px; cursor:pointer; display:none; align-items:center; justify-content:center; padding-left:5px;">▶</button>
-    <div id="mf-ring" style="position: fixed; left: 98px; top: 259px; width: 12px; height: 12px; margin-left: -6px; margin-top: -6px; border: 1.5px solid var(--rule); border-radius: 50%; pointer-events: none; z-index: 91; opacity: 0; transition: width .2s,height .2s,margin .2s,opacity .3s; mix-blend-mode: difference"></div></div>
+    <div data-mq-heropanel="1" style="background:linear-gradient(160deg,#00B8A6 0%,#0098B6 100%); position:relative; min-height:580px; overflow:hidden; padding:0;">
+      <div id="mf-demo-slot" style="position:absolute; inset:0;">
+        {{ splash }}
+      </div>
+    </div>
   </section>
 
-  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
-    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">01 / CONTEXT</div>
+  <section data-screen-label="01 Context" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="01 / CONTEXT" data-ua="01 / КОНТЕКСТ">01 / CONTEXT</div>
     <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:760px;" data-en="Drinking culture changed.&lt;br&gt;The tools didn’t follow." data-ua="Культура пиття змінилась.&lt;br&gt;Інструменти — ні.">Drinking culture changed.<br>The tools didn’t follow.</h2>
-    <p data-reveal="" style="font-weight:500; font-size:17px; line-height:1.6; color:var(--muted); max-width:620px; margin:26px 0 44px;" data-en="A growing “sober-curious” audience wants the ritual and craft of a cocktail without the alcohol — but discovery still happens through scattered blog posts, screenshots and bar menus. There was no calm, dedicated home for the alcohol-free drink." data-ua="Аудиторія «sober-curious» прагне ритуалу й майстерності коктейлю без алкоголю — але пошук досі живе в розкиданих статтях, скріншотах і барних меню. Не було спокійного, окремого дому для безалкогольного напою.">A growing “sober-curious” audience wants the ritual and craft of a cocktail without the alcohol — but discovery still happens through scattered blog posts, screenshots and bar menus. There was no calm, dedicated home for the alcohol-free drink.</p>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-2col="1">
-      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);">SIGNAL 01</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="A ritual, not a compromise" data-ua="Ритуал, а не компроміс">A ritual, not a compromise</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="People skipping alcohol still want something that feels held — flavour, presentation and a name worth ordering." data-ua="Ті, хто відмовляється від алкоголю, хочуть відчуття вартісного — смак, подача й назва, яку хочеться замовити.">People skipping alcohol still want something that feels held — flavour, presentation and a name worth ordering.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);">SIGNAL 02</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="Recipes live nowhere" data-ua="Рецепти ніде не живуть">Recipes live nowhere</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="Mocktail recipes are buried in long articles and saved photos. Nothing lets you browse, filter and keep them in one place." data-ua="Рецепти губляться в довгих статтях і збережених фото. Ніщо не дає гортати, фільтрувати й тримати їх в одному місці.">Mocktail recipes are buried in long articles and saved photos. Nothing lets you browse, filter and keep them in one place.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);">SIGNAL 03</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="Generic apps miss the craft" data-ua="Загальні застосунки не про майстерність">Generic apps miss the craft</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="Recipe apps treat drinks as an afterthought — no ingredient filters, no “surprise me”, no space to add your own." data-ua="Рецептні застосунки ставляться до напоїв як до другорядного — без фільтрів інгредієнтів, без «здивуй мене», без місця для власних.">Recipe apps treat drinks as an afterthought — no ingredient filters, no “surprise me”, no space to add your own.</p></div>
+    <p data-reveal="" style="font-weight:500; font-size:17px; line-height:1.6; color:var(--muted); max-width:620px; margin:26px 0 44px;" data-en="A growing “sober-curious” audience wants the ritual of a cocktail without the alcohol, but recipes still live in scattered blog posts, screenshots and bar menus. There was no calm, dedicated place for the alcohol-free drink." data-ua="Дедалі більше людей «sober-curious» хочуть ритуалу коктейлю без алкоголю, але рецепти досі розкидані по блогах, скріншотах і барних меню. Не було спокійного, окремого місця для безалкогольного напою.">A growing “sober-curious” audience wants the ritual of a cocktail without the alcohol, but recipes still live in scattered blog posts, screenshots and bar menus. There was no calm, dedicated place for the alcohol-free drink.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-1col="1">
+      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);" data-en="SIGNAL 01" data-ua="СИГНАЛ 01">SIGNAL 01</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="A ritual, not a compromise" data-ua="Ритуал, а не компроміс">A ritual, not a compromise</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="People skipping alcohol still want a drink that feels considered: flavour, presentation and a name worth ordering." data-ua="Ті, хто не п’є алкоголь, усе одно хочуть продуманого напою: смак, подачу й назву, яку хочеться замовити.">People skipping alcohol still want a drink that feels considered: flavour, presentation and a name worth ordering.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);" data-en="SIGNAL 02" data-ua="СИГНАЛ 02">SIGNAL 02</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="Recipes live nowhere" data-ua="Рецепти ніде не живуть">Recipes live nowhere</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="Mocktail recipes are buried in long articles and saved photos. Nothing lets you browse, filter and keep them in one place." data-ua="Рецепти губляться в довгих статтях і збережених фото. Ніщо не дає гортати, фільтрувати й тримати їх в одному місці.">Mocktail recipes are buried in long articles and saved photos. Nothing lets you browse, filter and keep them in one place.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:26px;"><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted);" data-en="SIGNAL 03" data-ua="СИГНАЛ 03">SIGNAL 03</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px; margin:12px 0 8px;" data-en="Generic apps miss the craft" data-ua="Загальні застосунки не про майстерність">Generic apps miss the craft</div><p style="font-weight:500; font-size:14px; line-height:1.5; color:var(--muted); margin:0;" data-en="Recipe apps treat drinks as an afterthought: no ingredient filters, no “surprise me”, no space to add your own." data-ua="Рецептні застосунки ставляться до напоїв як до другорядного: без фільтрів за інгредієнтами, без «здивуй мене», без місця для власних.">Recipe apps treat drinks as an afterthought: no ingredient filters, no “surprise me”, no space to add your own.</p></div>
     </div>
   </section>
 
-  <section data-band style="background:var(--blue); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:80px 48px; text-align:center; clip-path:inset(0 100% 0 0);" data-mq-pad="1">
-    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#c5cffb;">02 / PRODUCT GOAL</div>
-    <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(30px,5.2vw,72px); line-height:0.96; letter-spacing:-0.02em; margin:20px auto 0; max-width:900px;" data-en="Find, save and create a great alcohol-free drink — in under a minute." data-ua="Знайти, зберегти й створити чудовий безалкогольний напій — менш ніж за хвилину.">Find, save and create a great alcohol-free drink — in under a minute.</h2>
-    <p style="font-weight:500; font-size:16px; line-height:1.55; color:#dbe2fc; max-width:560px; margin:22px auto 0;" data-en="One clear job, done simply: a single, friendly home where anyone can discover mocktails by category or ingredient, keep the ones they love, and build their own." data-ua="Одне чітке завдання, зроблене просто: єдиний дружній дім, де кожен знаходить мокteйли за категорією чи інгредієнтом, зберігає улюблені й створює власні.">One clear job, done simply: a single, friendly home where anyone can discover mocktails by category or ingredient, keep the ones they love, and build their own.</p>
+  <section data-screen-label="02 Product goal" data-band="" style="background:var(--blue); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:80px 48px; text-align:center; clip-path:inset(0 100% 0 0);" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#c5cffb;" data-en="02 / PRODUCT GOAL" data-ua="02 / ЦІЛЬ ПРОДУКТУ">02 / PRODUCT GOAL</div>
+    <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(28px,5.2vw,72px); line-height:0.96; letter-spacing:-0.02em; margin:20px auto 0; max-width:900px;" data-en="Find, save and create a great alcohol-free drink in under a minute." data-ua="Знайти, зберегти й створити чудовий безалкогольний напій менш ніж за хвилину.">Find, save and create a great alcohol-free drink in under a minute.</h2>
+    <p style="font-weight:500; font-size:16px; line-height:1.55; color:#dbe2fc; max-width:560px; margin:22px auto 0;" data-en="One clear job, done simply: one friendly place to find drinks by character or ingredient, keep the ones you love, and add your own." data-ua="Одне чітке завдання, зроблене просто: одне дружнє місце, щоб знаходити напої за характером чи інгредієнтом, зберігати улюблені й додавати власні.">One clear job, done simply: one friendly place to find drinks by character or ingredient, keep the ones you love, and add your own.</p>
   </section>
 
-  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
-    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">03 / PROCESS</div>
-    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:680px;" data-en="From a loose idea to a shipped product." data-ua="Від сирої ідеї до готового продукту.">From a loose idea to a shipped product.</h2>
-    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:22px 0 40px;" data-en="The project moved through a complete cycle — understanding the user, structuring the experience, designing the interface, then building and refining it as a real React Native app." data-ua="Проєкт пройшов повний цикл — розуміння користувача, структурування досвіду, дизайн інтерфейсу, далі — збірка й доведення як реального React Native застосунку.">The project moved through a complete cycle — understanding the user, structuring the experience, designing the interface, then building and refining it as a real React Native app.</p>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-2col="1">
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--red);">01</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Research" data-ua="Дослідження">Research</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Looked at how people find and keep non-alcoholic recipes." data-ua="Як люди знаходять і зберігають безалкогольні рецепти.">Looked at how people find and keep non-alcoholic recipes.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--blue);">02</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="User goals" data-ua="Цілі користувача">User goals</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Defined the core jobs: discover, decide, save, create." data-ua="Ключові задачі: знайти, вирішити, зберегти, створити.">Defined the core jobs: discover, decide, save, create.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:#caa400;">03</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="User flows" data-ua="Користувацькі флоу">User flows</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Mapped every path including share, empty and random states." data-ua="Усі шляхи, включно з share, порожніми й випадковими станами.">Mapped every path including share, empty and random states.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--ink);">04</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Architecture" data-ua="Архітектура">Architecture</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Reduced the app to four screens and one bottom navigation." data-ua="Звів застосунок до чотирьох екранів і однієї нижньої навігації.">Reduced the app to four screens and one bottom navigation.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--red);">05</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="UI design" data-ua="UI дизайн">UI design</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Built a compact system: colour, type, cards, chips, states." data-ua="Компактна система: колір, тип, картки, чипи, стани.">Built a compact system: colour, type, cards, chips, states.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--blue);">06</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Prototype" data-ua="Прототип">Prototype</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Wired a clickable flow to test discovery and the add-recipe form." data-ua="Клікабельний флоу для тесту пошуку й форми додавання.">Wired a clickable flow to test discovery and the add-recipe form.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:#caa400;">07</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Implementation" data-ua="Реалізація">Implementation</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Translated the design into reusable React Native components." data-ua="Переніс дизайн у перевикористовувані React Native компоненти.">Translated the design into reusable React Native components.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--ink);">08</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Testing" data-ua="Тестування">Testing</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Checked navigation, validation and the empty / error states." data-ua="Перевірив навігацію, валідацію та порожні / помилкові стани.">Checked navigation, validation and the empty / error states.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:140px;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--red);">09</div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px; margin:10px 0 6px;" data-en="Optimization" data-ua="Оптимізація">Optimization</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:0;" data-en="Tuned animation performance and refined naming and labels." data-ua="Підлаштував анімації та вдосконалив назви й підписи.">Tuned animation performance and refined naming and labels.</p></div>
+  <section data-screen-label="03 Course to App Store" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="03 / FROM COURSE PROJECT TO APP STORE" data-ua="03 / ВІД КУРСОВОГО ПРОЄКТУ ДО APP STORE">03 / FROM COURSE PROJECT TO APP STORE</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:820px;" data-en="A working app is not a product. Fourteen days closed the gap." data-ua="Робочий застосунок — ще не продукт. Чотирнадцять днів закрили цю різницю.">A working app is not a product. Fourteen days closed the gap.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:640px; margin:22px 0 0;" data-en="The course gave me a working app. The release asked for everything a course doesn’t check: real content, real data handling, real review." data-ua="Курс дав мені робочий застосунок. Реліз вимагав усього, що курс не перевіряє: справжнього контенту, справжньої роботи з даними, справжнього рев’ю.">The course gave me a working app. The release asked for everything a course doesn’t check: real content, real data handling, real review.</p>
+    <div data-tl="" style="display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); margin-top:56px;">
+      <div data-tl-stage="" data-reveal="" style="position:relative; border-top:3px solid var(--rule); padding:28px 18px 0 0;">
+        <span data-tl-dot="" style="position:absolute; left:0; top:-11px; width:19px; height:19px; background:var(--red); border:3px solid var(--rule);"></span>
+        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);" data-en="2026 · COURSE" data-ua="2026 · КУРС">2026 · COURSE</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.15; margin:10px 0 8px;" data-en="Course project" data-ua="Курсовий проєкт">Course project</div>
+        <p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Designed and built as my final project for a React Native course: research, user goals, flows, a UI system and a working app." data-ua="Спроєктував і зібрав як фінальний проєкт курсу React Native: дослідження, цілі користувача, флоу, UI-система й робочий застосунок.">Designed and built as my final project for a React Native course: research, user goals, flows, a UI system and a working app.</p>
+        <p style="font-family:'Space Mono',monospace; font-size:11px; line-height:1.7; margin:12px 0 0;" data-en="Research · User goals · User flows · Architecture · UI system · Prototype · Build · Testing · Optimisation" data-ua="Дослідження · Цілі · Флоу · Архітектура · UI-система · Прототип · Збірка · Тестування · Оптимізація">Research · User goals · User flows · Architecture · UI system · Prototype · Build · Testing · Optimisation</p>
+      </div>
+      <div data-tl-stage="" data-reveal="" style="position:relative; border-top:3px solid var(--rule); padding:28px 18px 0 0;">
+        <span data-tl-dot="" style="position:absolute; left:0; top:-11px; width:19px; height:19px; background:var(--yellow); border:3px solid var(--rule);"></span>
+        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);" data-en="8 SEP" data-ua="8 ВЕР">8 SEP</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.15; margin:10px 0 8px;" data-en="Release audit" data-ua="Аудит перед релізом">Release audit</div>
+        <p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="What separated a course project from a product: template app config, the default icon, a test API key, data kept only in memory, mixed languages, a 5.5-second splash, no retry when the network failed." data-ua="Що відділяло курсовий проєкт від продукту: шаблонна конфігурація, стандартна іконка, тестовий API-ключ, дані лише в пам’яті, змішані мови, 5,5-секундний сплеш, жодного повтору при збої мережі.">What separated a course project from a product: template app config, the default icon, a test API key, data kept only in memory, mixed languages, a 5.5-second splash, no retry when the network failed.</p>
+      </div>
+      <div data-tl-stage="" data-reveal="" style="position:relative; border-top:3px solid var(--rule); padding:28px 18px 0 0;">
+        <span data-tl-dot="" style="position:absolute; left:0; top:-11px; width:19px; height:19px; background:var(--blue); border:3px solid var(--rule);"></span>
+        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);" data-en="9–13 SEP" data-ua="9–13 ВЕР">9–13 SEP</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.15; margin:10px 0 8px;" data-en="Release preparation" data-ua="Підготовка до релізу">Release preparation</div>
+        <p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Data saved on the device, a new icon and splash, English copy throughout, safe areas and keyboard handling, error states with “Try again”, a shorter splash, a clean share format." data-ua="Дані зберігаються на пристрої, нова іконка й сплеш, увесь текст англійською, безпечні зони й робота з клавіатурою, стани помилок із «Спробувати ще», коротший сплеш, чистий формат поширення.">Data saved on the device, a new icon and splash, English copy throughout, safe areas and keyboard handling, error states with “Try again”, a shorter splash, a clean share format.</p>
+      </div>
+      <div data-tl-stage="" data-reveal="" style="position:relative; border-top:3px solid var(--rule); padding:28px 18px 0 0;">
+        <span data-tl-dot="" style="position:absolute; left:0; top:-11px; width:19px; height:19px; background:var(--ink); border:3px solid var(--rule);"></span>
+        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);" data-en="15 SEP" data-ua="15 ВЕР">15 SEP</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.15; margin:10px 0 8px;" data-en="TestFlight on my iPhone" data-ua="TestFlight на моєму iPhone">TestFlight on my iPhone</div>
+        <p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Every card had the same subtitle, and the “100+ drinks” in the copy wasn’t true. I rewrote the copy, built character tags from the ingredients, made the filters real and added photos to your own recipes. Submitted for review." data-ua="Усі картки мали однаковий підзаголовок, а «100+ напоїв» у тексті не відповідало дійсності. Я переписав тексти, зібрав теги характеру з інгредієнтів, зробив фільтри справжніми й додав фото до власних рецептів. Відправив на рев’ю.">Every card had the same subtitle, and the “100+ drinks” in the copy wasn’t true. I rewrote the copy, built character tags from the ingredients, made the filters real and added photos to your own recipes. Submitted for review.</p>
+      </div>
+      <div data-tl-stage="" data-reveal="" style="position:relative; border-top:3px solid var(--rule); padding:28px 18px 0 0;">
+        <span data-tl-dot="" style="position:absolute; left:0; top:-11px; width:19px; height:19px; background:var(--red); border:3px solid var(--rule);"></span>
+        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);" data-en="16 SEP" data-ua="16 ВЕР">16 SEP</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.15; margin:10px 0 8px;" data-en="App Review asks for more" data-ua="App Review просить більше">App Review asks for more</div>
+        <p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Common for new developer accounts. I answered the same day with a 3-minute screen recording from the iPhone and a written walkthrough." data-ua="Звична річ для нових акаунтів розробника. Я відповів того ж дня: 3-хвилинний запис екрана з iPhone і письмовий покроковий опис.">Common for new developer accounts. I answered the same day with a 3-minute screen recording from the iPhone and a written walkthrough.</p>
+      </div>
+      <div data-tl-stage="" data-reveal="" style="position:relative; border-top:3px solid var(--rule); padding:28px 18px 0 0;">
+        <span data-tl-dot="" style="position:absolute; left:0; top:-11px; width:19px; height:19px; background:var(--teal); border:3px solid var(--rule);"></span>
+        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--teal); font-weight:700;" data-en="22 SEP" data-ua="22 ВЕР">22 SEP</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.15; margin:10px 0 8px;" data-en="Approved" data-ua="Схвалено">Approved</div>
+        <p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="Version 1.0 released in 173 countries and regions." data-ua="Версія 1.0 вийшла в 173 країнах і регіонах.">Version 1.0 released in 173 countries and regions.</p>
+      </div>
+      <div data-tl-stage="" data-reveal="" style="position:relative; border-top:3px solid var(--rule); padding:28px 0 0 0;">
+        <span data-tl-dot="" style="position:absolute; left:0; top:-11px; width:19px; height:19px; background:var(--paper); border:3px dashed var(--rule);"></span>
+        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);" data-en="24 SEP" data-ua="24 ВЕР">24 SEP</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.15; margin:10px 0 8px;" data-en="Version 1.1 released" data-ua="Версію 1.1 випущено">Version 1.1 released</div>
+        <p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:0;" data-en="New photos for every drink, the camera for recipe photos, edit and delete for your own recipes, and the app remembers light, dark or system theme." data-ua="Нові фото для кожного напою, камера для фото рецептів, редагування й видалення власних рецептів, а застосунок пам’ятає світлу, темну чи системну тему.">New photos for every drink, the camera for recipe photos, edit and delete for your own recipes, and the app remembers light, dark or system theme.</p>
+      </div>
     </div>
   </section>
 
-  <section style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
-    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">04 / USER FLOW</div>
+  <section data-screen-label="Numbers" style="background:var(--rule); border-bottom:5px solid var(--rule); padding:0;">
+    <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px;" data-mq-2col="1">
+      <div style="background:var(--blue); color:#F4F1E8; padding:30px 24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(40px,4.4vw,64px); line-height:1;">14</div><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.08em; color:#dbe2fc; margin-top:10px;" data-en="DAYS FROM AUDIT TO APP STORE" data-ua="ДНІВ ВІД АУДИТУ ДО APP STORE">DAYS FROM AUDIT TO APP STORE</div></div>
+      <div style="background:var(--surface); padding:30px 24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(40px,4.4vw,64px); line-height:1;">173</div><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.08em; color:var(--muted); margin-top:10px;" data-en="COUNTRIES AND REGIONS" data-ua="КРАЇНИ Й РЕГІОНИ">COUNTRIES AND REGIONS</div></div>
+      <div style="background:var(--surface); padding:30px 24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(40px,4.4vw,64px); line-height:1;">2</div><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.08em; color:var(--muted); margin-top:10px;" data-en="RELEASES" data-ua="РЕЛІЗИ">RELEASES</div></div>
+      <div style="background:var(--yellow); color:#14110B; padding:30px 24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(40px,4.4vw,64px); line-height:1;">0</div><div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.08em; margin-top:10px;" data-en="PERSONAL DATA COLLECTED" data-ua="ЗІБРАНИХ ПЕРСОНАЛЬНИХ ДАНИХ">PERSONAL DATA COLLECTED</div></div>
+    </div>
+  </section>
+
+  <section data-screen-label="04 Role" style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="04 / MY ROLE: DESIGN ENGINEER" data-ua="04 / МОЯ РОЛЬ: ДИЗАЙН-ІНЖЕНЕР">04 / MY ROLE: DESIGN ENGINEER</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:760px;" data-en="One person, from research to release." data-ua="Одна людина — від дослідження до релізу.">One person, from research to release.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:680px; margin:22px 0 14px;" data-en="I worked with Claude, Anthropic’s AI, as a build partner: Claude Code for the code, Cowork for release operations and QA, Claude Design for the App Store screenshots." data-ua="Я працював із Claude, ШІ від Anthropic, як із партнером зі збірки: Claude Code — для коду, Cowork — для релізних операцій і QA, Claude Design — для скріншотів App Store.">I worked with Claude, Anthropic’s AI, as a build partner: Claude Code for the code, Cowork for release operations and QA, Claude Design for the App Store screenshots.</p>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:680px; margin:0 0 40px;" data-en="I owned the product decisions, the UX and the UI, reviewed and tested every change on the device, and ran the release myself: the Apple Developer account, the App Store Connect listing, the privacy answers and App Review." data-ua="Продуктові рішення, UX і UI були на мені; кожну зміну я переглядав і тестував на пристрої, а реліз провів сам: акаунт Apple Developer, сторінка в App Store Connect, відповіді про приватність і App Review.">I owned the product decisions, the UX and the UI, reviewed and tested every change on the device, and ran the release myself: the Apple Developer account, the App Store Connect listing, the privacy answers and App Review.</p>
+    <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-4col="1">
+      <div data-reveal="" style="background:var(--surface); display:flex; flex-direction:column;">
+        <div style="background:var(--red); color:#F4F1E8; padding:18px 22px; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;" data-en="Product" data-ua="Продукт">Product</div>
+        <div style="padding:20px 22px; display:flex; flex-direction:column; gap:12px; font-weight:500; font-size:14px; line-height:1.5;">
+          <div data-en="Scope for 1.0 vs 1.1." data-ua="Обсяг 1.0 проти 1.1.">Scope for 1.0 vs 1.1.</div>
+          <div data-en="Honest content: no inflated claims." data-ua="Чесний контент: жодних роздутих обіцянок.">Honest content: no inflated claims.</div>
+          <div data-en="Private by default: no account, no data collected." data-ua="Приватність за замовчуванням: без акаунта, без збору даних.">Private by default: no account, no data collected.</div>
+        </div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); display:flex; flex-direction:column;">
+        <div style="background:var(--blue); color:#F4F1E8; padding:18px 22px; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;" data-en="Design" data-ua="Дизайн">Design</div>
+        <div style="padding:20px 22px; display:flex; flex-direction:column; gap:12px; font-weight:500; font-size:14px; line-height:1.5;">
+          <div data-en="UI system in light and dark." data-ua="UI-система у світлій і темній темах.">UI system in light and dark.</div>
+          <div data-en="Flows and states; App Store screenshots." data-ua="Флоу й стани; скріншоти для App Store.">Flows and states; App Store screenshots.</div>
+          <div data-en="Drink photos in one studio style, generated from my own brief." data-ua="Фото напоїв в одному студійному стилі, згенеровані за моїм брифом.">Drink photos in one studio style, generated from my own brief.</div>
+        </div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); display:flex; flex-direction:column;">
+        <div style="background:var(--yellow); color:#14110B; padding:18px 22px; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;" data-en="Build" data-ua="Збірка">Build</div>
+        <div style="padding:20px 22px; display:flex; flex-direction:column; gap:12px; font-weight:500; font-size:14px; line-height:1.5;">
+          <div data-en="React Native and TypeScript app; on-device storage." data-ua="Застосунок на React Native і TypeScript; зберігання на пристрої.">React Native and TypeScript app; on-device storage.</div>
+          <div data-en="API integration with caching." data-ua="Інтеграція з API і кешування.">API integration with caching.</div>
+          <div data-en="Camera and photo library; a theme that persists." data-ua="Камера й фотобібліотека; тема, що зберігається.">Camera and photo library; a theme that persists.</div>
+        </div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); display:flex; flex-direction:column;">
+        <div style="background:#14110B; color:#F4F1E8; padding:18px 22px; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px;" data-en="Ship" data-ua="Реліз">Ship</div>
+        <div style="padding:20px 22px; display:flex; flex-direction:column; gap:12px; font-weight:500; font-size:14px; line-height:1.5;">
+          <div data-en="Cloud builds; TestFlight tests on the iPhone." data-ua="Хмарні збірки; тести в TestFlight на iPhone.">Cloud builds; TestFlight tests on the iPhone.</div>
+          <div data-en="App Store Connect and App Review." data-ua="App Store Connect і App Review.">App Store Connect and App Review.</div>
+          <div data-en="Two releases in about two weeks." data-ua="Два релізи приблизно за два тижні.">Two releases in about two weeks.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="05 User flow" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="05 / USER FLOW" data-ua="05 / КОРИСТУВАЦЬКИЙ ФЛОУ">05 / USER FLOW</div>
     <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,4vw,50px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:720px;" data-en="From “I want a drink” to a saved recipe." data-ua="Від «хочу напій» до збереженого рецепта.">From “I want a drink” to a saved recipe.</h2>
-    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:22px 0 40px;" data-en="The main journey is deliberately short. Every entry point — search, category or a random suggestion — leads to the same rich detail screen, where the drink can be saved or shared." data-ua="Головний шлях навмисно короткий. Будь-яка точка входу — пошук, категорія чи випадкова підказка — веде до одного детального екрана, де напій можна зберегти чи поділитися.">The main journey is deliberately short. Every entry point — search, category or a random suggestion — leads to the same rich detail screen, where the drink can be saved or shared.</p>
-    <div data-reveal="" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; font-family:'Space Mono',monospace; font-size:13px;">
-      <span style="background:#14110B; color:#F4F1E8; padding:9px 14px;">Open app</span>
-      <span style="color:var(--muted);">→</span>
-      <span style="background:var(--blue); color:#F4F1E8; padding:9px 14px;">Home</span>
-      <span style="color:var(--muted);">→</span>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:22px 0 40px;" data-en="The main journey is short on purpose. Every entry point leads to the same recipe screen, where the drink can be saved or shared. The second path is for your own drinks." data-ua="Головний шлях навмисно короткий. Кожна точка входу веде до одного екрана рецепта, де напій можна зберегти чи поширити. Другий шлях — для власних напоїв.">The main journey is short on purpose. Every entry point leads to the same recipe screen, where the drink can be saved or shared. The second path is for your own drinks.</p>
+    <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted); margin-bottom:12px;" data-en="PATH A · DISCOVER" data-ua="ШЛЯХ A · ЗНАЙТИ">PATH A · DISCOVER</div>
+    <div data-reveal="" data-flow="" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; font-family:'Space Mono',monospace; font-size:13px;">
+      <span style="background:#14110B; color:#F4F1E8; padding:9px 14px;" data-en="Open app" data-ua="Відкрити застосунок">Open app</span>
+      <span data-arrow="" style="color:var(--muted);">→</span>
       <span style="display:flex; flex-direction:column; gap:6px;">
-        <span style="border:1.5px solid var(--rule); padding:7px 12px;">Search by name</span>
-        <span style="border:1.5px solid var(--rule); padding:7px 12px;">Browse category</span>
-        <span style="border:1.5px dashed var(--blue); padding:7px 12px;">Surprise me</span>
+        <span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Search by name" data-ua="Пошук за назвою">Search by name</span>
+        <span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Filter by character or ingredient" data-ua="Фільтр за характером чи інгредієнтом">Filter by character or ingredient</span>
+        <span style="border:1.5px dashed var(--blue); padding:7px 12px;" data-en="Surprise me" data-ua="Здивуй мене">Surprise me</span>
       </span>
-      <span style="color:var(--muted);">→</span>
-      <span style="background:#0E8C82; color:#F4F1E8; padding:9px 14px;">Recipe details</span>
-      <span style="color:var(--muted);">→</span>
+      <span data-arrow="" style="color:var(--muted);">→</span>
+      <span style="background:#0E8C82; color:#F4F1E8; padding:9px 14px;" data-en="Recipe" data-ua="Рецепт">Recipe</span>
+      <span data-arrow="" style="color:var(--muted);">→</span>
       <span style="display:flex; flex-direction:column; gap:6px;">
-        <span style="background:var(--red); color:#F4F1E8; padding:7px 12px;">♥ Add to favourites</span>
-        <span style="border:1.5px solid var(--rule); padding:7px 12px;">Share recipe</span>
+        <span style="background:var(--red); color:#F4F1E8; padding:7px 12px;" data-en="♥ Save" data-ua="♥ Зберегти">♥ Save</span>
+        <span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Share" data-ua="Поширити">Share</span>
       </span>
-      <span style="color:var(--muted);">→</span>
-      <span style="background:var(--yellow); color:#14110B; padding:9px 14px;">Favourites</span>
+      <span data-arrow="" style="color:var(--muted);">→</span>
+      <span style="background:var(--yellow); color:#14110B; padding:9px 14px;" data-en="Favourites" data-ua="Обране">Favourites</span>
+    </div>
+    <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted); margin:34px 0 12px;" data-en="PATH B · CREATE" data-ua="ШЛЯХ B · СТВОРИТИ">PATH B · CREATE</div>
+    <div data-reveal="" data-flow="" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; font-family:'Space Mono',monospace; font-size:13px;">
+      <span style="background:var(--blue); color:#F4F1E8; padding:9px 14px;" data-en="Add Recipe tab" data-ua="Вкладка Add Recipe">Add Recipe tab</span>
+      <span data-arrow="" style="color:var(--muted);">→</span>
+      <span style="border:1.5px solid var(--rule); padding:9px 14px;" data-en="Add your own (with a photo)" data-ua="Додати свій (з фото)">Add your own (with a photo)</span>
+      <span data-arrow="" style="color:var(--muted);">→</span>
+      <span style="background:#0E8C82; color:#F4F1E8; padding:9px 14px;" data-en="My Recipes" data-ua="Мої рецепти">My Recipes</span>
+      <span data-arrow="" style="color:var(--muted);">→</span>
+      <span style="border:1.5px solid var(--rule); padding:9px 14px;" data-en="Edit / Delete" data-ua="Редагувати / Видалити">Edit / Delete</span>
     </div>
   </section>
 
-  <section style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
-    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">05 / INFORMATION ARCHITECTURE</div>
-    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:600px;" data-en="Four screens. One bar.&lt;br&gt;Nothing to get lost in." data-ua="Чотири екрани. Одна панель.&lt;br&gt;Ніде загубитись.">Four screens. One bar.<br>Nothing to get lost in.</h2>
-    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:22px 0 40px;" data-en="Built around four core actions, each mapped to a screen. A single bottom navigation keeps the whole product one tap away." data-ua="Побудовано навколо чотирьох дій, кожна — окремий екран. Одна нижня навігація тримає весь продукт за один тап.">Built around four core actions, each mapped to a screen. A single bottom navigation keeps the whole product one tap away.</p>
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-2col="1">
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:130px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px;">Home</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Browse, search &amp; filter — the entry point." data-ua="Огляд, пошук і фільтр — точка входу.">Browse, search &amp; filter — the entry point.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:130px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px;">Recipe Details</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Ingredients, steps &amp; the save / share actions." data-ua="Інгредієнти, кроки та дії зберегти / поділитися.">Ingredients, steps &amp; the save / share actions.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:130px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px;">Favourites</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Saved recipes, with an empty state for newcomers." data-ua="Збережені рецепти, з порожнім станом для новачків.">Saved recipes, with an empty state for newcomers.</p></div>
-      <div data-reveal="" style="background:var(--surface); padding:24px; min-height:130px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:18px;">Add Recipe</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Create a custom mocktail with live validation." data-ua="Створити власний мокteйль з валідацією наживо.">Create a custom mocktail with live validation.</p></div>
+  <section data-screen-label="06 IA" style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="06 / INFORMATION ARCHITECTURE" data-ua="06 / ІНФОРМАЦІЙНА АРХІТЕКТУРА">06 / INFORMATION ARCHITECTURE</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0; max-width:600px;" data-en="Three tabs. Five screens." data-ua="Три вкладки. П’ять екранів.">Three tabs. Five screens.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:22px 0 40px;" data-en="The tab bar holds the three jobs. Recipe, Surprise and Edit open on top of them and close back to where you were." data-ua="Панель вкладок тримає три задачі. Рецепт, Сюрприз і Редагування відкриваються поверх і повертають туди, де ви були.">The tab bar holds the three jobs. Recipe, Surprise and Edit open on top of them and close back to where you were.</p>
+    <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted); margin-bottom:10px;" data-en="TABS" data-ua="ВКЛАДКИ">TABS</div>
+    <div data-reveal="" style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; background:var(--rule); border:2px solid var(--rule);">
+      <div style="background:var(--blue); color:#F4F1E8; padding:16px 12px; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(12px,1.6vw,18px);">Home</div>
+      <div style="background:var(--red); color:#F4F1E8; padding:16px 12px; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(12px,1.6vw,18px);">Favourites</div>
+      <div style="background:var(--yellow); color:#14110B; padding:16px 12px; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(12px,1.6vw,18px);">Add Recipe</div>
+    </div>
+    <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted); margin:28px 0 10px;" data-en="SCREENS" data-ua="ЕКРАНИ">SCREENS</div>
+    <div style="display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-2col="1">
+      <div data-reveal="" style="background:var(--surface); padding:22px; border-top:6px solid var(--blue);"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px;">Home</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Search, character and ingredient filters, featured drinks." data-ua="Пошук, фільтри за характером та інгредієнтами, добірка напоїв.">Search, character and ingredient filters, featured drinks.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:22px; border-top:6px solid var(--blue);"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px;" data-en="Recipe" data-ua="Рецепт">Recipe</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Tags, ingredients, steps; save and share." data-ua="Теги, інгредієнти, кроки; зберегти й поширити.">Tags, ingredients, steps; save and share.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:22px; border-top:6px dashed var(--blue);"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px;" data-en="Surprise" data-ua="Сюрприз">Surprise</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="One random drink when you can’t decide." data-ua="Один випадковий напій, коли не можеш обрати.">One random drink when you can’t decide.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:22px; border-top:6px solid var(--red);"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px;">Favourites</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Saved drinks, kept on the phone." data-ua="Збережені напої, що живуть на телефоні.">Saved drinks, kept on the phone.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:22px; border-top:6px solid var(--yellow);"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:17px;" data-en="Add / Edit recipe" data-ua="Додати / Редагувати">Add / Edit recipe</div><p style="font-weight:500; font-size:13px; line-height:1.5; color:var(--muted); margin:8px 0 0;" data-en="Photo, name, character, ingredients, steps." data-ua="Фото, назва, характер, інгредієнти, кроки.">Photo, name, character, ingredients, steps.</p></div>
     </div>
   </section>
 
-  <section style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
-    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:#0E8C82; margin-bottom:18px;">06 / KEY SCREENS</div>
-    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 12px; max-width:600px;" data-en="The product, screen by screen." data-ua="Продукт, екран за екраном.">The product, screen by screen.</h2>
-    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:600px; margin:0 0 40px;" data-en="Every screen ships in both light and dark mode — discovery, recipe detail, favourites and a create-your-own flow with live validation." data-ua="Кожен екран — у світлій і темній темі: пошук, деталі рецепта, обране та власний флоу створення з валідацією наживо.">Every screen ships in both light and dark mode — discovery, recipe detail, favourites and a create-your-own flow with live validation.</p>
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-2col="1">
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-1.png" alt="Home" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">01 · HOME</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-8.png" alt="Home dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">02 · HOME · DARK</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-2.png" alt="Recipe ingredients" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">03 · RECIPE · INGREDIENTS</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-3.png" alt="Recipe steps" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">04 · RECIPE · STEPS</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-4.png" alt="Recipe dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">05 · RECIPE · DARK</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-5.png" alt="Favourites" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">06 · FAVOURITES</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-10.png" alt="Favourites empty" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">07 · FAVOURITES · EMPTY</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-9.png" alt="Favourites empty dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">08 · EMPTY · DARK</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-6.png" alt="Add recipe" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">09 · ADD RECIPE</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-7.png" alt="Add recipe filled" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">10 · ADD · FILLED</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-11.png" alt="Add recipe dark" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">11 · ADD · DARK</div></div>
-      <div style="background:var(--surface); padding:16px;"><img loading="lazy" src="assets/images/mocktail-finder/mf-12.png" alt="Add recipe validation" style="width:100%; display:block;"><div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;">12 · ADD · VALIDATION</div></div>
+  <section data-screen-label="07 Key screens" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="07 / KEY SCREENS · VERSION 1.1" data-ua="07 / КЛЮЧОВІ ЕКРАНИ · ВЕРСІЯ 1.1">07 / KEY SCREENS · VERSION 1.1</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 12px; max-width:640px;" data-en="The product, screen by screen." data-ua="Продукт, екран за екраном.">The product, screen by screen.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:0 0 40px;" data-en="Captured on my iPhone from the 1.1 build, in light and dark." data-ua="Зняті на моєму iPhone зі збірки 1.1, у світлій і темній темах.">Captured on my iPhone from the 1.1 build, in light and dark.</p>
+    <div data-screens="" style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; background:var(--rule); border:2px solid var(--rule);">
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-home.webp" alt="Home screen, light theme: search, category chips, ingredient filters and a featured drink" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="01 · HOME" data-ua="01 · ГОЛОВНА">01 · HOME</figcaption></figure>
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-home-dark.webp" alt="Home screen, dark theme" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="02 · HOME · DARK" data-ua="02 · ГОЛОВНА · ТЕМНА">02 · HOME · DARK</figcaption></figure>
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-warm-dark.webp" alt="Featured hot chocolates in the dark theme, one saved as a favourite" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="03 · FEATURED · DARK" data-ua="03 · ДОБІРКА · ТЕМНА">03 · FEATURED · DARK</figcaption></figure>
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-recipe.webp" alt="Apple Berry Smoothie recipe: Berry and Fruity tags, ingredients and a preparation step" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="04 · RECIPE" data-ua="04 · РЕЦЕПТ">04 · RECIPE</figcaption></figure>
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-recipe-dark.webp" alt="Chocolate Beverage recipe in the dark theme with Hot, Chocolate, Spiced and Creamy tags" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="05 · RECIPE · DARK" data-ua="05 · РЕЦЕПТ · ТЕМНА">05 · RECIPE · DARK</figcaption></figure>
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-recipe-actions.webp" alt="Recipe screen with Add to Favourites and Share Recipe buttons" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="06 · SAVE &amp; SHARE" data-ua="06 · ЗБЕРЕГТИ Й ПОШИРИТИ">06 · SAVE &amp; SHARE</figcaption></figure>
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-favourites.webp" alt="Favourites tab with two saved drinks" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="07 · FAVOURITES" data-ua="07 · ОБРАНЕ">07 · FAVOURITES</figcaption></figure>
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-add.webp" alt="Add Recipe form: optional photo, name, description and up to three character tags" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="08 · ADD RECIPE" data-ua="08 · ДОДАТИ РЕЦЕПТ">08 · ADD RECIPE</figcaption></figure>
+      <figure style="background:var(--surface); padding:18px; margin:0;"><img loading="lazy" src="assets/images/mocktail-finder/mf11-add-steps.webp" alt="Add Recipe form: ingredients with amounts, preparation steps and Save Recipe" style="width:100%; display:block; border-radius:18px;"><figcaption style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:12px; text-align:center;" data-en="09 · ADD · INGREDIENTS &amp; STEPS" data-ua="09 · ДОДАТИ · ІНГРЕДІЄНТИ Й КРОКИ">09 · ADD · INGREDIENTS &amp; STEPS</figcaption></figure>
     </div>
   </section>
 
-  <section data-band style="background:var(--red); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:78px 48px; text-align:center; clip-path:inset(0 100% 0 0);" data-mq-pad="1">
+  <section data-screen-label="08 Decisions" style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="08 / DECISIONS WHERE DESIGN MEETS CODE" data-ua="08 / РІШЕННЯ НА СТИКУ ДИЗАЙНУ Й КОДУ">08 / DECISIONS WHERE DESIGN MEETS CODE</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 40px; max-width:760px;" data-en="Small calls that decide how the app feels." data-ua="Невеликі рішення, що визначають відчуття від застосунку.">Small calls that decide how the app feels.</h2>
+    <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-1col="1">
+      <div data-reveal="" style="background:var(--surface); padding:26px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--red);">01</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px;" data-en="Honest catalogue" data-ua="Чесний каталог">Honest catalogue</div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="PROBLEM" data-ua="ПРОБЛЕМА">PROBLEM</span><span data-en="The copy promised “100+” drinks. The catalogue didn’t have them." data-ua="Текст обіцяв «100+» напоїв. У каталозі їх не було.">The copy promised “100+” drinks. The catalogue didn’t have them.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</span><span data-en="Drop the count from the copy and put the value in quality: photos, tags, clear steps." data-ua="Прибрати кількість із текстів і зробити цінністю якість: фото, теги, зрозумілі кроки.">Drop the count from the copy and put the value in quality: photos, tags, clear steps.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="WHY" data-ua="ЧОМУ">WHY</span><span data-en="A promise the user can check in a minute has to be true." data-ua="Обіцянка, яку користувач перевірить за хвилину, має бути правдою.">A promise the user can check in a minute has to be true.</span></div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); padding:26px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--blue);">02</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px;" data-en="Character tags" data-ua="Теги характеру">Character tags</div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="PROBLEM" data-ua="ПРОБЛЕМА">PROBLEM</span><span data-en="The list API returns only a name and a photo, so every card had the same placeholder subtitle." data-ua="API списку повертає лише назву й фото, тож кожна картка мала однаковий підзаголовок-заглушку.">The list API returns only a name and a photo, so every card had the same placeholder subtitle.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</span><span data-en="Derive tags (Iced, Citrus, Creamy, Sparkling…) from each drink’s ingredients." data-ua="Виводити теги (Iced, Citrus, Creamy, Sparkling…) з інгредієнтів кожного напою.">Derive tags (Iced, Citrus, Creamy, Sparkling…) from each drink’s ingredients.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="WHY" data-ua="ЧОМУ">WHY</span><span data-en="The same tags power the filters, so one piece of data does two jobs." data-ua="Ті самі теги живлять фільтри — одні дані виконують дві роботи.">The same tags power the filters, so one piece of data does two jobs.</span></div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); padding:26px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-family:'Space Mono',monospace; font-size:11px; color:#a88a00;">03</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px;" data-en="Three-state theme" data-ua="Тема з трьома станами">Three-state theme</div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="PROBLEM" data-ua="ПРОБЛЕМА">PROBLEM</span><span data-en="Light, dark and system are three states; the header has room for one button." data-ua="Світла, темна й системна — це три стани, а в хедері місце для однієї кнопки.">Light, dark and system are three states; the header has room for one button.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</span><span data-en="A tap switches light/dark, press-and-hold goes back to following the iPhone, and a small dot shows system mode." data-ua="Тап перемикає світлу/темну, довге натискання повертає до налаштувань iPhone, а маленька крапка показує системний режим.">A tap switches light/dark, press-and-hold goes back to following the iPhone, and a small dot shows system mode.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="WHY" data-ua="ЧОМУ">WHY</span><span data-en="A three-way tap would have made the everyday switch worse." data-ua="Тристанний тап погіршив би щоденне перемикання.">A three-way tap would have made the everyday switch worse.</span></div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); padding:26px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--ink);">04</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px;" data-en="Readable over any photo" data-ua="Читабельно поверх будь-якого фото">Readable over any photo</div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="PROBLEM" data-ua="ПРОБЛЕМА">PROBLEM</span><span data-en="On recipe screens the status bar and titles sat on bright drink photos." data-ua="На екранах рецептів статус-бар і заголовки лежали на яскравих фото напоїв.">On recipe screens the status bar and titles sat on bright drink photos.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</span><span data-en="A short dark fade under the status bar and an opaque sticky header." data-ua="Коротке темне затемнення під статус-баром і непрозорий липкий хедер.">A short dark fade under the status bar and an opaque sticky header.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="WHY" data-ua="ЧОМУ">WHY</span><span data-en="Text never depends on what the photo looks like." data-ua="Текст ніколи не залежить від того, яке саме фото під ним.">Text never depends on what the photo looks like.</span></div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); padding:26px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--red);">05</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px;" data-en="Camera without surprises" data-ua="Камера без сюрпризів">Camera without surprises</div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="PROBLEM" data-ua="ПРОБЛЕМА">PROBLEM</span><span data-en="A permission prompt out of context feels like a trap, and a declined one is a dead end." data-ua="Запит дозволу поза контекстом здається пасткою, а відхилений — глухим кутом.">A permission prompt out of context feels like a trap, and a declined one is a dead end.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</span><span data-en="One sheet (Take Photo / Choose from Library), a plain-language permission text, and a way to Settings if access was declined." data-ua="Один лист (Take Photo / Choose from Library), зрозумілий текст дозволу й шлях до Налаштувань, якщо доступ відхилено.">One sheet (Take Photo / Choose from Library), a plain-language permission text, and a way to Settings if access was declined.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="WHY" data-ua="ЧОМУ">WHY</span><span data-en="The app asks only when you reach for the camera, and you can always recover." data-ua="Застосунок питає лише тоді, коли ви тягнетеся до камери, і завжди є вихід.">The app asks only when you reach for the camera, and you can always recover.</span></div>
+      </div>
+      <div data-reveal="" style="background:var(--surface); padding:26px; display:flex; flex-direction:column; gap:12px;">
+        <div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--blue);">06</div>
+        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:19px;" data-en="Private by default" data-ua="Приватність за замовчуванням">Private by default</div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="PROBLEM" data-ua="ПРОБЛЕМА">PROBLEM</span><span data-en="A recipe app has no reason to know who you are." data-ua="Рецептному застосунку нема потреби знати, хто ви.">A recipe app has no reason to know who you are.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="DECISION" data-ua="РІШЕННЯ">DECISION</span><span data-en="No account, no ads, no analytics. Photos never leave the phone." data-ua="Без акаунта, без реклами, без аналітики. Фото ніколи не покидають телефон.">No account, no ads, no analytics. Photos never leave the phone.</span></div>
+        <div style="font-size:14px; line-height:1.5;"><span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--muted); display:block;" data-en="WHY" data-ua="ЧОМУ">WHY</span><span data-en="The App Store label can honestly say “Data Not Collected”." data-ua="Мітка в App Store може чесно казати «Data Not Collected».">The App Store label can honestly say “Data Not Collected”.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="09 Stack" style="background:var(--paper); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="09 / STACK AND WHY" data-ua="09 / СТЕК І ЧОМУ САМЕ ВІН">09 / STACK AND WHY</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 40px; max-width:760px;" data-en="Each tool earns its place." data-ua="Кожен інструмент — на своєму місці.">Each tool earns its place.</h2>
+    <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; background:var(--rule); border:2px solid var(--rule);" data-mq-4col="1">
+      <div data-reveal="" style="background:var(--surface); padding:24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.2;">Expo SDK 54 + React Native 0.81</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:10px 0 0;" data-en="One codebase, cloud builds (EAS Build) and direct upload to App Store Connect (EAS Submit). No hand-maintained Xcode project." data-ua="Одна кодова база, хмарні збірки (EAS Build) і пряме завантаження в App Store Connect (EAS Submit). Жодного Xcode-проєкту, який треба підтримувати вручну.">One codebase, cloud builds (EAS Build) and direct upload to App Store Connect (EAS Submit). No hand-maintained Xcode project.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.2;">TypeScript</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:10px 0 0;" data-en="Catches mistakes before a build reaches the phone." data-ua="Ловить помилки ще до того, як збірка потрапить на телефон.">Catches mistakes before a build reaches the phone.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.2;">Redux Toolkit + AsyncStorage</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:10px 0 0;" data-en="Favourites, your own recipes and the theme stay on the device. No backend, no accounts." data-ua="Обране, власні рецепти й тема залишаються на пристрої. Без бекенду, без акаунтів.">Favourites, your own recipes and the theme stay on the device. No backend, no accounts.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.2;">React Navigation</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:10px 0 0;" data-en="Three tabs, with the recipe, surprise and edit screens stacked on top." data-ua="Три вкладки, а екрани рецепта, сюрпризу й редагування — стеком поверх.">Three tabs, with the recipe, surprise and edit screens stacked on top.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.2;">TheCocktailDB API (v2)</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:10px 0 0;" data-en="Curated drink data with a non-alcoholic filter. Recipe details are cached on the device for 30 days." data-ua="Курована база напоїв із фільтром безалкогольних. Деталі рецептів кешуються на пристрої на 30 днів.">Curated drink data with a non-alcoholic filter. Recipe details are cached on the device for 30 days.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.2;">expo-image-picker</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:10px 0 0;" data-en="The iOS photo picker hands the app only the chosen photo, so no library permission is needed. The camera asks for access only when used." data-ua="Системний вибір фото iOS передає застосунку лише обране фото, тож доступ до бібліотеки не потрібен. Камера просить доступ лише під час використання.">The iOS photo picker hands the app only the chosen photo, so no library permission is needed. The camera asks for access only when used.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.2;">TestFlight · App Store Connect · GitHub · Vercel</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:10px 0 0;" data-en="Testing, release and source control. Vercel hosts this site, including the app’s privacy and support pages." data-ua="Тестування, реліз і контроль версій. Vercel хостить цей сайт, зокрема сторінки приватності й підтримки застосунку.">Testing, release and source control. Vercel hosts this site, including the app’s privacy and support pages.</p></div>
+      <div data-reveal="" style="background:var(--surface); padding:24px;"><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; line-height:1.2;">Claude Code · Cowork · Claude Design</div><p style="font-weight:500; font-size:13.5px; line-height:1.5; color:var(--muted); margin:10px 0 0;" data-en="AI tools for the code, release operations and the App Store screenshots." data-ua="ШІ-інструменти для коду, релізних операцій і скріншотів App Store.">AI tools for the code, release operations and the App Store screenshots.</p></div>
+    </div>
+  </section>
+
+  <section data-screen-label="10 App Store" style="background:var(--surface); border-bottom:5px solid var(--rule); padding:78px 48px;" data-mq-pad="1">
+    <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--teal); margin-bottom:18px;" data-en="10 / ON THE APP STORE" data-ua="10 / В APP STORE">10 / ON THE APP STORE</div>
+    <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 12px; max-width:760px;" data-en="Seven screenshots, one panorama." data-ua="Сім скріншотів, одна панорама.">Seven screenshots, one panorama.</h2>
+    <p data-reveal="" style="font-weight:500; font-size:16px; line-height:1.6; color:var(--muted); max-width:620px; margin:0 0 36px;" data-en="The listing screenshots run edge to edge, so swiping through them reads as one continuous picture." data-ua="Скріншоти сторінки йдуть край у край, тож гортання читається як одна суцільна картина.">The listing screenshots run edge to edge, so swiping through them reads as one continuous picture.</p>
+    <div data-pano="" tabindex="0" aria-label="App Store screenshots" style="display:flex; overflow-x:auto; scroll-snap-type:x mandatory; border:2px solid var(--rule); background:#0b3a3f;">
+      <img loading="lazy" src="assets/images/mocktail-finder/mf11-store-01-hero.webp" alt="App Store screenshot 1: Real alcohol-free recipes, with photos" style="flex:1 1 0; width:14.2857%; min-width:0; display:block;">
+      <img loading="lazy" src="assets/images/mocktail-finder/mf11-store-02-recipe.webp" alt="App Store screenshot 2: Ingredients and steps. Nothing else." style="flex:1 1 0; width:14.2857%; min-width:0; display:block;">
+      <img loading="lazy" src="assets/images/mocktail-finder/mf11-store-03-share.webp" alt="App Store screenshot 3: Share it in one tap" style="flex:1 1 0; width:14.2857%; min-width:0; display:block;">
+      <img loading="lazy" src="assets/images/mocktail-finder/mf11-store-04-favourites.webp" alt="App Store screenshot 4: Keep the ones you love" style="flex:1 1 0; width:14.2857%; min-width:0; display:block;">
+      <img loading="lazy" src="assets/images/mocktail-finder/mf11-store-05-warm.webp" alt="App Store screenshot 5: Warm ones too" style="flex:1 1 0; width:14.2857%; min-width:0; display:block;">
+      <img loading="lazy" src="assets/images/mocktail-finder/mf11-store-06-add.webp" alt="App Store screenshot 6: Add your own, take or pick a photo" style="flex:1 1 0; width:14.2857%; min-width:0; display:block;">
+      <img loading="lazy" src="assets/images/mocktail-finder/mf11-store-07-theme.webp" alt="App Store screenshot 7: Light or dark. Your choice sticks." style="flex:1 1 0; width:14.2857%; min-width:0; display:block;">
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.06em;">
+      <span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Free" data-ua="Безкоштовно">Free</span>
+      <span style="border:1.5px solid var(--rule); padding:7px 12px;">4+</span>
+      <span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="Food &amp; Drink" data-ua="Їжа й напої">Food &amp; Drink</span>
+      <span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="No account" data-ua="Без акаунта">No account</span>
+      <span style="border:1.5px solid var(--rule); padding:7px 12px;" data-en="No ads" data-ua="Без реклами">No ads</span>
+      <span style="background:var(--ink); color:var(--paper); padding:7px 12px;">Data Not Collected</span>
+    </div>
+    <a href="https://apps.apple.com/app/id6811610325" target="_blank" rel="noopener" data-cursor="1" data-cta="" style="display:inline-flex; align-items:center; margin-top:30px; background:var(--ink); color:var(--paper); border-radius:44px; padding:14px 26px; font-weight:700; font-size:16px; transition:filter .15s, transform .14s;" style-hover="transform:translateY(-2px);" data-en="Get it on the App Store ↗" data-ua="Завантажити в App Store ↗">Get it on the App Store ↗</a>
+  </section>
+
+  <section data-screen-label="CTA" data-band="" style="background:var(--red); color:#F4F1E8; border-bottom:5px solid var(--rule); padding:78px 48px; text-align:center; clip-path:inset(0 100% 0 0);" data-mq-pad="1">
     <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; color:#ffd9d2;" data-en="LIKE WHAT YOU SEE?" data-ua="СПОДОБАЛОСЬ?">LIKE WHAT YOU SEE?</div>
     <h2 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(30px,5vw,68px); line-height:0.96; letter-spacing:-0.02em; margin:18px auto 0; max-width:760px;" data-en="Let’s build your product next." data-ua="Зробімо твій продукт наступним.">Let’s build your product next.</h2>
-    <a href="index.html#cta" data-cta="" data-cursor="1" data-en="Start a project →" data-ua="Почати проєкт →" style="display:inline-block; margin-top:32px; font-family:'Hanken Grotesk',sans-serif; font-weight:700; font-size:clamp(16px,1.8vw,20px); background:#F4F1E8; color:#14110B; border-radius:44px; padding:14px 28px; transition:filter .15s, transform .14s;">Start a project →</a>
+    <a href="index.html#cta" data-cta="" data-cursor="1" data-en="Start a project →" data-ua="Почати проєкт →" style="display:inline-block; margin-top:32px; font-weight:700; font-size:clamp(16px,1.8vw,20px); background:#F4F1E8; color:#14110B; border-radius:44px; padding:14px 28px; transition:filter .15s, transform .14s;">Start a project →</a>
   </section>
 
   <section style="background:var(--paper); padding:64px 48px;" data-mq-pad="1">
@@ -197,52 +419,55 @@
 
   <footer style="background:var(--surface); color:var(--ink); border-top:5px solid var(--rule); padding:40px 48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
     <a href="index.html" data-cursor="1" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:15px;">VLAD FILON</a>
-    <span style="font-family:'Space Mono',monospace; font-size:12px; color:var(--muted);">Dublin, Ireland · © 2026</span>
+    <span style="font-family:'Space Mono',monospace; font-size:12px; color:var(--muted);" data-en="Dublin, Ireland · © 2026" data-ua="Дублін, Ірландія · © 2026">Dublin, Ireland · © 2026</span>
   </footer>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   componentDidMount() {
-    
     const root = document.getElementById('mf-root');
-    var __vfBoot = function(){ if (window.VFChrome) { VFChrome.init('mf', {nextcard:1,theme:1,ring:1,nav:1,hover:1,navred:1,reveal:1,lang:1}); } else { setTimeout(__vfBoot, 60); } }; __vfBoot();
+    const boot = () => { if (window.VFChrome) VFChrome.init('mf', {nextcard:1,theme:1,ring:1,nav:1,hover:1,navred:1,reveal:1,lang:1}); else setTimeout(boot, 60); };
+    boot();
     if (!root) return;
-    
-
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    /* demo video: persist playback position */
+    /* mobile menu: theme + language proxies for the header buttons hidden inside #mf-nav */
+    const syncProxy = () => {
+      const ic = document.getElementById('mf-theme-icon'), pi = root.querySelector('[data-proxy-icon]');
+      if (ic && pi) pi.textContent = ic.textContent;
+      const en = document.getElementById('mf-lang-en'), ua = document.getElementById('mf-lang-ua');
+      const pe = root.querySelector('[data-proxy-en]'), pu = root.querySelector('[data-proxy-ua]');
+      if (en && pe) pe.style.opacity = getComputedStyle(en).opacity;
+      if (ua && pu) pu.style.opacity = getComputedStyle(ua).opacity;
+    };
+    root.querySelectorAll('[data-proxy]').forEach(b => b.addEventListener('click', () => { const t = document.getElementById(b.getAttribute('data-proxy')); if (t) t.click(); setTimeout(syncProxy, 40); }));
+    setTimeout(syncProxy, 400); setTimeout(syncProxy, 1500);
+    /* hero video slot: drop <video id="mf-demo"> into #mf-demo-slot (replacing the img) and this wiring takes over */
     const vid = document.getElementById('mf-demo');
-    const playBtn = document.getElementById('mf-play');
     if (vid) {
       try { const t = parseFloat(localStorage.getItem('mf-demo-time') || '0'); if (t > 0) vid.currentTime = t; } catch (_) {}
       vid.addEventListener('timeupdate', () => { try { localStorage.setItem('mf-demo-time', vid.currentTime); } catch (_) {} });
-      const sync = () => { if (playBtn) playBtn.style.display = vid.paused ? 'flex' : 'none'; };
-      const tryPlay = () => { vid.muted = true; const p = vid.play(); if (p) p.then(sync).catch(sync); else sync(); };
+      const tryPlay = () => { vid.muted = true; const p = vid.play(); if (p) p.catch(() => {}); };
       vid.addEventListener('canplay', tryPlay);
-      vid.addEventListener('play', sync); vid.addEventListener('pause', sync);
-      const toggle = () => { if (vid.paused) tryPlay(); else vid.pause(); };
-      vid.addEventListener('click', toggle);
-      if (playBtn) playBtn.addEventListener('click', toggle);
-      // kick off once user interacts anywhere (covers autoplay-blocking browsers)
-      const kick = () => { tryPlay(); window.removeEventListener('pointerdown', kick); };
-      window.addEventListener('pointerdown', kick);
+      vid.addEventListener('click', () => { if (vid.paused) tryPlay(); else vid.pause(); });
       tryPlay();
     }
   }
-  renderVals() { return {}; }
+  renderVals() {
+    if (!this._splash) {
+      const e = React.createElement, T = '5.2s';
+      const bubbles = [[-6, '0s', 7], [10, '.35s', 5], [2, '.7s', 6], [16, '1.1s', 4], [-12, '1.5s', 5]].map(([dx, d, s], i) =>
+        e('span', { key: i, style: { position: 'absolute', left: 'calc(50% + ' + (14 + i * 3) + 'px)', top: 'calc(50% - clamp(40px,5vw,62px))', width: s * 1.4, height: s * 1.4, borderRadius: '50%', background: '#F4F1E8', opacity: 0, '--dx': dx + 'px', animation: 'mfBubble 1.9s ease-out ' + d + ' infinite' } }));
+      this._splash = e('div', { role: 'img', 'aria-label': 'Mocktail Finder launch screen', style: { position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18 } },
+        e('div', { style: { position: 'relative', width: 'clamp(110px,14vw,170px)', aspectRatio: '1/1', animation: 'mfGlyph ' + T + ' cubic-bezier(.2,.8,.2,1) infinite' } },
+          e('img', { src: 'assets/images/mocktail-finder/mf11-glyph.png', alt: '', style: { width: '100%', height: '100%', display: 'block' } })),
+        ...bubbles,
+        e('div', { style: { fontFamily: "'Archivo Expanded',sans-serif", fontWeight: 800, fontSize: 'clamp(22px,2.6vw,34px)', letterSpacing: '-0.01em', color: '#F4F1E8', animation: 'mfWord ' + T + ' ease-out infinite' } }, 'Mocktail Finder'),
+        e('div', { style: { position: 'absolute', left: '50%', width: 'clamp(120px,16vw,200px)', marginLeft: 'calc(clamp(120px,16vw,200px) / -2)', bottom: '14%', height: 3, borderRadius: 3, background: 'rgba(244,241,232,.28)', overflow: 'hidden' } },
+          e('div', { style: { height: '100%', background: '#F4F1E8', transformOrigin: 'left', animation: 'mfBar ' + T + ' ease-in-out infinite' } })));
+    }
+    return { splash: this._splash };
+  }
 }
 </script>
-<script src="assets/js/vf-shared.js"></script>
 </body>
 </html>
