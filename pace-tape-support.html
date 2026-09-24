@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support · Pace Tape · Vlad Filon</title>
+<meta name="description" content="Help and frequently asked questions for the Pace Tape iOS app: pace, speed and time calculator for swim, bike, run and triathlon.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Support · Pace Tape">
+<meta property="og:description" content="Help and frequently asked questions for the Pace Tape iOS app: pace, speed and time calculator for swim, bike, run and triathlon.">
+<meta property="og:url" content="https://www.vladfilon.com/pace-tape-support.html">
+<meta property="og:image" content="https://www.vladfilon.com/assets/meta/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800;900&family=Archivo:wdth,wght@125,700;125,800;125,900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  #mf-root { --paper:#F4F1E8; --surface:#F4F1E8; --ink:#14110B; --rule:#14110B; --muted:#8a8576; --hair:#d3ccba; --stone:#DEDCD6; --red:#E1251B; --blue:#1E3FCF; --yellow:#F2C200; }
+  #mf-root[data-theme="dark"] { --paper:#0c0b07; --surface:#17150f; --ink:#F4F1E8; --rule:#6b6052; --muted:#9a9282; --hair:#322c23; --stone:#211f19; }
+  ::selection { background:#E1251B; color:#fff; }
+  a { color:inherit; text-decoration:none; }
+  #mf-root button:focus-visible, #mf-root a:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  #mf-root { background:var(--paper); min-height: 100vh; display: flex; flex-direction: column; }
+  #mf-root main { flex: 1 0 auto; }
+  @media (max-width:900px){
+    #mf-root section, #mf-root footer{ padding-left:20px !important; padding-right:20px !important; }
+  }
+  [style*="Archivo Expanded"]{ font-family:'Archivo','Hanken Grotesk',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
+</style>
+<script src="./assets/js/vf-analytics.js" defer></script>
+<script src="./assets/js/vf-shared.js" defer></script>
+</head>
+<body>
+<div id="mf-root" data-theme="" style="position: relative; color: var(--ink); font-family: 'Hanken Grotesk', sans-serif; transition: background-color 0.4s, color 0.4s;">
+
+  <header style="position: sticky; top: 0px; z-index: 40; background: var(--stone); border-bottom: 5px solid var(--rule); display: flex; justify-content: space-between; align-items: stretch;">
+    <a href="index.html" data-cursor="1" aria-label="Vlad Filon — home" style="display: flex; align-items: center; padding: 14px 22px; border-right: 5px solid var(--rule);">
+      <span style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: var(--ink); color: var(--paper); font-family: 'Archivo Expanded', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: -0.02em;">VF</span>
+    </a>
+    <a href="index.html#works" data-cursor="1" data-en="← Work" data-ua="← Роботи" style="display: flex; align-items: center; padding: 0px 22px; font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 0.06em; color: var(--muted);">← Work</a>
+    <div style="flex: 1 1 0%;"></div>
+    <nav id="mf-nav" style="display: flex; align-items: stretch;">
+      <a href="index.html" data-cursor="1" data-en="Work" data-ua="Роботи" style="display: flex; align-items: center; padding: 0px 20px; font-weight: 600; font-size: 14px; border-left: 1.5px solid var(--hair); transition: color 0.15s;">Work</a>
+      <a href="art.html" data-cursor="1" data-en="Paintings" data-ua="Картини" style="display: flex; align-items: center; padding: 0px 20px; font-weight: 600; font-size: 14px; border-left: 1.5px solid var(--hair); transition: color 0.15s;">Paintings</a>
+      <button id="mf-theme" data-cursor="1" title="Toggle theme" style="display: flex; align-items: center; padding: 0px 16px; background: transparent; border: none; border-left: 1.5px solid var(--hair); cursor: pointer; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 14px;"><span id="mf-theme-icon">☾</span></button>
+      <button id="mf-lang" data-cursor="1" style="display: flex; align-items: center; gap: 5px; padding: 0px 16px; background: transparent; border: none; border-left: 1.5px solid var(--hair); cursor: pointer; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 13px;"><span id="mf-lang-en">EN</span><span style="opacity: 0.4;">/</span><span id="mf-lang-ua" style="opacity: 0.4;">UA</span></button>
+      <a href="index.html#cta" data-cursor="1" data-en="Let’s Talk" data-ua="Зв’язок" style="display: flex; align-items: center; padding: 0px 24px; font-weight: 700; font-size: 14px; background: var(--red); color: rgb(244, 241, 232); border-left: 5px solid var(--rule); transition: filter 0.15s;">Let’s Talk</a>
+    </nav>
+    <button id="mf-burger" data-cursor="1" aria-label="Menu" style="display: none; align-items: center; padding: 0px 22px; background: var(--ink); color: var(--paper); border: none; cursor: pointer; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 13px;">MENU</button>
+  </header>
+  <div id="mf-mobile" style="display: none; position: sticky; top: 71px; z-index: 39; background: var(--surface); border-bottom: 5px solid var(--rule);">
+    <a href="index.html#works" data-en="← Work" data-ua="← Роботи" style="display: block; padding: 16px 24px; font-weight: 600; border-bottom: 1.5px solid var(--hair);">← Work</a>
+    <a href="index.html#works" data-en="Work" data-ua="Роботи" style="display: block; padding: 16px 24px; font-weight: 600; border-bottom: 1.5px solid var(--hair);">Work</a>
+    <a href="art.html" data-en="Paintings" data-ua="Картини" style="display: block; padding: 16px 24px; font-weight: 600; border-bottom: 1.5px solid var(--hair);">Paintings</a>
+    <a href="index.html#cta" data-en="Let’s Talk →" data-ua="Зв’язок →" style="display: block; padding: 16px 24px; font-weight: 700; background: var(--red); color: rgb(244, 241, 232);">Let’s Talk →</a>
+  </div>
+
+  <main>
+  <section style="border-bottom: 5px solid var(--rule); background: var(--surface); padding: 64px 48px;">
+    <div style="max-width: 760px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: var(--muted);">PACE TAPE · SUPPORT</div>
+      <h1 data-en="Support" data-ua="Підтримка" style="font-family: 'Archivo Expanded', sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 64px); line-height: 0.92; letter-spacing: -0.03em; margin: 20px 0 0;">Support</h1>
+      <p data-en="iOS app · version 1.0" data-ua="Застосунок для iOS · версія 1.0" style="font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--muted); margin: 22px 0 0;">iOS app · version 1.0</p>
+    </div>
+  </section>
+
+  <section style="background: var(--paper); padding: 56px 48px 80px;">
+    <div style="max-width: 760px;">
+<p style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;"><span data-en="Thanks for using Pace Tape. If something isn’t working or you have an idea, write to" data-ua="Дякую, що користуєтесь Pace Tape. Якщо щось не працює або у вас є ідея, напишіть на">Thanks for using Pace Tape. If something isn’t working or you have an idea, write to</span> <a href="mailto:filon.design.ux@gmail.com" data-cursor="1" style="border-bottom: 2px solid var(--red);">filon.design.ux@gmail.com</a> <span data-en="— I read every message and usually reply within a few days. Please mention your iPhone model and iOS version; a screenshot helps a lot." data-ua="— я читаю кожен лист і зазвичай відповідаю протягом кількох днів. Вкажіть, будь ласка, модель iPhone і версію iOS; скриншот дуже допоможе.">— I read every message and usually reply within a few days. Please mention your iPhone model and iOS version; a screenshot helps a lot.</span></p>
+<h2 data-en="Frequently asked questions" data-ua="Часті питання" style="font-family: 'Archivo Expanded', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; margin: 40px 0 14px;">Frequently asked questions</h2>
+<h3 data-en="How do I choose what to calculate?" data-ua="Як вибрати, що рахувати?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">How do I choose what to calculate?</h3>
+<p data-en="Each sport has three linked numbers: pace (speed on the bike), distance and time. Tap &quot;Calculate&quot; on the card you want as the result: it fills with the sport&#x27;s colour and shows &quot;= Result&quot;. Change the other two numbers and the result updates as you go." data-ua="У кожному виді спорту три пов’язані числа: темп (на велосипеді — швидкість), дистанція і час. Натисніть «Обчислити» на картці, яку хочете бачити результатом: вона заповниться кольором виду спорту й покаже «= Результат». Змінюйте два інші числа — результат оновлюється одразу." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Each sport has three linked numbers: pace (speed on the bike), distance and time. Tap "Calculate" on the card you want as the result: it fills with the sport's colour and shows "= Result". Change the other two numbers and the result updates as you go.</p>
+<h3 data-en="How do I type a number?" data-ua="Як ввести число?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">How do I type a number?</h3>
+<p data-en="Tap the number and use the keypad. Time and pace are typed like a stopwatch: 4, 3, 0 gives 4:30, and the &quot;00&quot; key adds two zeros. Distance and bike speed get a decimal key instead. Tap &quot;Done&quot; when you finish." data-ua="Натисніть на число й наберіть його на клавіатурі. Час і темп набираються як на секундомірі: 4, 3, 0 — це 4:30, а клавіша «00» додає два нулі. Для дистанції та швидкості на велосипеді замість неї з’являється клавіша коми. Наприкінці натисніть «Готово»." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Tap the number and use the keypad. Time and pace are typed like a stopwatch: 4, 3, 0 gives 4:30, and the "00" key adds two zeros. Distance and bike speed get a decimal key instead. Tap "Done" when you finish.</p>
+<h3 data-en="Can I change a number without the keypad?" data-ua="Чи можна змінити число без клавіатури?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Can I change a number without the keypad?</h3>
+<p data-en="Yes. Drag the number left or right to change it step by step (second by second for time and pace), with a light haptic tick. Or tap one of the quick chips under it." data-ua="Так. Тягніть число вліво або вправо, щоб змінювати його крок за кроком (для часу й темпу — по секунді), з легкою вібрацією. Або натисніть одну з кнопок-підказок під ним." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Yes. Drag the number left or right to change it step by step (second by second for time and pace), with a light haptic tick. Or tap one of the quick chips under it.</p>
+<h3 data-en="How do I switch to miles or yards?" data-ua="Як перейти на милі чи ярди?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">How do I switch to miles or yards?</h3>
+<p data-en="Use the units toggle at the top of the screen: KM / MI, or M / YD on Swim." data-ua="Скористайтеся перемикачем одиниць угорі екрана: кілометри або милі, на плаванні — метри або ярди." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Use the units toggle at the top of the screen: KM / MI, or M / YD on Swim.</p>
+<h3 data-en="How does the triathlon tab work?" data-ua="Як працює вкладка тріатлону?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">How does the triathlon tab work?</h3>
+<p data-en="The Σ tab adds up swim, bike, run and both transitions (T1 and T2) into one total time. Start from a preset (Sprint, Olympic, Half or Full) and adjust each leg." data-ua="Вкладка Σ складає плавання, вело, біг і обидві транзитки (T1 і T2) в один загальний час. Почніть із готового варіанта (Спринт, Олімпійка, Половинка або Повна) і налаштуйте кожен етап." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">The Σ tab adds up swim, bike, run and both transitions (T1 and T2) into one total time. Start from a preset (Sprint, Olympic, Half or Full) and adjust each leg.</p>
+<h3 data-en="How do I turn off the jokes in the black band?" data-ua="Як вимкнути жарти в чорній стрічці?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">How do I turn off the jokes in the black band?</h3>
+<p data-en="Open Settings and switch off &quot;Ticker jokes&quot;. The band is also hidden when Reduce Motion is on in your iPhone&#x27;s accessibility settings." data-ua="Відкрийте налаштування й вимкніть «Жарти в стрічці». Стрічка також не з’являється, якщо в налаштуваннях доступності iPhone увімкнено «Зменшення руху»." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Open Settings and switch off "Ticker jokes". The band is also hidden when Reduce Motion is on in your iPhone's accessibility settings.</p>
+<h3 data-en="Can I see the tips again?" data-ua="Чи можна знову побачити підказки?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Can I see the tips again?</h3>
+<p data-en="Yes: Settings › Onboarding › Show again." data-ua="Так: Налаштування › Онбординг › Показати." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Yes: Settings › Onboarding › Show again.</p>
+<h3 data-en="How do I change the language or theme?" data-ua="Як змінити мову чи тему?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">How do I change the language or theme?</h3>
+<p data-en="In Settings. Language: System language, English or Українська. Theme: System, Light or Dark." data-ua="У налаштуваннях. Мова: мова системи, English або Українська. Тема: системна, світла або темна." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">In Settings. Language: System language, English or Українська. Theme: System, Light or Dark.</p>
+<h3 data-en="Do I need an account or an internet connection?" data-ua="Чи потрібні акаунт або інтернет?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Do I need an account or an internet connection?</h3>
+<p data-en="No. The app works offline, without sign-up, and there are no ads." data-ua="Ні. Застосунок працює офлайн, без реєстрації, і в ньому немає реклами." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">No. The app works offline, without sign-up, and there are no ads.</p>
+<h3 data-en="Is the app free?" data-ua="Застосунок безкоштовний?" style="font-weight: 700; font-size: 18px; margin: 28px 0 8px;">Is the app free?</h3>
+<p data-en="Yes, completely." data-ua="Так, повністю." style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;">Yes, completely.</p>
+<h2 data-en="Privacy" data-ua="Конфіденційність" style="font-family: 'Archivo Expanded', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; margin: 40px 0 14px;">Privacy</h2>
+<p style="margin: 0 0 18px; font-size: 17px; line-height: 1.6;"><span data-en="The app collects no personal data. Details:" data-ua="Застосунок не збирає персональних даних. Деталі:">The app collects no personal data. Details:</span> <a href="pace-tape-privacy.html" data-en="Privacy Policy" data-ua="Політика конфіденційності" data-cursor="1" style="border-bottom: 2px solid var(--red);">Privacy Policy</a></p>
+    </div>
+  </section>
+  </main>
+
+  <footer style="background: var(--surface); color: var(--ink); border-top: 5px solid var(--rule); padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+    <a href="index.html" data-cursor="1" style="font-family: 'Archivo Expanded', sans-serif; font-weight: 800; font-size: 15px;">VLAD FILON</a>
+    <span style="font-family: 'Space Mono', monospace; font-size: 12px; color: var(--muted);">Dublin, Ireland · © 2026</span>
+  </footer>
+</div>
+<script>
+  (function boot() {
+    if (window.VFChrome) { VFChrome.init('mf', { theme: 1, nav: 1, navred: 1, lang: 1 }); }
+    else { setTimeout(boot, 60); }
+  })();
+</script>
+</body>
+</html>
