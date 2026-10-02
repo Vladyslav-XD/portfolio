@@ -1,3 +1,34 @@
+# Handoff — soft navigation (2026-10-02)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 65ec355.
+
+## Why
+The music toggle (vf-music.js) kept the position between pages but could not resume after a page change: Safari, Firefox and often Chrome block sound on a freshly loaded page until the visitor taps it. The fix removes the reload itself.
+
+## Files
+Add:
+- `assets/js/vf-nav.js`: soft navigation. A click on an internal link fetches the page, swaps the `<x-dc>` template and the `data-dc-script` logic, updates title / meta / `<html lang>`, calls `window.__dcBoot()` (the design-code runtime remounts the page) and pushes the URL. The window never reloads, so the header music keeps playing on every page, in every browser.
+
+Replace (one line in `<head>`, right before `support.js`): `art.html`, `bookworm-community.html`, `charon.html`, `coffee-audit.html`, `drug-dozy.html`, `index.html`, `language-course.html`, `mocktail-finder.html`, `my-eco-pharmacy.html`, `pace-tape.html`, `race-planner.html`, `tverdokhlib.html`:
+`<script src="./assets/js/vf-nav.js"></script>`
+
+## How it behaves
+- Only root-level `*.html` links on the same origin are intercepted. Links with `target`, `download`, modifier keys, `data-no-soft`, `.dc.html`, folders (`/pace-tape/widgetbook/`) and in-page anchors are left to the browser.
+- Pages without the runtime (`*-privacy.html`, `*-support.html`, `smart-school.html`, `404.html`) are not design-code pages: the script sees that and falls back to a normal navigation. Any other failure (network, missing `<x-dc>`) also falls back to a normal navigation, so the worst case is today's behaviour.
+- Back / forward work (`popstate`), scroll positions are restored, `index.html#cta` and `#works` links scroll to the section after the swap.
+- Per page the script unmounts the old React root, removes the window/document listeners and intervals the page logic and `VFChrome` added, and disables the previous page's `<helmet>` styles (the runtime appends them to `<head>` and never removes them).
+- Pages are prefetched on hover and cached for 10 minutes.
+- Language and theme behave exactly as on a fresh load of each page (`<html lang>` is reset per page); nothing new is stored.
+
+## Check before merging
+- Play the music on the home page, open any case study: the music does not stop (Safari, Chrome, Firefox, iPhone).
+- Back and forward buttons, "Start a project →" (index.html#cta) and "← Back to works" from a case.
+- Privacy / Support pages still open (normal navigation).
+- Theme, EN/UA, hover rows and the mobile menu on the page you arrived at.
+- Vercel Analytics and Clarity still count page views after a soft navigation (both track `pushState`; confirm in the dashboards after a day).
+
+---
+
 # Handoff — Pace Tape case, home row, music toggle (2026-10-01 / 02)
 
 Repo: Vladyslav-XD/portfolio · branch main. Copy this folder over the repo root, keeping the paths. Nothing needs deleting.
