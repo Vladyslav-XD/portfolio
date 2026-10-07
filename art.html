@@ -9,6 +9,7 @@
 <meta property="og:url" content="https://www.vladfilon.com/art.html">
 <meta property="og:image" content="https://www.vladfilon.com/assets/meta/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noimageindex">
 <script src="./assets/js/vf-nav.js"></script>
 <script src="./assets/js/support.js"></script>
 </head>
@@ -32,6 +33,8 @@
   [style*="Archivo Expanded"]{ font-family:'Archivo','Hanken Grotesk',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
   @media (prefers-reduced-motion: reduce){ #na-root *, #na-lightbox * { transition-duration:1ms !important; animation-duration:1ms !important; } }
 
+  /* paintings: no drag / save-image / long-press menu */
+  #na-root .na-img, #na-lightbox img { -webkit-user-drag:none; user-drag:none; -webkit-touch-callout:none; user-select:none; }
   /* masonry */
   #na-grid { column-count:3; column-gap:5px; }
   @media (max-width:1000px){ #na-grid { column-count:2; } }

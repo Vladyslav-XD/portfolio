@@ -241,3 +241,15 @@
     syncStyles();
   }).catch(function () {});
 })();
+
+/* Paintings on art.html: block the context menu and drag on the artworks only. */
+(function () {
+  function isArt(el) {
+    if (!el || el.nodeType !== 1) return false;
+    if (el.tagName !== 'IMG') return false;
+    return el.classList.contains('na-img') || !!(el.closest && el.closest('#na-lightbox'));
+  }
+  function block(e) { if (isArt(e.target)) e.preventDefault(); }
+  document.addEventListener('contextmenu', block, true);
+  document.addEventListener('dragstart', block, true);
+})();
