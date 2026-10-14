@@ -1,16 +1,22 @@
-# Validator clean: Fixel fonts, local scratch skipped (2026-10-14)
+# Validator clean: Fixel fonts, Widgetbook catalog, local scratch skipped (2026-10-14)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 34bad2c.
 
 ## Why
-`node scripts/validate-static-site.mjs` failed on main: 12 errors from the gitignored `_to_delete/` scratch folder, and the Fixel `@font-face` files of `pace-tape.html`, which were never in the repo (404 on www.vladfilon.com).
+`node scripts/validate-static-site.mjs` failed on main: 12 errors from the gitignored `_to_delete/` scratch folder, the Fixel `@font-face` files of `pace-tape.html`, which were never in the repo, and the hero link to `/pace-tape/widgetbook/`, which was never deployed (both 404 on www.vladfilon.com).
 
 ## Changes
 - `scripts/validate-static-site.mjs`: skips `_to_delete/` (e2ac67c).
 - `assets/fonts/FixelText-Medium.woff2`, `FixelText-Bold.woff2` (84 KB each) and `Fixel-OFL.txt`: from the Pace Tape app (`assets/fonts/fixel/`, the same files the app ships), converted from OTF to WOFF2 with fontTools, glyphs unchanged. Fixel is MacPaw's open font, SIL OFL 1.1, no Reserved Font Name. Decision 05 on `pace-tape.html` ("Settings · Haptics · Ticker jokes", EN and UK) now renders in Fixel instead of falling back to Hanken Grotesk / the system font. Only weight 500 is used, so the browser never downloads Bold.
+- `pace-tape/widgetbook/`: the Pace Tape component catalog, copied unchanged from the app repo's site build (`tool/build_widgetbook.sh --site`, built 2026-10-09; 34 files, 13 MB). Base href `/pace-tape/widgetbook/`; CanvasKit is served from the site, so it makes no request to another host. Its fonts (Fixel, Sofia Sans, Poppins, Roboto) carry their licences in the font metadata. To update it, rebuild in the app repo and replace the folder.
+- `scripts/validate-static-site.mjs`: links to `pace-tape/widgetbook/` are still checked, but the folder's minified Flutter code is not scanned (the patterns misread it as 10 broken references).
+
+## Not changed
+- Privacy modal on `index.html` still says the catalog "loads the Flutter web engine from Google's servers (gstatic.com)". The build in this folder does not; the sentence is now stricter than needed. Copy change left to Vlad.
 
 ## Check before merging
 - `pace-tape.html`, decision 05: the sample line is in Fixel in EN and UK; no 404 for `assets/fonts/` in the network panel.
+- `pace-tape.html` hero → "Component catalog (Widgetbook) ↗" opens `/pace-tape/widgetbook/` in a new tab; deep link `/pace-tape/widgetbook/#/?path=calculator/keypad/clock` opens the keypad case; theme and locale addons work.
 
 ---
 

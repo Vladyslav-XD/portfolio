@@ -1,10 +1,13 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { extname, join, relative, resolve } from "node:path";
+import { extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const sourceExtensions = new Set([".html", ".css", ".js"]);
 const ignoredDirectories = new Set([".git", "node_modules", "_to_delete"]);
+// Generated builds copied in from other projects. Links to them are still checked;
+// their minified code is not scanned, as the patterns misread it.
+const generatedDirectories = new Set(["pace-tape/widgetbook"]);
 
 function walk(directory) {
   const files = [];
@@ -12,6 +15,7 @@ function walk(directory) {
   for (const entry of readdirSync(directory)) {
     if (ignoredDirectories.has(entry)) continue;
     const absolutePath = join(directory, entry);
+    if (generatedDirectories.has(relative(repoRoot, absolutePath).split(sep).join("/"))) continue;
     const stats = statSync(absolutePath);
 
     if (stats.isDirectory()) files.push(...walk(absolutePath));
