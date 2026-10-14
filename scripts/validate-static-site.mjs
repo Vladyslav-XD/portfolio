@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const sourceExtensions = new Set([".html", ".css", ".js"]);
-const ignoredDirectories = new Set([".git", "node_modules"]);
+const ignoredDirectories = new Set([".git", "node_modules", "_to_delete"]);
 
 function walk(directory) {
   const files = [];
