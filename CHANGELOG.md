@@ -1,3 +1,26 @@
+# Page titles and page language (2026-10-14)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit e2ac67c.
+
+## Why
+- Nine case pages had no `<title>`: the browser tab showed the address, and screen readers announced no page name (WCAG 2.2 · 2.4.2 Page Titled).
+- Thirteen pages had no `lang` on `<html>`, and switching to Ukrainian set `lang="ua"`, which is a country code, not a language. Screen readers kept reading Ukrainian text with the English voice (WCAG 2.2 · 3.1.1 Language of Page).
+
+## Changes
+- `<title>` added to `art.html`, `bookworm-community.html`, `charon.html`, `drug-dozy.html`, `language-course.html`, `my-eco-pharmacy.html`, `race-planner.html`, `smart-school.html`, `tverdokhlib.html`. Each one is the page's own `og:title`: no new copy. Soft navigation already reads `head > title`, so tab names also update without a reload.
+- `<html lang="en">` on every page that lacked it (all of them open in English): `art`, `bookworm-community`, `charon`, `coffee-audit`, `drug-dozy`, `index`, `language-course`, `mocktail-finder`, `my-eco-pharmacy`, `pace-tape`, `race-planner`, `smart-school`, `tverdokhlib`. The `*.dc.html` fragments are not touched.
+- Ukrainian now sets `lang="uk"` (`vf-shared.js`, `index.html`, `art.html`). The switch's own value stays `ua`, so the `data-ua` copy and every `=== 'ua'` check work as before.
+- Code that reads the page language follows: `vf-music.js` (button label "Музика"), `coffee-audit.html` (`html[lang="uk"]`, the phone label "НА ЦЬОМУ САЙТІ"). `pace-tape.html` already accepted both. `index.html` already checked for `uk`, so the hint under the phone hero quote now reads "ЩЕ →" in Ukrainian; before, it always said "NEXT →".
+- `vf-analytics.js`: the Clarity `lang` tag and the `lang_toggle` event still send `ua`, so old and new reports match.
+
+## Check before merging
+- Every case page: the browser tab shows the page name, also after moving between pages from the home page.
+- EN → UA → EN on the home page, a case page and `art.html`: `<html lang>` goes `en` → `uk` → `en`; the music button reads "Музика" in UA.
+- Phone, home in UA: tap the hero quote, the hint reads "ЩЕ →".
+- VoiceOver in Safari on a case page in UA: the Ukrainian text is read with a Ukrainian voice.
+
+---
+
 # Handoff — Beyond the desk album, image protection, IT Smart School page, NDA rows (2026-10-14)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main as of 2026-10-14 (`index.html` and `sitemap.xml` on main were checked against this package's base: no other changes). Copy this folder over the repo root, keeping the paths. One file is deleted (see Delete).

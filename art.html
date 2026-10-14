@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not Art — Paintings · Vlad Filon</title>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Not Art — Paintings · Vlad Filon">
 <meta property="og:description" content="Personal oil and acrylic paintings by Vlad Filon.">
@@ -284,7 +285,7 @@ class Component extends DCLogic {
     this.lang = 'en';
     try { document.documentElement.setAttribute('lang', 'en'); } catch (_) {}
     const applyLang = () => {
-      try { document.documentElement.setAttribute('lang', this.lang); } catch (_) {}
+      try { document.documentElement.setAttribute('lang', this.lang === 'ua' ? 'uk' : 'en'); } catch (_) {}
       root.querySelectorAll('[data-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua') : el.getAttribute('data-en'); if (v != null) el.innerHTML = v; });
       const en = document.getElementById('na-lang-en'), ua = document.getElementById('na-lang-ua');
       if (en && ua) { en.style.opacity = this.lang === 'en' ? '1' : '.4'; ua.style.opacity = this.lang === 'ua' ? '1' : '.4'; }

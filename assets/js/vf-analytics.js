@@ -71,6 +71,8 @@
   function tag(k, v) { try { if (window.clarity && v != null) window.clarity('set', k, String(v)); } catch (_) {} }
   var page = (location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'home');
   tag('page', page);
+  /* Pages declare lang="uk" for Ukrainian; reports keep the "ua" label they always had. */
+  function pageLang() { var l = document.documentElement.lang || 'en'; return l === 'uk' ? 'ua' : l; }
 
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
@@ -80,7 +82,7 @@
   ready(function () {
     var root = document.querySelector('[id$="-root"]');
     tag('theme', (root && root.getAttribute('data-theme')) === 'dark' ? 'dark' : 'light');
-    tag('lang', document.documentElement.lang || 'en');
+    tag('lang', pageLang());
 
     var once = {};
     function first(key) { if (once[key]) return false; once[key] = 1; return true; }
@@ -122,7 +124,7 @@
         tag('theme', to); track('theme_toggle', { to: to });
       }, 30);
       if (t.closest('[id$="-lang"]')) setTimeout(function () {
-        var to = document.documentElement.lang || 'en';
+        var to = pageLang();
         tag('lang', to); track('lang_toggle', { to: to });
       }, 30);
 

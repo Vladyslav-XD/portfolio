@@ -156,7 +156,7 @@
         root.querySelectorAll('[data-en]').forEach(function (el) { var v = api.lang === 'ua' ? el.getAttribute('data-ua') : el.getAttribute('data-en'); if (v != null) el.innerHTML = v; });
         var en = document.getElementById(prefix + '-lang-en'), ua = document.getElementById(prefix + '-lang-ua');
         if (en && ua) { en.style.opacity = api.lang === 'en' ? '1' : '.4'; ua.style.opacity = api.lang === 'ua' ? '1' : '.4'; }
-        try { document.documentElement.lang = api.lang; } catch (_) {}
+        try { document.documentElement.lang = api.lang === 'ua' ? 'uk' : 'en'; } catch (_) {}
       };
       api.applyLang = applyLang;
       root.querySelectorAll('[data-cta]').forEach(function (el) { el.addEventListener('mouseenter', function () { el.style.filter = 'brightness(0.93)'; el.style.transform = 'translateY(-1px)'; }); el.addEventListener('mouseleave', function () { el.style.filter = 'none'; el.style.transform = 'none'; }); });

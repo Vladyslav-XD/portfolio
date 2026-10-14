@@ -8,7 +8,7 @@
   var C = ['#E1251B', '#1E3FCF', '#F2C200'], P = [0.9, 1.15, 0.75], F = [0, 1.9, 3.7], FZ = [0.55, 1, 0.75], TAU = Math.PI * 2;
   var state = 'off', amp = 0, last = 0, audio = null, btns = [], fr = 0, healT = 0;
   var mqR = window.matchMedia('(prefers-reduced-motion: reduce)'), mqN = window.matchMedia('(max-width: 639px)');
-  function lang() { return document.documentElement.getAttribute('lang') === 'ua' ? 'ua' : 'en'; }
+  function lang() { return document.documentElement.getAttribute('lang') === 'uk' ? 'ua' : 'en'; }
   function store(v) { try { localStorage.setItem('vf-music', v); } catch (e) {} }
   function expected(b) { var L = S[lang()], narrow = b.hasAttribute('data-mt-mobile') && mqN.matches; return narrow ? (state === 'resume' ? L.play : '') : L[state]; }
   function bind(b) { if (b._vfMt) return; b._vfMt = 1; b.addEventListener('click', function () { if (state === 'on') stop(); else play(); }); }

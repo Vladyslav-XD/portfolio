@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1570,7 +1570,7 @@ class Component extends DCLogic {
     /* ---------- language ---------- */
     this.lang = (this.props.lang === 'ua') ? 'ua' : 'en';
     const applyLang = () => {
-      try { document.documentElement.setAttribute('lang', this.lang); } catch (_) {}
+      try { document.documentElement.setAttribute('lang', this.lang === 'ua' ? 'uk' : 'en'); } catch (_) {}
       root.querySelectorAll('[data-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua') : el.getAttribute('data-en'); if (v != null) el.innerHTML = v; });
       root.querySelectorAll('[data-aria-en]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-aria-ua') : el.getAttribute('data-aria-en'); if (v != null) el.setAttribute('aria-label', v); });
       root.querySelectorAll('[data-en-aria]').forEach(el => { const v = this.lang === 'ua' ? el.getAttribute('data-ua-aria') : el.getAttribute('data-en-aria'); if (v != null) el.setAttribute('aria-label', v); });
