@@ -1,3 +1,44 @@
+# Handoff — Beyond the desk album, image protection, IT Smart School page, NDA rows (2026-10-14)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main as of 2026-10-14 (`index.html` and `sitemap.xml` on main were checked against this package's base: no other changes). Copy this folder over the repo root, keeping the paths. One file is deleted (see Delete).
+
+## Files
+Add:
+- `assets/js/vf-protect.js`: blocks the context menu ("Save image as…"), drag-to-desktop and the iOS / Android long-press menu on every img, video and canvas. A deterrent, not DRM: screenshots still work. Text stays selectable. Its listeners are added before any page mounts, so vf-nav.js never treats them as page-scoped (they survive soft navigation).
+- `assets/images/smart-school/`: 5 screens, WebP, 2000 px wide.
+- `assets/images/home/end-*.webp`: 16 photos for the Beyond the desk album, WebP, max 1600 px.
+
+Replace:
+- `index.html`: see below.
+- `smart-school.html`: the IT Smart School case. It replaces the old 4.6 MB bundled export of the same page. Same header as the other cases (music toggle, no Blog); vf-nav.js before support.js and vf-shared.js in the helmet, like the other design-code pages.
+- `sitemap.xml`: lastmod 2026-10-14 for `/` and `smart-school.html` (the entry already existed).
+
+Delete:
+- `scripts/repair-smart-school-bundle.mjs`: it patched the analytics tag inside the old bundled export. The new `smart-school.html` has no bundle, so the script no longer applies and would throw on it.
+
+Edit, one line right before `</head>` (not in this package, so nothing else in these files is overwritten): `art.html`, `bookworm-community.html`, `charon.html`, `coffee-audit.html`, `drug-dozy.html`, `language-course.html`, `mocktail-finder.html`, `mocktail-finder-privacy.html`, `mocktail-finder-support.html`, `my-eco-pharmacy.html`, `pace-tape.html`, `pace-tape-privacy.html`, `pace-tape-support.html`, `race-planner.html`, `tverdokhlib.html`:
+`<script src="./assets/js/vf-protect.js" defer></script>`
+
+`404.html`: the same line with a root path, `<script src="/assets/js/vf-protect.js" defer></script>`, and the favicon and `vf-analytics.js` paths changed to `/assets/...` too. The host serves this page at any missing URL, nested ones included: on `/a/b` a relative `./assets/...` resolved to `/a/assets/...` and got the 404 page back instead of the file, so the favicon, analytics and protection never loaded there. The page's "Restore balance" button already goes to `/`.
+
+## index.html
+- **Work list**: rows 13 Pharmacy Prescription Reservation and 14 MARI CRM show "UNDER NDA" / "ПІД NDA" in the empty READ slot (muted, row ink on hover, under the title on mobile). MARI CRM year 2026 → 2025.
+- **Beyond the desk → album** (11 entries): London, Chicago, Fastlane 10K Dublin, Lake Orta, Oceanman Stari Grad, Oceanman Kyiv 5 km, Oceanman Kyiv finish + relay, KropSwim, Dzharylhach → Skadovsk, with Mykhailo Romanchuk, Dnipro winter 2024.
+  - Navigation: ← / → buttons, a row of colour squares (hidden below 520 px), counter, click on the photo = next, swipe, ← / → keys. The event chips in the data column still open their entry.
+  - Entries with several frames show dots; Kyiv and Skadovsk switch the caption with the frame. Skadovsk frame 4 links to `my-eco-pharmacy.html`.
+  - Photos load lazily (current entry ± 1). Chicago gets the line "Retrospective in progress." Intro paragraph: one sentence about the arrows.
+- **The Sub-3 project chart**: the track is the goal (3:00:00, red line); each bar is the finish time from zero, the part past the line in light red. Label row "CITY · country", PB chip + time. Axis under the bars: 0:00:00 … 3:00:00.
+- **Selected open water chart**: sorted by distance; "City · water" (Gozzano · Lake Orta, Stari Grad · Adriatic Sea, Skadovsk · Black Sea, Kyiv · Dnipro River); PB chip + time on 14.5, 10 and 5 km; distance at the end of the bar; axis 0 km … 22 km (Gibraltar). UA uses the decimal comma (14,5).
+
+## Check before merging
+- Home → More about me → Beyond the desk: arrows, squares, swipe on a phone; all 16 new photos load; captions in EN and UA.
+- Right-click / long-press a photo on any page (including after a soft navigation): no "Save image" menu.
+- Home row 10 → `smart-school.html` opens; theme, EN / UA and the music keep working.
+- 375 px and 1440 px, light and dark.
+- A nested missing URL such as `/a/b`: the 404 page shows its favicon, and its scripts load without errors.
+
+---
+
 # Handoff — soft navigation (2026-10-02)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 65ec355.

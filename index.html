@@ -20,6 +20,7 @@
 <meta name="twitter:image" content="https://www.vladfilon.com/assets/meta/og-image.png">
 <script src="./assets/js/vf-nav.js"></script>
 <script src="./assets/js/support.js"></script>
+<script src="./assets/js/vf-protect.js" defer></script>
 </head>
 <body>
 <x-dc>
@@ -72,6 +73,7 @@
     #vf-root [data-mq-pad], #vf-root [data-mq-pad], #vf-root [data-mq-pad], #vf-root [data-mq-pad], #vf-root [data-mq-pad], #vf-root [data-mq-pad], #vf-root [data-mq-pad], #vf-root [data-mq-pad]{ padding-left:20px !important; padding-right:20px !important; }
     #vf-root #vf-worklist a{ grid-template-columns:38px 1fr !important; column-gap:14px !important; }
     #vf-root #vf-worklist [data-meta], #vf-root #vf-worklist [data-arrow]{ display:none !important; }
+    #vf-root #vf-worklist [data-nda]{ grid-column:2; text-align:left !important; }
     #vf-root #vf-testi{ flex-direction:column !important; min-height:0 !important; }
     #vf-root #vf-testi [data-t]{ flex:none !important; background:var(--surface) !important; }
     #vf-root #vf-testi [data-tbtn], #vf-root #vf-testi [data-tprog]{ display:none !important; }
@@ -90,6 +92,7 @@
   #vf-worklist a:hover [data-meta]{ color:var(--rowink,#F4F1E8) !important; }
   #vf-worklist a:hover > span:first-child{ color:var(--rowink,#F4F1E8) !important; opacity:.62; }
   #vf-worklist a:hover [data-arrow]{ opacity:1 !important; }
+  #vf-worklist a:hover [data-nda]{ color:var(--rowink,#F4F1E8) !important; }
   #vf-worklist a:hover [data-detail]{ max-height:260px !important; opacity:1 !important; margin-top:14px !important; }
 
   /* faq accordion — resting state via CSS (data-open); open/close animated with WAAPI in JS (immune to re-render transition restarts) */
@@ -106,29 +109,26 @@
 
   /* endurance — bar fills + viewer state (CSS-driven, immune to React re-renders) */
   #vf-endurance [data-fill]{ width:0; }
-  #vf-endurance[data-run="1"] [data-fill="london"]{ width:86%; }
-  #vf-endurance[data-run="1"] [data-fill="chicago"]{ width:19%; }
-  #vf-endurance[data-run="1"] [data-fill="orta"]{ width:66%; }
-  #vf-endurance [data-slot]{ opacity:0; pointer-events:none; }
-  #vf-endurance[data-active="london"] [data-slot="london"],
-  #vf-endurance[data-active="chicago"] [data-slot="chicago"],
-  #vf-endurance[data-active="orta"] [data-slot="orta"]{ opacity:1; pointer-events:auto; }
-  #vf-endurance [data-slot="orta"] [data-orta-img]{ opacity:0; }
-  #vf-endurance [data-slot="orta"] [data-orta-img]:first-child{ opacity:1; }
-  #vf-endurance[data-frame="1"] [data-slot="orta"] [data-orta-img]:first-child{ opacity:0; }
-  #vf-endurance[data-frame="1"] [data-slot="orta"] [data-orta-img]:last-child{ opacity:1; }
-  #vf-endurance [data-orta-dots]{ opacity:0; }
-  #vf-endurance[data-active="orta"] [data-orta-dots]{ opacity:1; }
-  #vf-endurance [data-orta-dots] [data-dot="1"]{ opacity:.38; }
-  #vf-endurance[data-frame="1"] [data-orta-dots] [data-dot="0"]{ opacity:.38; }
-  #vf-endurance[data-frame="1"] [data-orta-dots] [data-dot="1"]{ opacity:1; }
-  #vf-endurance [data-cap]{ opacity:0; }
-  #vf-endurance[data-active="london"] [data-cap="london"],
-  #vf-endurance[data-active="chicago"] [data-cap="chicago"],
-  #vf-endurance[data-active="orta"] [data-cap="orta"]{ opacity:1; }
-  #vf-endurance[data-active="london"] [data-ev]:not([data-ev="london"]),
-  #vf-endurance[data-active="chicago"] [data-ev]:not([data-ev="chicago"]),
-  #vf-endurance[data-active="orta"] [data-ev]:not([data-ev="orta"]){ opacity:.55; }
+  #vf-endurance[data-run="1"] [data-fill="london"]{ width:81.88%; }
+  #vf-endurance[data-run="1"] [data-fill="chicago"]{ width:90.82%; }
+  #vf-endurance[data-run="1"] [data-fill="orta"]{ width:65.9%; }
+  #vf-endurance[data-run="1"] [data-fill="croatia"]{ width:45.5%; }
+  #vf-endurance[data-run="1"] [data-fill="skadovsk"]{ width:36.4%; }
+  #vf-endurance[data-run="1"] [data-fill="kyiv5k"]{ width:22.7%; }
+  #vf-endurance [data-slot], #vf-endurance [data-f], #vf-endurance [data-cap]{ opacity:0; visibility:hidden; transition:opacity .35s ease, visibility 0s linear .35s; }
+  #vf-endurance [data-slot][data-on], #vf-endurance [data-f][data-on], #vf-endurance [data-cap][data-on]{ opacity:1; visibility:visible; transition:opacity .35s ease, visibility 0s linear 0s; }
+  #vf-endurance [data-dot]{ opacity:.38; transition:opacity .2s; }
+  #vf-endurance [data-dot][data-on]{ opacity:1; }
+  #vf-endurance [data-ev]:not([data-on]){ opacity:.55; }
+  #vf-endurance [data-endphoto]:focus-visible{ outline:3px solid var(--blue); outline-offset:-3px; }
+  #vf-endurance [data-endnav]:hover{ background:var(--ink) !important; color:var(--paper) !important; }
+  #vf-endurance [data-endnav]:active{ transform:translateY(1px); }
+  #vf-endurance [data-endgo] > span{ opacity:.3; transition:opacity .2s, transform .2s; }
+  #vf-endurance [data-endgo]:hover > span{ opacity:.7; }
+  #vf-endurance [data-endgo][data-on] > span{ opacity:1; transform:scale(1.3); }
+  #vf-endurance [data-endlink]:hover{ border-bottom-color:#F4F1E8 !important; }
+  @media (max-width:900px){ #vf-root #vf-endurance [data-endphoto]{ min-height:min(118vw,560px) !important; } }
+  @media (max-width:520px){ #vf-root #vf-endurance [data-endidx]{ display:none !important; } }
 
     [data-tquote] p{margin:0} [data-tquote] p + p{margin-top:.7em}
   </style>
@@ -391,14 +391,16 @@
         <span data-meta="" style="font-family:'Space Mono',monospace; font-size:13px; color:var(--muted);">2022</span>
         
         
+        <span data-nda="" data-en="UNDER NDA" data-ua="ПІД NDA" style="font-family:'Space Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.08em; text-align:right; white-space:nowrap; color:var(--muted); transition:color .25s;">UNDER NDA</span>
       </a>
       <a data-work="" data-extra="" data-color="#F2C200" data-ink="#14110B" data-reveal="" style="--rowc:#F2C200; --rowink:#14110B; position:relative; border-top:2.5px solid var(--rule); display:none; grid-template-columns:64px 1fr 230px 70px 84px; gap:18px; align-items:center; padding:24px 22px; background:var(--surface); overflow:hidden;" data-mq-1col="1">
         <span style="font-family:'Space Mono',monospace; font-size:13px; color:var(--muted);">14</span>
         <div><div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(20px,2.4vw,32px); letter-spacing:-0.01em; line-height:1;">MARI CRM</div><div data-meta="" data-en="MARI — Metrics, Analytics, Reports &amp; Innovations: a modern marketing-analytics SaaS with reporting, dashboards and responsive landings." data-ua="MARI — Metrics, Analytics, Reports &amp; Innovations: сучасний SaaS маркетингової аналітики зі звітами, дашбордами й адаптивними лендингами." style="font-weight:500; font-size:14px; color:var(--muted); margin-top:6px;">MARI — Metrics, Analytics, Reports &amp; Innovations: a modern marketing-analytics SaaS with reporting, dashboards and responsive landings.</div><div data-detail="" style="max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><div style="display:grid; grid-template-columns:1.1fr 0.9fr 1.5fr; gap:24px; padding-top:16px; border-top:1.5px solid currentColor;" data-mq-1col="1"><div><div data-en="ROLE" data-ua="РОЛЬ" style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">ROLE</div><div data-en="UX/UI & Web Designer · UX Writer" data-ua="UX/UI- та веб-дизайнер · UX-копірайтер" style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">UX/UI & Web Designer · UX Writer</div></div><div><div data-en="TOOLS" data-ua="ІНСТРУМЕНТИ" style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">TOOLS</div><div data-en="Figma, AI copywriting, Photoshop" data-ua="Figma, AI-копірайтинг, Photoshop" style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">Figma, AI copywriting, Photoshop</div></div><div><div data-en="KEY FEATURES" data-ua="КЛЮЧОВЕ" style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.16em; opacity:.55; margin-bottom:7px;">KEY FEATURES</div><div data-en="SaaS positioning, dashboard concept, wireframes, UI kit, responsive landings, pricing, blog / resources, usability findings." data-ua="SaaS-позиціонування, концепт дашборда, вайрфрейми, UI-kit, адаптивні лендинги, прайсинг, блог / ресурси, висновки тестів." style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.45; font-weight:500;">SaaS positioning, dashboard concept, wireframes, UI kit, responsive landings, pricing, blog / resources, usability findings.</div></div></div></div></div>
         <span data-meta="" data-en="SaaS platform" data-ua="SaaS-платформа" style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--muted);">SaaS platform</span>
-        <span data-meta="" style="font-family:'Space Mono',monospace; font-size:13px; color:var(--muted);">2026</span>
+        <span data-meta="" style="font-family:'Space Mono',monospace; font-size:13px; color:var(--muted);">2025</span>
         
         
+        <span data-nda="" data-en="UNDER NDA" data-ua="ПІД NDA" style="font-family:'Space Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.08em; text-align:right; white-space:nowrap; color:var(--muted); transition:color .25s;">UNDER NDA</span>
       </a>
     </div>
     <button id="vf-showall" data-cursor="1" aria-expanded="false" aria-controls="vf-worklist" data-en="Expand all projects ↓" data-ua="Розгорнути всі проєкти ↓" data-aria-en="Expand all projects" data-aria-ua="Розгорнути всі проєкти" aria-label="Expand all projects" style="margin-top:18px; font-family:'Space Mono',monospace; font-weight:700; font-size:13px; letter-spacing:0.04em; color:var(--ink); background:transparent; border:2px solid var(--rule); border-radius:44px; padding:11px 22px; cursor:pointer;">Expand all projects ↓</button>
@@ -481,7 +483,7 @@
             <div style="display:flex; flex-direction:column; gap:13px;">
               <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#E1251B; flex:none;"></span><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="BEYOND THE DESK" data-ua="ПОЗА РОБОТОЮ">BEYOND THE DESK</span></div>
               <h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,38px); line-height:1.02; letter-spacing:-0.02em; margin:0;" data-en="Off the screen, I chase finish lines." data-ua="Поза екраном я біжу до фінішів.">Off the screen, I chase finish lines.</h3>
-              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); opacity:.82; margin:0; max-width:54ch;" data-en="Three goals keep me moving: complete all six World Marathon Majors, break three hours in the marathon, and swim the Strait of Gibraltar. Two Majors are done, 3:04:14 is the number to beat, and Gibraltar is still waiting. Pick an event below to see the result — and the finish-line photo." data-ua="Три цілі тримають мене в русі: пробігти всі шість World Marathon Majors, вибігти марафон із трьох годин і переплисти Гібралтарську протоку. Два Majors уже є, 3:04:14 — час, який треба побити, а Гібралтар ще чекає. Обери подію нижче — побачиш результат і фото на фініші.">Three goals keep me moving: complete all six World Marathon Majors, break three hours in the marathon, and swim the Strait of Gibraltar. Two Majors are done, 3:04:14 is the number to beat, and Gibraltar is still waiting. Pick an event below to see the result — and the finish-line photo.</p>
+              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); opacity:.82; margin:0; max-width:54ch;" data-en="Three goals keep me moving: complete all six World Marathon Majors, break three hours in the marathon, and swim the Strait of Gibraltar. Two Majors are done, 3:04:14 is the number to beat, and Gibraltar is still waiting. Pick an event below to see the result — and the finish-line photo. The arrows flip through the rest of the album." data-ua="Три цілі тримають мене в русі: пробігти всі шість World Marathon Majors, вибігти марафон із трьох годин і переплисти Гібралтарську протоку. Два Majors уже є, 3:04:14 — час, який треба побити, а Гібралтар ще чекає. Обери подію нижче — побачиш результат і фото на фініші. Стрілки гортають решту альбому.">Three goals keep me moving: complete all six World Marathon Majors, break three hours in the marathon, and swim the Strait of Gibraltar. Two Majors are done, 3:04:14 is the number to beat, and Gibraltar is still waiting. Pick an event below to see the result — and the finish-line photo. The arrows flip through the rest of the album.</p>
             </div>
 
             <!-- MAJORS -->
@@ -500,72 +502,223 @@
               </div>
             </div>
 
-            <!-- SUB-3 -->
+            <!-- SUB-3 — same principle as OPEN WATER: track = the goal (3:00:00, ends at the red line), bar = my finish time from zero; slower runs spill past the line in light red; city · country; PB + time in the label row -->
             <div style="display:flex; flex-direction:column;">
               <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;">
                 <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#E1251B; flex:none;"></span><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="THE SUB-3 PROJECT" data-ua="ПРОЄКТ SUB-3">THE SUB-3 PROJECT</span></div>
-                <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.06em; color:#E1251B;" data-en="GOAL · 3:00:00" data-ua="ЦІЛЬ · 3:00:00">GOAL · 3:00:00</span>
+                <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.06em; color:#E1251B;" data-en="GOAL · MARATHON UNDER 3:00:00" data-ua="ЦІЛЬ · МАРАФОН ДО 3:00:00">GOAL · MARATHON UNDER 3:00:00</span>
               </div>
-              <div style="position:relative; margin-top:16px; display:flex; flex-direction:column; gap:9px;">
-                <div style="position:absolute; top:-3px; bottom:-3px; right:calc(clamp(64px,16vw,92px) + 10px); width:3px; background:#E1251B; z-index:2;"></div>
-                <div data-ev="london" style="transition:opacity .25s; display:flex; align-items:center; gap:10px;">
-                  <span style="width:clamp(58px,15vw,80px); flex:none; font-family:'Space Mono',monospace; font-size:11px; color:var(--ink);" data-en="LONDON" data-ua="ЛОНДОН">LONDON</span>
-                  <div style="flex:1; position:relative; height:24px; background:var(--hair);"><div data-fill="london" style="position:absolute; left:0; top:0; bottom:0; background:#E1251B;"></div></div>
-                  <span style="width:clamp(64px,16vw,92px); flex:none; text-align:right; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:04:14</span>
+              <div style="margin-top:14px; display:flex; flex-direction:column; gap:12px;">
+                <div data-ev="london" style="transition:opacity .25s; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding-right:12px; min-height:19px;">
+                    <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--ink);"><span data-en="LONDON" data-ua="ЛОНДОН">LONDON</span><span style="color:var(--muted);"> · </span><span style="color:var(--muted);" data-en="UK" data-ua="ВЕЛИКА БРИТАНІЯ">UK</span></span>
+                    <span style="display:inline-flex; align-items:center; gap:6px; flex:none;"><span style="font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.06em; line-height:1; padding:3px 5px 2px; background:#E1251B; color:#F4F1E8;">PB</span><span style="font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:04:14</span></span>
+                  </div>
+                  <div style="position:relative; height:20px;">
+                    <div style="position:absolute; left:0; top:0; bottom:0; width:80%; background:var(--hair);"></div>
+                    <div data-fill="london" style="position:absolute; left:0; top:0; bottom:0; background:linear-gradient(to right, #E1251B 0%, #E1251B 97.70%, rgba(225,37,27,.4) 97.70%, rgba(225,37,27,.4) 100%);"></div>
+                    <div style="position:absolute; left:80%; top:-4px; bottom:-4px; width:3px; margin-left:-1px; background:#E1251B; z-index:2;"></div>
+                  </div>
                 </div>
-                <div data-ev="chicago" style="transition:opacity .25s; display:flex; align-items:center; gap:10px;">
-                  <span style="width:clamp(58px,15vw,80px); flex:none; font-family:'Space Mono',monospace; font-size:11px; color:var(--ink);" data-en="CHICAGO" data-ua="ЧИКАГО">CHICAGO</span>
-                  <div style="flex:1; position:relative; height:24px; background:var(--hair);"><div data-fill="chicago" style="position:absolute; left:0; top:0; bottom:0; background:#14110B;"></div></div>
-                  <span style="width:clamp(64px,16vw,92px); flex:none; text-align:right; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:24:20</span>
+                <div data-ev="chicago" style="transition:opacity .25s; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding-right:12px; min-height:19px;">
+                    <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--ink);"><span data-en="CHICAGO" data-ua="ЧИКАГО">CHICAGO</span><span style="color:var(--muted);"> · </span><span style="color:var(--muted);" data-en="USA" data-ua="США">USA</span></span>
+                    <span style="display:inline-flex; align-items:center; gap:6px; flex:none;"><span style="font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:24:20</span></span>
+                  </div>
+                  <div style="position:relative; height:20px;">
+                    <div style="position:absolute; left:0; top:0; bottom:0; width:80%; background:var(--hair);"></div>
+                    <div data-fill="chicago" style="position:absolute; left:0; top:0; bottom:0; background:linear-gradient(to right, #E1251B 0%, #E1251B 88.09%, rgba(225,37,27,.4) 88.09%, rgba(225,37,27,.4) 100%);"></div>
+                    <div style="position:absolute; left:80%; top:-4px; bottom:-4px; width:3px; margin-left:-1px; background:#E1251B; z-index:2;"></div>
+                  </div>
+                </div>
+                <div data-axis="" style="position:relative; height:30px; margin-top:-12px;">
+                  <div style="position:absolute; left:80%; top:0; width:3px; height:12px; margin-left:-1px; background:#E1251B;"></div>
+                  <span style="position:absolute; left:0; top:14px; font-family:'Space Mono',monospace; font-size:11px; color:var(--muted);">0:00:00</span>
+                  <span style="position:absolute; left:80%; top:14px; transform:translateX(-50%); font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#E1251B; white-space:nowrap;">3:00:00</span>
                 </div>
               </div>
-              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.5; color:var(--ink); opacity:.7; margin:12px 0 0;" data-en="The red line is sub-3:00:00. London — my best — sits 4 min 14 sec short of it." data-ua="Червона лінія — sub-3:00:00. Лондон — мій найкращий — лише за 4 хв 14 с від неї.">The red line is sub-3:00:00. London — my best — sits 4 min 14 sec short of it.</p>
+              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.5; color:var(--ink); opacity:.7; margin:12px 0 0;" data-en="Each bar is my finish time. Sub-3 means stopping before the 3:00:00 line — London, my best, runs 4 min 14 sec past it." data-ua="Кожна смуга — мій фінішний час. Sub-3 — це зупинитися до лінії 3:00:00; Лондон, мій найкращий, виходить за неї на 4 хв 14 с.">Each bar is my finish time. Sub-3 means stopping before the 3:00:00 line — London, my best, runs 4 min 14 sec past it.</p>
             </div>
 
-            <!-- SWIM -->
+            <!-- SWIM — sorted by distance; full track = 22 km (blue goal line at the right); city · water; PB time where it is one -->
             <div style="display:flex; flex-direction:column;">
               <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-                <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#1E3FCF; flex:none;"></span><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="OPEN WATER" data-ua="ВІДКРИТА ВОДА">OPEN WATER</span></div>
+                <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#1E3FCF; flex:none;"></span><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="SELECTED OPEN WATER" data-ua="ВИБРАНІ ЗАПЛИВИ">SELECTED OPEN WATER</span></div>
                 <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.06em; color:#1E3FCF;" data-en="GOAL · GIBRALTAR 22 KM" data-ua="ЦІЛЬ · ГІБРАЛТАР 22 КМ">GOAL · GIBRALTAR 22 KM</span>
               </div>
-              <div style="position:relative; margin-top:16px; display:flex; flex-direction:column; gap:9px;">
-                <div style="position:absolute; top:-3px; bottom:-3px; right:calc(clamp(64px,16vw,92px) + 10px); width:3px; background:#1E3FCF; z-index:2;"></div>
-                <div data-ev="orta" style="transition:opacity .25s; display:flex; align-items:center; gap:10px;">
-                  <span style="width:clamp(58px,15vw,80px); flex:none; font-family:'Space Mono',monospace; font-size:11px; color:var(--ink);" data-en="LAKE ORTA" data-ua="ОЗ. ОРТА">LAKE ORTA</span>
-                  <div style="flex:1; position:relative; height:24px; background:var(--hair);"><div data-fill="orta" style="position:absolute; left:0; top:0; bottom:0; background:#1E3FCF;"></div></div>
-                  <span style="width:clamp(64px,16vw,92px); flex:none; text-align:right; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">14.5 KM</span>
+              <div style="position:relative; margin-top:14px; display:flex; flex-direction:column; gap:12px;">
+                <div style="position:absolute; top:-3px; bottom:-3px; right:0; width:3px; background:#1E3FCF; z-index:2;"></div>
+                <div data-ev="orta" style="transition:opacity .25s; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding-right:12px; min-height:19px;">
+                    <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--ink);"><span data-en="GOZZANO" data-ua="ГОЦЦАНО">GOZZANO</span><span style="color:var(--muted);"> · </span><span style="color:var(--muted);" data-en="LAKE ORTA" data-ua="ОЗЕРО ОРТА">LAKE ORTA</span></span>
+                    <span style="display:inline-flex; align-items:center; gap:6px; flex:none;"><span style="font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.06em; line-height:1; padding:3px 5px 2px; background:#1E3FCF; color:#F4F1E8;">PB</span><span style="font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">4:16:40</span></span>
+                  </div>
+                  <div style="position:relative; height:20px; background:var(--hair);"><div data-fill="orta" style="position:absolute; left:0; top:0; bottom:0; background:#1E3FCF;"><span data-vlab="" data-en="14.5" data-ua="14,5" style="position:absolute; left:100%; top:50%; transform:translateY(-50%); margin-left:8px; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink); white-space:nowrap;">14.5</span></div></div>
+                </div>
+                <div data-ev="croatia" style="transition:opacity .25s; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding-right:12px; min-height:19px;">
+                    <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--ink);"><span data-en="STARI GRAD" data-ua="СТАРІ ГРАД">STARI GRAD</span><span style="color:var(--muted);"> · </span><span style="color:var(--muted);" data-en="ADRIATIC SEA" data-ua="АДРІАТИЧНЕ МОРЕ">ADRIATIC SEA</span></span>
+                    <span style="display:inline-flex; align-items:center; gap:6px; flex:none;"><span style="font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.06em; line-height:1; padding:3px 5px 2px; background:#1E3FCF; color:#F4F1E8;">PB</span><span style="font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:03:20</span></span>
+                  </div>
+                  <div style="position:relative; height:20px; background:var(--hair);"><div data-fill="croatia" style="position:absolute; left:0; top:0; bottom:0; background:#1E3FCF;"><span data-vlab="" style="position:absolute; left:100%; top:50%; transform:translateY(-50%); margin-left:8px; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink); white-space:nowrap;">10</span></div></div>
+                </div>
+                <div data-ev="skadovsk" style="transition:opacity .25s; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding-right:12px; min-height:19px;">
+                    <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--ink);"><span data-en="SKADOVSK" data-ua="СКАДОВСЬК">SKADOVSK</span><span style="color:var(--muted);"> · </span><span style="color:var(--muted);" data-en="BLACK SEA" data-ua="ЧОРНЕ МОРЕ">BLACK SEA</span></span>
+                    
+                  </div>
+                  <div style="position:relative; height:20px; background:var(--hair);"><div data-fill="skadovsk" style="position:absolute; left:0; top:0; bottom:0; background:#1E3FCF;"><span data-vlab="" style="position:absolute; left:100%; top:50%; transform:translateY(-50%); margin-left:8px; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink); white-space:nowrap;">8</span></div></div>
+                </div>
+                <div data-ev="kyiv5k" style="transition:opacity .25s; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding-right:12px; min-height:19px;">
+                    <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--ink);"><span data-en="KYIV" data-ua="КИЇВ">KYIV</span><span style="color:var(--muted);"> · </span><span style="color:var(--muted);" data-en="DNIPRO RIVER" data-ua="РІЧКА ДНІПРО">DNIPRO RIVER</span></span>
+                    <span style="display:inline-flex; align-items:center; gap:6px; flex:none;"><span style="font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.06em; line-height:1; padding:3px 5px 2px; background:#1E3FCF; color:#F4F1E8;">PB</span><span style="font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">1:26:55</span></span>
+                  </div>
+                  <div style="position:relative; height:20px; background:var(--hair);"><div data-fill="kyiv5k" style="position:absolute; left:0; top:0; bottom:0; background:#1E3FCF;"><span data-vlab="" style="position:absolute; left:100%; top:50%; transform:translateY(-50%); margin-left:8px; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink); white-space:nowrap;">5</span></div></div>
                 </div>
               </div>
-              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.5; color:var(--ink); opacity:.7; margin:12px 0 0;" data-en="14.5 km across Lake Orta, Italy in 04:16:40 — my longest swim yet. Gibraltar is 7.5 km further." data-ua="14.5 км через озеро Орта, Італія за 04:16:40 — поки що найдовший заплив. До Гібралтару ще 7.5 км.">14.5 km across Lake Orta, Italy in 04:16:40 — my longest swim yet. Gibraltar is 7.5 km further.</p>
+              <div data-axis="" style="position:relative; height:30px;">
+                <div style="position:absolute; right:0; top:0; width:3px; height:12px; background:#1E3FCF;"></div>
+                <span style="position:absolute; left:0; top:14px; font-family:'Space Mono',monospace; font-size:11px; color:var(--muted);" data-en="0 KM" data-ua="0 КМ">0 KM</span>
+                <span style="position:absolute; right:0; top:14px; font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#1E3FCF; white-space:nowrap;" data-en="22 KM" data-ua="22 КМ">22 KM</span>
+              </div>
+              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.5; color:var(--ink); opacity:.7; margin:12px 0 0;" data-en="My longest swim so far: 14.5 km on Lake Orta. Gibraltar is 7.5 km further." data-ua="Найдовший заплив поки що — 14,5 км на озері Орта. До Гібралтару ще 7,5 км.">My longest swim so far: 14.5 km on Lake Orta. Gibraltar is 7.5 km further.</p>
             </div>
 
           </div>
 
-          <!-- VIEWER -->
-          <div style="background:#14110B; position:relative; min-height:clamp(360px,42vw,470px); overflow:hidden;">
-            <img loading="lazy" data-slot="london" src="assets/images/home/end-london.png" alt="London Marathon — with my wife" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%;">
-            <img loading="lazy" data-slot="chicago" src="assets/images/home/end-chicago.png" alt="Chicago Marathon finish" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:50% 36%;">
-            <div data-slot="orta" style="position:absolute; inset:0; width:100%; height:100%;">
-              <img loading="lazy" data-orta-img src="assets/images/home/end-orta-solo.png" alt="Oceanman Lago d’Orta" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 28%;">
-              <img loading="lazy" data-orta-img src="assets/images/home/end-orta.png" alt="Lake Orta open water" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 26%;">
+          <!-- VIEWER — album: entries [data-slot] × frames [data-f]; captions [data-cap] (data-capf = per-frame); JS sets [data-on] -->
+          <div data-endcol="" style="display:flex; flex-direction:column; gap:5px; background:var(--rule); min-width:0;">
+            <div data-endphoto="" data-cursor="1" role="region" aria-roledescription="album" aria-label="Beyond the desk — photo album" data-aria-en="Beyond the desk — photo album" data-aria-ua="Поза роботою — фотоальбом" style="background:#14110B; position:relative; flex:1 1 auto; min-height:clamp(360px,42vw,470px); overflow:hidden; cursor:pointer; touch-action:pan-y; user-select:none;">
+            <div data-slot="london" style="position:absolute; inset:0;">
+              <img data-f="0" src="assets/images/home/end-london.png" alt="London Marathon — with my wife" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%;">
+            </div>
+            <div data-slot="chicago" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-chicago.png" alt="Chicago Marathon finish" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:50% 36%;">
+            </div>
+            <div data-slot="dublin" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-dublin.webp" alt="Fastlane 10K, Dublin — personal best 37:15" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:45% 18%;">
+            </div>
+            <div data-slot="orta" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-orta-solo.png" alt="Oceanman Lago d’Orta" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 28%;">
+              <img data-f="1" data-src="assets/images/home/end-orta.png" alt="Lake Orta open water" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 26%;">
+              <div aria-hidden="true" style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
+            </div>
+            <div data-slot="croatia" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-croatia-award.webp" alt="Oceanman Stari Grad, Croatia — age-group silver award" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:40% 40%;">
+              <img data-f="1" data-src="assets/images/home/end-croatia-medal.webp" alt="Oceanman Stari Grad silver medal" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 45%;">
+              <div aria-hidden="true" style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
+            </div>
+            <div data-slot="kyiv5k" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-kyiv-5k.webp" alt="Oceanman Kyiv 5 km — selfie with the medal" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%;">
+            </div>
+            <div data-slot="kyiv" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-kyiv-finish.webp" alt="Oceanman Kyiv finish — exhausted, medal on" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 30%;">
+              <img data-f="1" data-src="assets/images/home/end-kyiv-relay.webp" alt="Oceanman Kyiv 2023 — relay team on the podium" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 45%;">
+              <img data-f="2" data-src="assets/images/home/end-kyiv-medal.webp" alt="Oceanman Team medal, Kyiv 2023" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:38% 50%;">
+              <div aria-hidden="true" style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="2" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
+            </div>
+            <div data-slot="kropswim" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-kropswim-award.webp" alt="KropSwim 2023, Kropyvnytskyi — 2nd place award" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%;">
+              <img data-f="1" data-src="assets/images/home/end-kropswim-selfie.webp" alt="KropSwim — selfie with the medal" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 28%;">
+              <div aria-hidden="true" style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
+            </div>
+            <div data-slot="skadovsk" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-skadovsk-wife.webp" alt="Legendary Swim 2021 — with my wife at the finish" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:36% 40%;">
+              <img data-f="1" data-src="assets/images/home/end-skadovsk-start.webp" alt="Legendary Swim — mass start" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%;">
+              <img data-f="2" data-src="assets/images/home/end-skadovsk-exit.webp" alt="Legendary Swim — leaving the water" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:43% 40%;">
+              <img data-f="3" data-src="assets/images/home/end-skadovsk-brand.webp" alt="With the Ukrainian flag and the My Eco Pharmacy flag at Legendary Swim, Skadovsk" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:50% 36%;">
+              <div aria-hidden="true" style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="2" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="3" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
+            </div>
+            <div data-slot="romanchuk" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-romanchuk.webp" alt="Selfie at the pool with Olympic medallist Mykhailo Romanchuk before training" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:42% 40%;">
+            </div>
+            <div data-slot="dnipro" style="position:absolute; inset:0;">
+              <img data-f="0" data-src="assets/images/home/end-dnipro-damage.webp" alt="Swimming pool in Dnipro after a russian missile strike — destroyed facade and crater" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 45%;">
+              <img data-f="1" data-src="assets/images/home/end-dnipro-pool.webp" alt="Swimmers waving in the pool — the session went ahead" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:50% 36%;">
+              <div aria-hidden="true" style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
             </div>
 
             <div style="position:absolute; top:18px; left:20px; z-index:4; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#F4F1E8; opacity:.5; pointer-events:none;" data-en="NOW SHOWING" data-ua="ЗАРАЗ ПОКАЗАНО">NOW SHOWING</div>
-            <div data-orta-dots style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
 
-            <div data-cap="london" style="position:absolute; left:0; right:0; bottom:0; padding:38px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
-              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#F4604E;" data-en="LONDON MARATHON · PB" data-ua="ЛОНДОНСЬКИЙ МАРАФОН · PB">LONDON MARATHON · PB</div>
+            <div data-cap="london" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F4604E;" data-en="LONDON MARATHON · PB" data-ua="ЛОНДОНСЬКИЙ МАРАФОН · PB">LONDON MARATHON · PB</div>
               <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">03:04:14</div>
-              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; color:#F4F1E8; opacity:.75; margin-top:8px;" data-en="4 min 14 sec from the three-hour wall." data-ua="4 хв 14 с до стіни трьох годин.">4 min 14 sec from the three-hour wall.</div>
+              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="4 min 14 sec from the three-hour wall." data-ua="4 хв 14 с до стіни трьох годин.">4 min 14 sec from the three-hour wall.</div>
             </div>
-            <div data-cap="chicago" style="position:absolute; left:0; right:0; bottom:0; padding:38px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%);.35) 72%, rgba(8,6,3,0)); z-index:3; pointer-events:none;">
-              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#F2C200;" data-en="CHICAGO MARATHON" data-ua="ЧИКАЗЬКИЙ МАРАФОН">CHICAGO MARATHON</div>
+            <div data-cap="chicago" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F2C200;" data-en="CHICAGO MARATHON" data-ua="ЧИКАЗЬКИЙ МАРАФОН">CHICAGO MARATHON</div>
               <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">03:24:20</div>
+              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="Retrospective in progress." data-ua="Ретроспектива — у процесі.">Retrospective in progress.</div>
             </div>
-            <div data-cap="orta" style="position:absolute; left:0; right:0; bottom:0; padding:38px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%);) 72%, rgba(8,6,3,0)); z-index:3; pointer-events:none;">
-              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#5B8DEF;" data-en="LAKE ORTA, ITALY · OPEN WATER" data-ua="ОЗЕРО ОРТА, ІТАЛІЯ · ВІДКРИТА ВОДА">LAKE ORTA, ITALY · OPEN WATER</div>
-              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">14.5 KM<span style="font-family:'Space Mono',monospace; font-weight:700; font-size:clamp(13px,1.3vw,17px); letter-spacing:0.02em; opacity:.82; margin-left:11px; vertical-align:middle;">04:16:40</span></div>
-              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; color:#F4F1E8; opacity:.75; margin-top:8px;" data-en="It’s really just for fun." data-ua="Це справді просто заради фану.">It’s really just for fun.</div>
+            <div data-cap="dublin" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F4604E;" data-en="FASTLANE 10K, DUBLIN · PB" data-ua="FASTLANE 10K, ДУБЛІН · PB">FASTLANE 10K, DUBLIN · PB</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">37:15</div>
+              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="Personal best. The jump was involuntary." data-ua="Особистий рекорд. Стрибок вийшов сам собою.">Personal best. The jump was involuntary.</div>
+            </div>
+            <div data-cap="orta" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#5B8DEF;" data-en="LAKE ORTA, ITALY · OPEN WATER" data-ua="ОЗЕРО ОРТА, ІТАЛІЯ · ВІДКРИТА ВОДА">LAKE ORTA, ITALY · OPEN WATER</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;"><span data-en="14.5 KM" data-ua="14,5 КМ">14.5 KM</span><span style="font-family:'Space Mono',monospace; font-weight:700; font-size:clamp(13px,1.3vw,17px); letter-spacing:0.02em; opacity:.82; margin-left:11px; vertical-align:middle;">04:16:40</span></div>
+              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="It’s really just for fun." data-ua="Це справді просто заради фану.">It’s really just for fun.</div>
+            </div>
+            <div data-cap="croatia" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F2C200;" data-en="OCEANMAN STARI GRAD, CROATIA · 2ND IN AGE GROUP" data-ua="OCEANMAN СТАРІ ГРАД, ХОРВАТІЯ · 2-ГЕ У ВІКОВІЙ КАТЕГОРІЇ">OCEANMAN STARI GRAD, CROATIA · 2ND IN AGE GROUP</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;"><span data-en="10 KM" data-ua="10 КМ">10 KM</span><span style="font-family:'Space Mono',monospace; font-weight:700; font-size:clamp(13px,1.3vw,17px); letter-spacing:0.02em; opacity:.82; margin-left:11px; vertical-align:middle;">03:03:20</span></div>
+              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="Silver from the Adriatic." data-ua="Срібло з Адріатики.">Silver from the Adriatic.</div>
+            </div>
+            <div data-cap="kyiv5k" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#5B8DEF;" data-en="OCEANMAN KYIV, UKRAINE · 5 KM · PB" data-ua="OCEANMAN КИЇВ, УКРАЇНА · 5 КМ · PB">OCEANMAN KYIV, UKRAINE · 5 KM · PB</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">01:26:55</div>
+              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="The Dnipro was on my side that day." data-ua="Того дня Дніпро був на моєму боці.">The Dnipro was on my side that day.</div>
+            </div>
+            <div data-cap="kyiv" data-capf="0" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F2C200;" data-en="OCEANMAN KYIV, UKRAINE" data-ua="OCEANMAN КИЇВ, УКРАЇНА">OCEANMAN KYIV, UKRAINE</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,1.6vw,22px); line-height:1.2; letter-spacing:-0.01em; color:#F4F1E8; margin-top:9px; max-width:30ch; text-wrap:pretty;" data-en="The price of a medal is written on my face." data-ua="Ціна медалі написана на обличчі.">The price of a medal is written on my face.</div>
+            </div>
+            <div data-cap="kyiv" data-capf="1,2" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F2C200;" data-en="OCEANMAN KYIV, UKRAINE · TEAM RELAY" data-ua="OCEANMAN КИЇВ, УКРАЇНА · ЕСТАФЕТА">OCEANMAN KYIV, UKRAINE · TEAM RELAY</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,1.6vw,22px); line-height:1.2; letter-spacing:-0.01em; color:#F4F1E8; margin-top:9px; max-width:30ch; text-wrap:pretty;" data-en="Relays are teamwork with a stopwatch." data-ua="Естафета — це командна робота із секундоміром.">Relays are teamwork with a stopwatch.</div>
+            </div>
+            <div data-cap="kropswim" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#5B8DEF;" data-en="KROPSWIM, KROPYVNYTSKYI, UKRAINE · 2ND PLACE" data-ua="KROPSWIM, КРОПИВНИЦЬКИЙ, УКРАЇНА · 2-ГЕ МІСЦЕ">KROPSWIM, KROPYVNYTSKYI, UKRAINE · 2ND PLACE</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,1.6vw,22px); line-height:1.2; letter-spacing:-0.01em; color:#F4F1E8; margin-top:9px; max-width:30ch; text-wrap:pretty;" data-en="Second place, first-class lake." data-ua="Друге місце — першокласне озеро.">Second place, first-class lake.</div>
+            </div>
+            <div data-cap="skadovsk" data-capf="0,1,2" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F2C200;" data-en="DZHARYLHACH → SKADOVSK, UKRAINE" data-ua="ДЖАРИЛГАЧ → СКАДОВСЬК, УКРАЇНА">DZHARYLHACH → SKADOVSK, UKRAINE</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;"><span data-en="8 KM" data-ua="8 КМ">8 KM</span></div>
+              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="From the island to the mainland — with my wife." data-ua="З острова на материк — разом із дружиною.">From the island to the mainland — with my wife.</div>
+            </div>
+            <div data-cap="skadovsk" data-capf="3" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F2C200;" data-en="DZHARYLHACH → SKADOVSK, UKRAINE" data-ua="ДЖАРИЛГАЧ → СКАДОВСЬК, УКРАЇНА">DZHARYLHACH → SKADOVSK, UKRAINE</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,1.6vw,22px); line-height:1.2; letter-spacing:-0.01em; color:#F4F1E8; margin-top:9px; max-width:30ch; text-wrap:pretty;" data-en="Brand marketing, open-water edition." data-ua="Бренд-маркетинг: версія для відкритої води.">Brand marketing, open-water edition.</div>
+              <a href="my-eco-pharmacy.html" data-endlink="" data-cursor="1" style="pointer-events:auto; display:inline-flex; margin-top:12px; padding:6px 0 3px; font-family:'Space Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.06em; color:#F4F1E8; border-bottom:2px solid #F2C200;" data-en="Pharmacy Brand System →" data-ua="Pharmacy Brand System →">Pharmacy Brand System →</a>
+            </div>
+            <div data-cap="romanchuk" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#5B8DEF;" data-en="IN THE POOL · WITH MYKHAILO ROMANCHUK" data-ua="У БАСЕЙНІ · З МИХАЙЛОМ РОМАНЧУКОМ">IN THE POOL · WITH MYKHAILO ROMANCHUK</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,1.6vw,22px); line-height:1.2; letter-spacing:-0.01em; color:#F4F1E8; margin-top:9px; max-width:30ch; text-wrap:pretty;" data-en="Borrowing some energy from an Olympic medallist." data-ua="Позичаю трохи енергії в олімпійського призера.">Borrowing some energy from an Olympic medallist.</div>
+            </div>
+            <div data-cap="dnipro" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F4F1E8;" data-en="DNIPRO, UKRAINE · WINTER 2024" data-ua="ДНІПРО, УКРАЇНА · ЗИМА 2024">DNIPRO, UKRAINE · WINTER 2024</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,1.6vw,22px); line-height:1.2; letter-spacing:-0.01em; color:#F4F1E8; margin-top:9px; max-width:30ch; text-wrap:pretty;" data-en="A russian missile took out the wall and the windows. The swim went ahead on schedule." data-ua="Російська ракета зруйнувала стіну й вибила вікна. Заплив — за розкладом.">A russian missile took out the wall and the windows. The swim went ahead on schedule.</div>
+            </div>
+            </div>
+            <div data-endbar="" style="background:var(--surface); padding:12px clamp(12px,1.6vw,18px); display:flex; flex-wrap:wrap; align-items:center; gap:10px; row-gap:8px;">
+              <button type="button" data-endnav="prev" data-cursor="1" aria-label="Previous photo" data-aria-en="Previous photo" data-aria-ua="Попереднє фото" style="width:44px; height:44px; flex:none; display:grid; place-items:center; padding:0; border:2px solid var(--rule); background:transparent; color:var(--ink); font-family:'Space Mono',monospace; font-weight:700; font-size:16px; line-height:1; cursor:pointer; transition:background-color .2s, color .2s;">←</button>
+              <div data-endidx="" style="order:-1; flex:1 1 100%; min-width:0; display:flex; flex-wrap:wrap; justify-content:center;">
+                <button type="button" data-endgo="london" data-cursor="1" aria-label="London Marathon" data-aria-en="London Marathon" data-aria-ua="Лондонський марафон" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#E1251B;"></span></button>
+                <button type="button" data-endgo="chicago" data-cursor="1" aria-label="Chicago Marathon" data-aria-en="Chicago Marathon" data-aria-ua="Чиказький марафон" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:var(--ink);"></span></button>
+                <button type="button" data-endgo="dublin" data-cursor="1" aria-label="Fastlane 10K, Dublin" data-aria-en="Fastlane 10K, Dublin" data-aria-ua="Fastlane 10K, Дублін" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#E1251B;"></span></button>
+                <button type="button" data-endgo="orta" data-cursor="1" aria-label="Lake Orta, Italy" data-aria-en="Lake Orta, Italy" data-aria-ua="Озеро Орта, Італія" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#1E3FCF;"></span></button>
+                <button type="button" data-endgo="croatia" data-cursor="1" aria-label="Oceanman Stari Grad, Croatia" data-aria-en="Oceanman Stari Grad, Croatia" data-aria-ua="Oceanman Старі Град, Хорватія" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#F2C200;"></span></button>
+                <button type="button" data-endgo="kyiv5k" data-cursor="1" aria-label="Oceanman Kyiv, 5 km" data-aria-en="Oceanman Kyiv, 5 km" data-aria-ua="Oceanman Київ, 5 км" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#1E3FCF;"></span></button>
+                <button type="button" data-endgo="kyiv" data-cursor="1" aria-label="Oceanman Kyiv — finish and relay" data-aria-en="Oceanman Kyiv — finish and relay" data-aria-ua="Oceanman Київ — фініш і естафета" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#F2C200;"></span></button>
+                <button type="button" data-endgo="kropswim" data-cursor="1" aria-label="KropSwim, Kropyvnytskyi" data-aria-en="KropSwim, Kropyvnytskyi" data-aria-ua="KropSwim, Кропивницький" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#1E3FCF;"></span></button>
+                <button type="button" data-endgo="skadovsk" data-cursor="1" aria-label="Dzharylhach → Skadovsk" data-aria-en="Dzharylhach → Skadovsk" data-aria-ua="Джарилгач → Скадовськ" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#F2C200;"></span></button>
+                <button type="button" data-endgo="romanchuk" data-cursor="1" aria-label="With Mykhailo Romanchuk" data-aria-en="With Mykhailo Romanchuk" data-aria-ua="З Михайлом Романчуком" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#1E3FCF;"></span></button>
+                <button type="button" data-endgo="dnipro" data-cursor="1" aria-label="Dnipro, winter 2024" data-aria-en="Dnipro, winter 2024" data-aria-ua="Дніпро, зима 2024" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:var(--ink);"></span></button>
+              </div>
+              <span data-endcount="" aria-live="polite" style="flex:1 1 auto; text-align:center; font-family:'Space Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.06em; color:var(--ink); white-space:nowrap;">01 / 11</span>
+              <button type="button" data-endnav="next" data-cursor="1" aria-label="Next photo" data-aria-en="Next photo" data-aria-ua="Наступне фото" style="width:44px; height:44px; flex:none; display:grid; place-items:center; padding:0; border:2px solid var(--rule); background:transparent; color:var(--ink); font-family:'Space Mono',monospace; font-weight:700; font-size:16px; line-height:1; cursor:pointer; transition:background-color .2s, color .2s;">→</button>
             </div>
           </div>
 
@@ -1525,32 +1678,86 @@ class Component extends DCLogic {
         setTimeout(() => { window.scrollTo({ top: aboutSec.getBoundingClientRect().top + window.pageYOffset - 64, behavior: 'auto' }); }, 60);
       });
     });
-    /* ---------- endurance viewer ---------- */
+    /* ---------- endurance album (entries [data-slot] × frames [data-f]; state = [data-on]) ---------- */
     (function(){
       const end = document.getElementById('vf-endurance');
       if (!end) return;
-      const evs = [...end.querySelectorAll('[data-ev]')];
+      const photo = end.querySelector('[data-endphoto]');
       const slots = [...end.querySelectorAll('[data-slot]')];
+      if (!photo || !slots.length) return;
+      const order = slots.map(s => s.getAttribute('data-slot'));
+      const evs = [...end.querySelectorAll('[data-ev]')];
+      const gos = [...end.querySelectorAll('[data-endgo]')];
       const caps = [...end.querySelectorAll('[data-cap]')];
-      let ortaFrame = 0;
-      const advanceOrta = () => {
-        end.setAttribute('data-frame', String(ortaFrame));
-        ortaFrame = ortaFrame ? 0 : 1;
+      const count = end.querySelector('[data-endcount]');
+      const framesOf = (s) => [...s.querySelectorAll('[data-f]')];
+      const mark = (el, v) => { if (v) el.setAttribute('data-on', ''); else el.removeAttribute('data-on'); };
+      const pad = (n) => (n < 10 ? '0' : '') + n;
+      let cur = 0, frame = 0;
+      const load = (i) => {
+        const s = slots[(i + slots.length) % slots.length];
+        framesOf(s).forEach(img => { const d = img.getAttribute('data-src'); if (d && img.getAttribute('src') !== d) img.setAttribute('src', d); });
       };
-      const setActive = (ev) => {
-        if (!ev) return;
-        end.setAttribute('data-active', ev);
+      const render = () => {
+        const id = order[cur];
+        const n = framesOf(slots[cur]).length;
+        if (frame > n - 1) frame = 0;
+        load(cur); load(cur + 1); load(cur - 1);
+        end.setAttribute('data-active', id);
+        slots.forEach((s, i) => {
+          mark(s, i === cur);
+          framesOf(s).forEach((f, k) => mark(f, i === cur && k === frame));
+          s.querySelectorAll('[data-dot]').forEach((d, k) => mark(d, k === frame));
+        });
+        const mine = caps.filter(c => c.getAttribute('data-cap') === id);
+        const shown = mine.find(c => (c.getAttribute('data-capf') || '').split(',').indexOf(String(frame)) > -1) || mine.find(c => !c.hasAttribute('data-capf')) || mine[0];
+        caps.forEach(c => mark(c, c === shown));
+        evs.forEach(b => mark(b, b.getAttribute('data-ev') === id));
+        gos.forEach(b => { const a = b.getAttribute('data-endgo') === id; mark(b, a); b.setAttribute('aria-current', a ? 'true' : 'false'); });
+        if (count) count.textContent = pad(cur + 1) + ' / ' + pad(slots.length);
+      };
+      const go = (id) => { const i = order.indexOf(id); if (i < 0) return; cur = i; frame = 0; render(); };
+      const step = (d) => {
+        const n = framesOf(slots[cur]).length;
+        if (d > 0) { if (frame < n - 1) frame += 1; else { cur = (cur + 1) % slots.length; frame = 0; } }
+        else if (frame > 0) frame -= 1;
+        else { cur = (cur - 1 + slots.length) % slots.length; frame = framesOf(slots[cur]).length - 1; }
+        render();
       };
       evs.forEach(b => {
-        const ev = b.getAttribute('data-ev');
+        const id = b.getAttribute('data-ev');
         b.style.cursor = 'pointer';
         b.setAttribute('tabindex', '0');
+        b.setAttribute('role', 'button');
         b.setAttribute('data-cursor', '1');
-        b.addEventListener('pointerenter', () => { if (ev === 'orta') advanceOrta(); setActive(ev); });
-        b.addEventListener('click', () => setActive(ev));
-        b.addEventListener('focus', () => setActive(ev));
+        b.addEventListener('pointerenter', () => {
+          if (order[cur] !== id) { go(id); return; }
+          const n = framesOf(slots[cur]).length;
+          if (n > 1) { frame = (frame + 1) % n; render(); }
+        });
+        b.addEventListener('click', () => { if (order[cur] !== id) go(id); });
+        b.addEventListener('focus', () => { if (order[cur] !== id) go(id); });
+        b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(id); } });
       });
-      setActive('london');
+      gos.forEach(b => b.addEventListener('click', () => go(b.getAttribute('data-endgo'))));
+      end.querySelectorAll('[data-endnav]').forEach(b => b.addEventListener('click', () => step(b.getAttribute('data-endnav') === 'next' ? 1 : -1)));
+      photo.setAttribute('tabindex', '0');
+      let px = null, py = 0;
+      photo.addEventListener('pointerdown', (e) => { if (e.button !== 0) return; px = e.clientX; py = e.clientY; });
+      photo.addEventListener('pointercancel', () => { px = null; });
+      photo.addEventListener('pointerup', (e) => {
+        if (px === null) return;
+        const dx = e.clientX - px, dy = e.clientY - py; px = null;
+        if (e.target.closest && e.target.closest('a')) return;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+        else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) step(1);
+      });
+      photo.parentElement.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        else if ((e.key === 'Enter' || e.key === ' ') && e.target === photo) { e.preventDefault(); step(1); }
+      });
+      render();
     })();
     const pron = document.getElementById('vf-pron');
     if (pron) pron.addEventListener('click', () => {
