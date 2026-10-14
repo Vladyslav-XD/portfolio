@@ -1,3 +1,19 @@
+# Validator clean: Fixel fonts, local scratch skipped (2026-10-14)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 34bad2c.
+
+## Why
+`node scripts/validate-static-site.mjs` failed on main: 12 errors from the gitignored `_to_delete/` scratch folder, and the Fixel `@font-face` files of `pace-tape.html`, which were never in the repo (404 on www.vladfilon.com).
+
+## Changes
+- `scripts/validate-static-site.mjs`: skips `_to_delete/` (e2ac67c).
+- `assets/fonts/FixelText-Medium.woff2`, `FixelText-Bold.woff2` (84 KB each) and `Fixel-OFL.txt`: from the Pace Tape app (`assets/fonts/fixel/`, the same files the app ships), converted from OTF to WOFF2 with fontTools, glyphs unchanged. Fixel is MacPaw's open font, SIL OFL 1.1, no Reserved Font Name. Decision 05 on `pace-tape.html` ("Settings · Haptics · Ticker jokes", EN and UK) now renders in Fixel instead of falling back to Hanken Grotesk / the system font. Only weight 500 is used, so the browser never downloads Bold.
+
+## Check before merging
+- `pace-tape.html`, decision 05: the sample line is in Fixel in EN and UK; no 404 for `assets/fonts/` in the network panel.
+
+---
+
 # Page titles and page language (2026-10-14)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit e2ac67c.
