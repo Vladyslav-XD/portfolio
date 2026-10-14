@@ -10,7 +10,7 @@ Add:
 
 Replace:
 - `index.html`: see below.
-- `smart-school.html`: the IT Smart School case. It replaces the old 4.6 MB bundled export of the same page. Same header as the other cases (music toggle, no Blog); vf-nav.js before support.js and vf-shared.js in the helmet, like the other design-code pages.
+- `smart-school.html`: the IT Smart School case. It replaces the old 4.6 MB bundled export of the same page. Same header as the other cases (music toggle, no Blog); vf-nav.js before support.js and vf-shared.js in the helmet, like the other design-code pages. Phones (≤ 700 px) get the layout rules of the previous page back: the hero and the grids stack in one column, the user-flow steps stay in two. Without them the two-column hero widened the page to ~550 px and the hero screenshot shrank to ~20 px. The design-process cards now stack too; on the previous page they stayed in two columns and were cut off at the right edge.
 - `sitemap.xml`: lastmod 2026-10-14 for `/` and `smart-school.html` (the entry already existed).
 
 Delete:
@@ -33,7 +33,7 @@ Edit, one line right before `</head>` (not in this package, so nothing else in t
 ## Check before merging
 - Home → More about me → Beyond the desk: arrows, squares, swipe on a phone; all 16 new photos load; captions in EN and UA.
 - Right-click / long-press a photo on any page (including after a soft navigation): no "Save image" menu.
-- Home row 10 → `smart-school.html` opens; theme, EN / UA and the music keep working.
+- Home row 10 → `smart-school.html` opens; theme, EN / UA and the music keep working. At 375 px it is one column and nothing is cut off at the right edge.
 - 375 px and 1440 px, light and dark.
 - A nested missing URL such as `/a/b`: the 404 page shows its favicon, and its scripts load without errors.
 

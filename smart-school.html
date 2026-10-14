@@ -36,6 +36,17 @@
     #ss-root [style*="repeat(3"]:not([data-keep]), #ss-root [style*="repeat(4"]:not([data-keep]){ grid-template-columns:repeat(2,1fr) !important; }
     #ss-root [data-mq-pad], #ss-root [data-mq-pad], #ss-root [data-mq-pad]{ padding-left:20px !important; padding-right:20px !important; }
   }
+  /* Phones: the layout rules of the previous (bundled) page. Without them the two-column hero sets the page width to ~550px. */
+  @media (max-width:700px){
+    html, body, #ss-root{ max-width:100%; overflow-x:clip; }
+    #ss-root [style*="grid-template-columns"], #ss-root [data-keep]{ grid-template-columns:1fr !important; }
+    #ss-root [style*="repeat(3"]:not([data-keep]), #ss-root [style*="repeat(4"]:not([data-keep]){ grid-template-columns:1fr !important; }
+    #ss-root section[data-screen-label="Hero"] > div{ min-height:auto !important; padding:40px 24px !important; }
+    #ss-root section[data-screen-label="Hero"] > div:last-child{ min-height:320px !important; }
+    #ss-flow [data-keep]{ grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    #ss-flow [data-roleflow]{ padding:16px !important; }
+    #ss-ring{ display:none !important; }
+  }
   [style*="Archivo Expanded"]{ font-family:'Archivo','Hanken Grotesk',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
 </style>
 <script src="./assets/js/vf-shared.js"></script>
