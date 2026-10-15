@@ -1,3 +1,28 @@
+# Pace Tape catalog rebuilt from pace_tape f39b1a9 (2026-10-15)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 426513d.
+
+## Why
+The catalog added in 426513d still had Flutter's default name ("pace_tape_widgetbook"). It loaded an emoji font from fonts.gstatic.com on start (the entry below says it made no request to another host; it did, for the emoji on Widgetbook's welcome screen). Screen readers saw nothing until a hidden "Enable accessibility" button was pressed, and it registered a service worker that could keep serving a stale copy.
+
+## Changes
+- `pace-tape/widgetbook/`: replaced as a whole by `build/widgetbook_site` from pace_tape commits 086bc47 and f39b1a9, not merged, so files the new build no longer has are deleted. 30 files, 13 MB.
+- Tab name "Pace Tape — component catalog". The catalog's own home page shows that title and the one-line description instead of Widgetbook's welcome screen (no emoji, no links to widgetbook.io).
+- No third-party requests: the engine's fallback fonts point at this site. A headless Chrome pass in the app repo over every use case, in four languages, light and dark, saw only the site's own host and no errors (163 requests).
+- Screen readers: the semantics tree is built on load, and the navigation tree stays readable when a use case is open. The page language stays English, while the uk/de/fr previews carry their own `lang`.
+- Removed: Poppins (3 files, 459 KB, unused) and `flutter_service_worker.js`.
+
+## Not changed
+- The privacy modal on `index.html` still says the catalog loads from Google's servers (see the entry below). The catalog now makes no request to Google at all. Copy change left to Vlad.
+- Visitors who opened the catalog on 14–15.10 may still have the old service worker. Browsers drop it once `flutter_service_worker.js` stops being served, so until then they might see the old copy once more.
+
+## Check before merging
+- Pace Tape case page → component catalog: the tab reads "Pace Tape — component catalog", and the home page shows the title and the description.
+- DevTools → Network on `/pace-tape/widgetbook/`: only www.vladfilon.com.
+- VoiceOver in Safari: the navigation tree is read without pressing anything. With a Ukrainian preview open, the menu is still read in English.
+
+---
+
 # Validator clean: Fixel fonts, Widgetbook catalog, local scratch skipped (2026-10-14)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 34bad2c.

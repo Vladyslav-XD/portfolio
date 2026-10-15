@@ -1,11 +1,11 @@
 {
-    "name": "pace_tape_widgetbook",
-    "short_name": "pace_tape_widgetbook",
+    "name": "Pace Tape — component catalog",
+    "short_name": "Pace Tape catalog",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Widgetbook catalog of the Pace Tape iOS app: every component and screen state, light and dark, four languages, large text and Reduce Motion.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
