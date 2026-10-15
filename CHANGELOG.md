@@ -14,7 +14,7 @@ The catalog added in 426513d still had Flutter's default name ("pace_tape_widget
 
 ## Not changed
 - The privacy modal on `index.html` still says the catalog loads from Google's servers (see the entry below). The catalog now makes no request to Google at all. Copy change left to Vlad.
-- Visitors who opened the catalog on 14–15.10 may still have the old service worker. Browsers drop it once `flutter_service_worker.js` stops being served, so until then they might see the old copy once more.
+- No service-worker clean-up is needed: the worker the 426513d copy registered was Flutter 3.47's clean-up worker. It cached nothing and had no fetch handler; on activation it unregistered itself and reloaded the page, so no visitor keeps it or an old copy from it.
 
 ## Check before merging
 - Pace Tape case page → component catalog: the tab reads "Pace Tape — component catalog", and the home page shows the title and the description.
