@@ -1,3 +1,21 @@
+# Privacy text: the catalog no longer loads from Google (2026-10-22)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 767cd72.
+
+## Why
+The privacy modal on `index.html` said the Pace Tape component catalog "loads the Flutter web engine from Google’s servers (gstatic.com)". Since f7d299f it makes no request to any other host (checked live on www.vladfilon.com on 2026-10-22: 15 requests, all to the site itself).
+
+## Changes
+- `index.html`, privacy modal, Analytics paragraph, one sentence in EN (`data-en` and the default text) and UA (`data-ua`):
+  - EN: "The Pace Tape component catalog (/pace-tape/widgetbook/) loads entirely from this site, with no requests to other servers."
+  - UA: "Каталог компонентів Pace Tape (/pace-tape/widgetbook/) повністю завантажується з цього сайту, без запитів до інших серверів."
+- The sentence speaks only about the catalog. Every other page still loads its fonts from Google Fonts (fonts.googleapis.com, fonts.gstatic.com), which the modal doesn't mention; that is left to Vlad.
+
+## Check before merging
+- Home → Privacy: the Analytics paragraph has the new sentence in EN, and in UA after switching the language.
+
+---
+
 # Pace Tape catalog rebuilt from pace_tape f39b1a9 (2026-10-15)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 426513d.
