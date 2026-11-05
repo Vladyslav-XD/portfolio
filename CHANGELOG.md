@@ -1,3 +1,41 @@
+# Pace Tape page: the app first, then the case; facts updated to 1.2.0 (2026-11-05)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main at e65d626. Copy this folder over the repo root, keeping the paths. Nothing needs deleting.
+
+## Why
+The App Store "Developer Website" link opens `pace-tape.html`. App users landed straight in a long design case, which is written for recruiters, design teams and clients. The page also still described version 1.0 (EN + UK only, no data collected); 1.2.0 (5 Nov 2026) has four languages and usage stats only with consent.
+
+## Files
+Add:
+- `assets/images/pace-tape/vlad-black-smile.webp`, `vlad-yellow-smile.webp`: the home-page portraits (`assets/images/home/portrait-*-smile.png`, ~1 MB each) as transparent WebP, same size (77 KB and 64 KB).
+
+Replace:
+- `pace-tape.html`: see below.
+- `CHANGELOG.md`: this entry on top of the current file.
+
+Edit:
+- `sitemap.xml`: lastmod 2026-11-05 for `pace-tape.html`.
+
+## pace-tape.html
+- **Hero = the app**: slogan "Calculate first, suffer later.", one-line pitch, four benefits (Simple · Clear · Fast · Honest, from the App Store text), App Store button, Support, Privacy, "Free · iPhone, iOS 15 or later · English, Українська, Deutsch, Français", three store screenshots (a swipe row below 900 px) and "Explore the design case study ↓" (anchor `#case-study`).
+- **About the developer** (new, `#developer`): portrait (black shirt on yellow in the light theme, yellow shirt on ink in the dark), two lines, "Go to my portfolio →" (index.html).
+- **Case-study intro** (new, `#case-study`, stone band): Role / Platform / Tools / Who wrote the code, moved from the hero (Platform now EN · UK · DE · FR), and the Widgetbook link.
+- **02 Research**: Pace Tape row — optional tip; "Not linked to you · usage stats only with consent · works offline"; EN, UK, DE, FR; note "Pace Tape row: version 1.2.0". Summary line and the SWOT strength follow.
+- **Key decision 01**: "Free. No ads, no login. Usage stats only with consent (since 1.2.0)."
+- **11 Results**: the line names 1.2.0 and consent-based stats; "It has only just gone live" removed.
+- **12 What's next → After launch**: what shipped in 1.2.0 (the App Store release notes) and what is still in the backlog (Android, Spanish and Polish, the drag-direction test). The "Launch intro" and "Listening to runners" cards and the install-path lesson are removed.
+
+## Not changed
+- `pace-tape-support.html` still says version 1.0, English or Українська only, "collects no personal data", the "Ticker jokes" switch and "Settings › Onboarding › Show again".
+- The App Store listing shows "Language: English" only; worth checking CFBundleLocalizations (en, uk, de, fr) in the app's Info.plist.
+
+## Check before merging
+- 1440 px and 375 px, EN and UA, light and dark: hero, portrait swap with the theme, screenshot swipe row on a phone.
+- "Explore the design case study ↓" lands on the stone band below the sticky header; "Go to my portfolio →" opens the home page.
+- Home → Pace Tape row (soft navigation): the page mounts with theme, EN / UA and music working.
+
+---
+
 # Privacy text: the catalog no longer loads from Google (2026-10-22)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 767cd72.
