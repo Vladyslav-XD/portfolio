@@ -1,3 +1,21 @@
+# Pace Tape page: no "About the developer" block (2026-11-06)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 28edd7f.
+
+## Why
+Vlad: the case study does not need a block about the developer (added in 7c32fd0).
+
+## Changes
+- `pace-tape.html`: the `#developer` section (portrait, "Made by Vlad Filon.", two lines, "Go to my portfolio →") and the five CSS rules that served only it are removed. The hero now leads straight into the case-study band.
+
+## Not changed
+- `assets/images/pace-tape/vlad-black-smile.webp` and `vlad-yellow-smile.webp` are no longer used; left in place until Vlad says to delete them.
+
+## Checked
+- 375 px and 1440 px, light and dark: the hero runs into the case-study band, no horizontal scroll.
+
+---
+
 # Pace Tape case: design system numbers for 1.2 (2026-11-06)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 86f2410.

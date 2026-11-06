@@ -58,11 +58,7 @@
   @media (max-width:1100px){ #pt-root [data-tl]{ grid-template-columns:none !important; grid-auto-flow:column; grid-auto-columns:minmax(240px,72%); overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; } }
   @media (max-width:1100px){ #pt-root [data-next] > :last-child{ grid-column:1/-1; } }
   @media (hover:none), (pointer:coarse){ #pt-root #pt-ring{ display:none !important; } }
-  #pt-root [data-pt-portrait="dark"]{ display:none; }
-  #pt-root[data-theme="dark"] [data-pt-portrait="light"]{ display:none; }
-  #pt-root[data-theme="dark"] [data-pt-portrait="dark"]{ display:block; }
-  #pt-root[data-theme="dark"] [data-dev-photo]{ background:#14110B !important; }
-  @media (max-width:900px){ #pt-root [data-shots]{ justify-content:flex-start !important; overflow-x:auto; scroll-snap-type:x mandatory; gap:16px; padding:36px 20px 40px !important; min-height:0 !important; } #pt-root [data-shots] img{ flex:0 0 64% !important; width:64% !important; max-width:280px; margin:0 !important; transform:none !important; scroll-snap-align:center; } #pt-root [data-dev-photo]{ min-height:360px !important; } }
+  @media (max-width:900px){ #pt-root [data-shots]{ justify-content:flex-start !important; overflow-x:auto; scroll-snap-type:x mandatory; gap:16px; padding:36px 20px 40px !important; min-height:0 !important; } #pt-root [data-shots] img{ flex:0 0 64% !important; width:64% !important; max-width:280px; margin:0 !important; transform:none !important; scroll-snap-align:center; } }
   [style*="Archivo Expanded"]{ font-family:'Archivo','Hanken Grotesk',sans-serif !important; font-stretch:125% !important; font-variation-settings:'wdth' 125 !important; }
 </style>
 <script src="./assets/js/vf-shared.js"></script>
@@ -137,21 +133,6 @@
       <img src="assets/images/pace-tape/store-2.webp" data-src-en="assets/images/pace-tape/store-2.webp" data-src-ua="assets/images/pace-tape/store-uk-2.webp" alt="Pace Tape swim screen: drag a number second by second" style="width:min(31%,230px); display:block; border:2.5px solid #0A0A0A; box-shadow:6px 6px 0 #0A0A0A; transform:rotate(-3deg) translateY(20px); position:relative; margin-right:-14px; z-index:1;">
       <img src="assets/images/pace-tape/store-1.webp" data-src-en="assets/images/pace-tape/store-1.webp" data-src-ua="assets/images/pace-tape/store-uk-1.webp" alt="Pace Tape run screen: pace, distance and the pink result card" style="width:min(34%,250px); display:block; border:2.5px solid #0A0A0A; box-shadow:6px 6px 0 #0A0A0A; transform:translateY(-14px); position:relative; z-index:2;">
       <img src="assets/images/pace-tape/store-4.webp" data-src-en="assets/images/pace-tape/store-4.webp" data-src-ua="assets/images/pace-tape/store-uk-4.webp" alt="Pace Tape triathlon screen: swim, T1, bike, T2, run and the total" style="width:min(31%,230px); display:block; border:2.5px solid #0A0A0A; box-shadow:6px 6px 0 #0A0A0A; transform:rotate(3deg) translateY(20px); position:relative; margin-left:-14px; z-index:1;">
-    </div>
-  </section>
-
-  <!-- ABOUT THE DEVELOPER -->
-  <section id="developer" data-screen-label="About the developer" data-mq-flush="1" style="border-bottom:5px solid var(--rule); display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:5px; background:var(--rule);" data-mq-1col="1">
-    <div data-dev-photo="" style="position:relative; min-height:380px; overflow:hidden; background:var(--yellow);">
-      <img data-pt-portrait="light" src="assets/images/pace-tape/vlad-black-smile.webp" alt="Vlad Filon" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 12%;">
-      <img data-pt-portrait="dark" src="assets/images/pace-tape/vlad-yellow-smile.webp" alt="Vlad Filon" loading="lazy" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 12%;">
-    </div>
-    <div data-mq-pad="1" style="background:var(--paper); padding:64px 48px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:18px;">
-      <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--accent);" data-en="ABOUT THE DEVELOPER" data-ua="ПРО РОЗРОБНИКА">ABOUT THE DEVELOPER</div>
-      <h2 data-reveal="" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,56px); line-height:1.0; letter-spacing:-0.02em; margin:0;" data-en="Made by Vlad Filon." data-ua="Створив Влад Філон.">Made by Vlad Filon.</h2>
-      <p style="font-size:clamp(17px,1.6vw,20px); line-height:1.5; max-width:620px; margin:0; text-wrap:pretty;" data-en="UX/UI and product designer in Dublin. I designed Pace Tape, built it with AI agents and released it on the App Store." data-ua="UX/UI- і продуктовий дизайнер у Дубліні. Я спроєктував Pace Tape, збудував його з AI-агентами й випустив в App Store.">UX/UI and product designer in Dublin. I designed Pace Tape, built it with AI agents and released it on the App Store.</p>
-      <p style="font-size:15px; line-height:1.5; margin:0; color:var(--muted);" data-en="Off the screen: marathons and open water." data-ua="Поза екраном — марафони й відкрита вода.">Off the screen: marathons and open water.</p>
-      <a href="index.html" data-cursor="1" style="display:inline-flex; align-items:center; margin-top:8px; background:var(--ink); color:var(--paper); border-radius:44px; padding:14px 26px; font-weight:700; font-size:16px; transition:transform .14s;" style-hover="transform:translateY(-2px);" data-en="Go to my portfolio →" data-ua="Перейти до портфоліо →">Go to my portfolio →</a>
     </div>
   </section>
 
