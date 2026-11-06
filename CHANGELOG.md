@@ -1,3 +1,18 @@
+# Pace Tape case: design system numbers for 1.2 (2026-11-06)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 86f2410.
+
+## Why
+Section "08 / Design system" on `pace-tape.html` still showed 20 components, 34 states and 48 reference screenshots, and listed the coach tips, which 1.2 removed. The catalog rebuilt in 86f2410 has 27 components and 106 use cases.
+
+## Changes
+- `pace-tape.html`, section 08 only, EN and UA: 27 components; 106 use cases (was "states"; UA «сценаріїв»); 185 reference screenshots (the PNGs in pace_tape `screenshots/`). Layer 3 list: "tips and guide, More menu, consent card" instead of "coach tips", and "aid station" added (UA «підказки й путівник, меню «…», картка згоди», «пункт харчування»).
+
+## Checked
+- Section 08 at 1440 px and 375 px, EN and UA: the four number tiles and the layer 3 card, no horizontal scroll.
+
+---
+
 # Pace Tape catalog rebuilt from pace_tape 1.2.0+9 (2026-11-06)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 456c415.
