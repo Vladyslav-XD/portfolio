@@ -1,3 +1,23 @@
+# Pace Tape catalog rebuilt from pace_tape 1.2.0+9 (2026-11-06)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 456c415.
+
+## Why
+The published catalog was built on 15 October from pace_tape f39b1a9, before 1.2: 21 components, 56 use cases. Pace Tape 1.2.0 went live on 5 November.
+
+## Changes
+- `pace-tape/widgetbook/`: replaced as a whole by `build/widgetbook_site` from pace_tape 6bce443 (1.2.0+9), built 6 November 2026; the old contents were deleted first. 30 files, 13 MB. Only `main.dart.js` and `assets/NOTICES` differ: the loader, the index page, the fonts and CanvasKit are the same files.
+- 27 components, 106 use cases. New with 1.2: the More menu, the usage-stats consent card, treadmill and outdoor run, the pool line, Σ Finish as input and the locks.
+- Tab name unchanged: "Pace Tape — component catalog".
+
+## Checked
+- Served locally under `/pace-tape/widgetbook/` in Chromium: it loads, the tab reads "Pace Tape — component catalog", `lang="en"`, no service worker, every request goes to the site's own host. The navigation footer reads "27 Components • 106 Use-cases"; Screens → MoreMenu → Open draws the menu (Aid station, Rate Pace Tape, How the app works, Settings), from the tree and from a deep link.
+
+## Not changed
+- `pace-tape.html` §08 still says "20 components · 34 states · 48 reference screenshots" and lists coach tips and the launch intro in layer 3. The catalog now has 27 components and 106 use cases. Copy change left to Vlad.
+
+---
+
 # Pace Tape page: the app first, then the case; facts updated to 1.2.0 (2026-11-05)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main at e65d626. Copy this folder over the repo root, keeping the paths. Nothing needs deleting.
