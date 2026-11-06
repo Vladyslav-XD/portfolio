@@ -36,6 +36,21 @@ Edit:
 
 ---
 
+# Pace Tape 1.2: Privacy Policy, usage stats only with consent (2026-10-29)
+
+Repo: Vladyslav-XD/portfolio · branch main. Committed as e65d626, on main after 3a48314.
+
+## Why
+Version 1.2 of Pace Tape adds usage stats (PostHog EU Cloud), sent only after the user taps Yes on a consent card, and the Aid station tips. The page still said "no analytics" and "no internet connection", and App Review reads the Privacy Policy URL.
+
+## Changes
+- `pace-tape-privacy.html`: effective date 29 October 2026 (app version 1.2); meta/og description: usage stats only with consent. New sections "Calculations stay on your device", "Usage stats (version 1.2 and later)" (nothing stored or sent before Yes; consent as the legal basis, GDPR Art. 6(1)(a) and ePrivacy Art. 5(3) / Irish S.I. No. 336 of 2011; what is sent and what is never sent; IP addresses discarded, no location worked out; retention up to one year; PostHog as processor; how to withdraw), "Purchases", "Your rights" (withdrawal, GDPR Art. 11, the Irish Data Protection Commission); "No internet connection" removed; stored-data list now names Reduce Motion, the answer about usage stats, seen tips and the tip state; "What the app does not do" says no tracking across apps or sites instead of "no analytics"; "Children" says stats go only after Yes and asks under-16s to check with a parent or guardian; version history line under "Changes to this policy". EN (`data-en` and default text) and UA (`data-ua`).
+
+## Checked
+- Live page in EN and UA after the push (29.10.2026). Versions 1.0–1.1 are covered by the sentence "Versions 1.0 and 1.1 send nothing."
+
+---
+
 # Privacy text: the catalog no longer loads from Google (2026-10-22)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 767cd72.
