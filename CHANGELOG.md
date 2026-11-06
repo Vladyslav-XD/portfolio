@@ -1,3 +1,24 @@
+# About in the project page headers (2026-11-06)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after the entry below.
+
+## Why
+The home page header has Work · About · FAQ · Paintings; the project pages had only Work · Paintings, so About disappeared as soon as a project opened. About left every header on 2026-09-04 (af8680a) and came back only on the home page on 2026-09-18 (8617641).
+
+## Changes
+- 11 project pages (bookworm-community, charon, coffee-audit, drug-dozy, language-course, mocktail-finder, my-eco-pharmacy, pace-tape, race-planner, smart-school, tverdokhlib): "About" / «Про мене» after Work in the desktop nav and in the mobile menu, linking to `index.html#about`, in the Work link's style.
+- `index.html`: arriving at `index.html#about` (soft navigation or a full load) opens "More about me" and scrolls it below the header, as the home page's own About link does; `#about` gets `scroll-margin-top:64px` for the browser's own jump to the anchor.
+
+## Not changed
+- `art.html` keeps its "Personal" link to the same section.
+- The privacy and support pages still have Work · Paintings. `pace-tape-privacy.html` is not to be edited again, and the Mocktail Finder pages hold another session's uncommitted work.
+
+## Checked
+- The 11 pages at 912 px (the narrowest desktop header), EN and UA: one row, nothing past the right edge; at 375 px the mobile menu lists Work, About, Paintings.
+- About from a project page (desktop nav and mobile menu), a full load of `index.html#about`, and the home page's own About: "More about me" opens with its top 64 px below the top of the window.
+
+---
+
 # Pace Tape page: no "About the developer" block (2026-11-06)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 28edd7f.

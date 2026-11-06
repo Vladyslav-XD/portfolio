@@ -101,7 +101,8 @@
   #vf-faq [data-faq-item][data-open="1"] [data-faq-sign]{ transform:rotate(45deg) !important; }
   #vf-faq [data-faq-q]:hover [data-faq-sign]{ color:var(--ink) !important; }
 
-  /* about — collapsible */
+  /* about — collapsible; the scroll margin keeps index.html#about below the header (as the nav click does) */
+  #about{ scroll-margin-top:64px; }
   #vf-about-panel{ max-height:0; overflow:hidden; }
   #about[data-aopen="1"] #vf-about-panel{ max-height:4400px; }
   #about[data-aopen="1"] [data-about-sign]{ transform:rotate(45deg) !important; }
@@ -1665,19 +1666,21 @@ class Component extends DCLogic {
     })();
 
     /* nav "About" → expand the panel, then scroll to it */
+    const openAbout = () => {
+      if (aboutSec.getAttribute('data-aopen') !== '1') {
+        aboutSec.setAttribute('data-aopen', '1');
+        if (aboutBtn) aboutBtn.setAttribute('aria-expanded', 'true');
+        setTimeout(vfAnimateEndurance, 140);
+      }
+      const mob = document.getElementById('vf-mobile');
+      if (mob) mob.style.display = 'none';
+      setTimeout(() => { window.scrollTo({ top: aboutSec.getBoundingClientRect().top + window.pageYOffset - 64, behavior: 'auto' }); }, 60);
+    };
     if (aboutSec) root.querySelectorAll('a[href="#about"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (aboutSec.getAttribute('data-aopen') !== '1') {
-          aboutSec.setAttribute('data-aopen', '1');
-          if (aboutBtn) aboutBtn.setAttribute('aria-expanded', 'true');
-          setTimeout(vfAnimateEndurance, 140);
-        }
-        const mob = document.getElementById('vf-mobile');
-        if (mob) mob.style.display = 'none';
-        setTimeout(() => { window.scrollTo({ top: aboutSec.getBoundingClientRect().top + window.pageYOffset - 64, behavior: 'auto' }); }, 60);
-      });
+      a.addEventListener('click', (e) => { e.preventDefault(); openAbout(); });
     });
+    /* the case pages' "About" opens index.html#about: same as the nav click */
+    if (aboutSec && location.hash === '#about') openAbout();
     /* ---------- endurance album (entries [data-slot] × frames [data-f]; state = [data-on]) ---------- */
     (function(){
       const end = document.getElementById('vf-endurance');
