@@ -96,10 +96,6 @@
     <a href="index.html#works" data-en="Work" data-ua="Роботи" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Work</a>
     <a href="index.html#about" data-en="About" data-ua="Про мене" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">About</a>
     <a href="art.html" data-en="Paintings" data-ua="Картини" style="display:block; padding:16px 24px; font-weight:600; border-bottom:1.5px solid var(--hair);">Paintings</a>
-    <div style="display:flex; border-bottom:1.5px solid var(--hair);">
-      <button data-proxy="mf-theme" aria-label="Toggle theme" style="flex:1; display:flex; align-items:center; justify-content:center; gap:10px; min-height:52px; background:transparent; border:none; border-right:1.5px solid var(--hair); cursor:pointer; color:var(--ink); font-family:'Space Mono',monospace; font-size:13px;"><span data-proxy-icon="">☾</span><span data-en="Theme" data-ua="Тема">Theme</span></button>
-      <button data-proxy="mf-lang" aria-label="Switch language" style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px; min-height:52px; background:transparent; border:none; cursor:pointer; color:var(--ink); font-family:'Space Mono',monospace; font-size:13px;"><span data-proxy-en="">EN</span><span style="opacity:.4;">/</span><span data-proxy-ua="" style="opacity:.4;">UA</span></button>
-    </div>
     <a href="index.html#cta" data-en="Let’s Talk →" data-ua="Зв’язок →" style="display:block; padding:16px 24px; font-weight:700; background:var(--red); color:#F4F1E8;">Let’s Talk →</a>
   </div>
 
@@ -438,16 +434,6 @@ class Component extends DCLogic {
     boot();
     if (!root) return;
     /* mobile menu: theme + language proxies for the header buttons hidden inside #mf-nav */
-    const syncProxy = () => {
-      const ic = document.getElementById('mf-theme-icon'), pi = root.querySelector('[data-proxy-icon]');
-      if (ic && pi) pi.textContent = ic.textContent;
-      const en = document.getElementById('mf-lang-en'), ua = document.getElementById('mf-lang-ua');
-      const pe = root.querySelector('[data-proxy-en]'), pu = root.querySelector('[data-proxy-ua]');
-      if (en && pe) pe.style.opacity = getComputedStyle(en).opacity;
-      if (ua && pu) pu.style.opacity = getComputedStyle(ua).opacity;
-    };
-    root.querySelectorAll('[data-proxy]').forEach(b => b.addEventListener('click', () => { const t = document.getElementById(b.getAttribute('data-proxy')); if (t) t.click(); setTimeout(syncProxy, 40); }));
-    setTimeout(syncProxy, 400); setTimeout(syncProxy, 1500);
     /* hero video slot: drop <video id="mf-demo"> into #mf-demo-slot (replacing the img) and this wiring takes over */
     const vid = document.getElementById('mf-demo');
     if (vid) {

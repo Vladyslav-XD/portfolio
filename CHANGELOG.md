@@ -1,3 +1,18 @@
+# One theme/language row in the mobile menu (2026-11-06)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after the entry below.
+
+## Why
+On `pace-tape.html`, `mocktail-finder.html` and `coffee-audit.html` the mobile menu showed two theme/language rows: the page's own "☾ Theme · EN / UA" row and the "THEME · LANGUAGE" row that `vf-shared.js` adds to every project page's menu. The other project pages have only the shared row.
+
+## Changes
+- The three pages: the page's own row (two `data-proxy` buttons) and its script (`syncProxy`, the click proxies, the delayed syncs) are removed. The shared row stays, in the same place above Let's Talk.
+
+## Checked
+- 375 px, each page: the menu reads Work · About · Paintings · THEME / LANGUAGE · Let's Talk (UA: Роботи · Про мене · Картини · ТЕМА / МОВА · Зв'язок); the theme button switches to dark and its icon follows; the language button switches to Ukrainian and back; no console errors.
+
+---
+
 # About in the project page headers (2026-11-06)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after the entry below.
@@ -11,7 +26,7 @@ The home page header has Work · About · FAQ · Paintings; the project pages ha
 
 ## Not changed
 - `art.html` keeps its "Personal" link to the same section.
-- The privacy and support pages still have Work · Paintings. `pace-tape-privacy.html` is not to be edited again, and the Mocktail Finder pages hold another session's uncommitted work.
+- The privacy and support pages keep Work · Paintings (Vlad, 2026-11-06): they are service pages the App Store sends people to; they need an answer, not the author.
 
 ## Checked
 - The 11 pages at 912 px (the narrowest desktop header), EN and UA: one row, nothing past the right edge; at 375 px the mobile menu lists Work, About, Paintings.
