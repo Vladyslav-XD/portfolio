@@ -1,3 +1,19 @@
+# Home page: MSc in Computer Science, 2027 (2026-11-07)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit cef130a.
+
+## Why
+Vlad: the home page should say "MSc in Computer Science, 2027" instead of "MSc in HCI, 2026".
+
+## Changes
+- `index.html`, the APPROACH paragraph (desktop grid block and phone card): "(MSc in HCI, 2026)" → "(MSc in Computer Science, 2027)"; UA "(MSc у HCI, 2026)" → "(MSc з компʼютерних наук, 2027)". The rest of the paragraph is unchanged.
+
+## Checked
+- Desktop grid at 912, 1024, 1180, 1366, 1440, 1536 and 1900 px, EN and UA: the paragraph takes at most 6 lines, as the UA text already did at those widths, and no line is cut off by the block's fixed height.
+- 375 px, EN and UA: the card grows with the text, no horizontal scroll.
+
+---
+
 # Pace Tape: unused developer portraits deleted (2026-11-07)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 4aa74f8.
