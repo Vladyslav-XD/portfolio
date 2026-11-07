@@ -1,3 +1,18 @@
+# Pace Tape: unused developer portraits deleted (2026-11-07)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 4aa74f8.
+
+## Why
+`assets/images/pace-tape/vlad-black-smile.webp` and `vlad-yellow-smile.webp` served only the "About the developer" block, removed in 7163e97. Vlad said to delete them.
+
+## Changes
+- The two WebP files (77 KB and 64 KB) are deleted. Nothing in the repo referenced them.
+
+## Checked
+- `pace-tape.html` live: no failed image requests; both old URLs return 404.
+
+---
+
 # One theme/language row in the mobile menu (2026-11-06)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after the entry below.
