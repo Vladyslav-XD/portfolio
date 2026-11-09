@@ -171,6 +171,23 @@ Version 1.2 of Pace Tape adds usage stats (PostHog EU Cloud), sent only after th
 
 ---
 
+# Mocktail Finder 1.2: Privacy Policy and Support rewritten (2026-10-22)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 3a48314.
+
+## Why
+Version 1.2 of the app adds one-time in-app purchases (Pro, six recipe collections, tips), Ukrainian, and an offline catalogue: the free recipes are now built into the app, so it no longer requests anything from TheCocktailDB or Unsplash. Both pages still described version 1.0.
+
+## Changes
+- `mocktail-finder-privacy.html`: effective date 22 October 2026; new sections "Works offline" (no requests of our own; note that 1.0–1.1 loaded the catalogue from TheCocktailDB) and "Purchases" (handled by the App Store, we see no payment details, only the purchase state is stored on the device); "Information sent over the internet" removed; stored data now lists My Bar, the shopping list, language, theme and purchase state; "Sharing" covers "Share as card". EN (`data-en` and default text) and UA (`data-ua`).
+- `mocktail-finder-support.html`: header "version 1.2"; new FAQ entries: internet not needed, what Pro is, collections and "Everything", restoring purchases, failed or "waiting for approval" purchases (refunds via Apple), tips, language and theme in About, "Bartender school"; "Recipes won't load" and the sun/moon theme entry removed; "Is the app free?" updated.
+
+## Check before merging
+- Both pages at 375 px and 1440 px, EN and UA, light and dark: headings, lists, the mailto link and the Privacy Policy link.
+- Publish before the 1.2 App Store submission (App Review reads the Privacy Policy URL); until 1.2 is released, the "Works offline" section's last sentence covers users still on 1.0–1.1.
+
+---
+
 # Privacy text: the catalog no longer loads from Google (2026-10-22)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 767cd72.
