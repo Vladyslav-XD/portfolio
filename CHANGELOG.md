@@ -1,3 +1,35 @@
+# Beyond the desk: Amsterdam Marathon 2026, sub-3 (2026-11-06)
+
+Repo: Vladyslav-XD/portfolio · branch main. Prepared on 2026-11-06 against `index.html` at 3a48314; merged on 2026-11-19 onto ebb2265 (three-way merge, no conflicts), so the later header About and APPROACH changes stay.
+
+## Why
+Amsterdam Marathon, 18 Oct 2026: 2:52:09 (the time on the Marathon Photos overlay). A new PB and the sub-3 goal reached, while the home page still said "3:04:14 is the number to beat" and showed London as the PB.
+
+## Files
+Add:
+- `assets/images/home/end-amsterdam-joy.webp` (1067 × 1600) and `end-amsterdam-finish.webp` (1270 × 1600, cropped around the runner, so the timing box is outside the frame): Marathon Photos shots.
+- `assets/images/home/end-amsterdam-run.webp`, `end-amsterdam-bell.webp`: posters for the two clips (540 × 960).
+- `assets/video/home/end-amsterdam-run.mp4` (4.6 s, 0.8 MB) and `end-amsterdam-bell.mp4` (6 s, 1 MB): H.264, 540 × 960, no audio track, moov first. Cut from two phone clips: running past the I amsterdam letters, and the PB bell after the finish (zoomed in on the stage).
+
+Replace:
+- `index.html`: see below.
+- `sitemap.xml`: lastmod 2026-11-19 for `/` (the day it went in).
+- `CHANGELOG.md`: this entry on top of the current file.
+
+## index.html — Beyond the desk
+- **Intro**: "Two Majors are done, the three-hour wall came down in Amsterdam (2:52:09), and Gibraltar is still waiting." UA: «…стіна трьох годин упала в Амстердамі (2:52:09)…».
+- **The Sub-3 project chart**: new first row AMSTERDAM · NETHERLANDS, PB chip, 2:52:09. The bar stops left of the 3:00:00 line (76.51 % of the row) and draws in over 1.6 s when the section opens (instant with reduced motion). London keeps 3:04:14 without the PB chip. Note: "…Amsterdam, my best, stops 7 min 51 sec short of it."
+- **Album**: Amsterdam is the first entry (12 entries), 4 frames: run clip → arms wide → 25 m to the finish → PB bell clip. Captions "AMSTERDAM MARATHON · PB · SUB-3 / 02:52:09 / 7 min 51 sec under the three-hour wall." and, on the bell clip, "Personal best? Then you ring the bell." London's caption loses "· PB". New red square first in the index row; counter 01 / 12.
+- **Clips**: muted, loop, `preload="none"`. A clip's file loads only when its frame is shown, plays only while the album is on screen and the tab is visible, and pauses otherwise. Reduced motion: poster only. Posters load with the entry (current ± 1, like the photos).
+- World Marathon Majors unchanged (Amsterdam is not a Major): 2 / 6.
+
+## Check before merging
+- Home → More about me → Beyond the desk: the album opens on Amsterdam and the run clip plays (iPhone Safari too; Low Power Mode shows the poster). → steps through the 4 frames, the bell clip plays. Captions in EN and UA.
+- The Amsterdam bar draws in and stops left of the red line; hovering the Amsterdam row opens its entry.
+- 375 px and 1440 px, light and dark.
+
+---
+
 # Home page: degree name in English in the UA text (2026-11-19)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 29b259b.

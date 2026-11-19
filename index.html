@@ -110,6 +110,8 @@
 
   /* endurance — bar fills + viewer state (CSS-driven, immune to React re-renders) */
   #vf-endurance [data-fill]{ width:0; }
+  #vf-endurance [data-fill="amsterdam"]{ transition:width 1.6s cubic-bezier(.2,.7,.2,1) .2s; }
+  #vf-endurance[data-run="1"] [data-fill="amsterdam"]{ width:76.51%; }
   #vf-endurance[data-run="1"] [data-fill="london"]{ width:81.88%; }
   #vf-endurance[data-run="1"] [data-fill="chicago"]{ width:90.82%; }
   #vf-endurance[data-run="1"] [data-fill="orta"]{ width:65.9%; }
@@ -475,7 +477,7 @@
       </div>
 
       <!-- ===== ENDURANCE — beyond the desk ===== -->
-      <div id="vf-endurance" data-active="london" style="border-top:5px solid var(--rule); background:var(--rule);">
+      <div id="vf-endurance" data-active="amsterdam" style="border-top:5px solid var(--rule); background:var(--rule);">
         <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:5px; background:var(--rule);" data-mq-1col="1">
 
           <!-- DATA SIDE -->
@@ -484,7 +486,7 @@
             <div style="display:flex; flex-direction:column; gap:13px;">
               <div style="display:flex; align-items:center; gap:9px;"><span style="width:9px; height:9px; background:#E1251B; flex:none;"></span><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--muted);" data-en="BEYOND THE DESK" data-ua="ПОЗА РОБОТОЮ">BEYOND THE DESK</span></div>
               <h3 style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(24px,3vw,38px); line-height:1.02; letter-spacing:-0.02em; margin:0;" data-en="Off the screen, I chase finish lines." data-ua="Поза екраном я біжу до фінішів.">Off the screen, I chase finish lines.</h3>
-              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); opacity:.82; margin:0; max-width:54ch;" data-en="Three goals keep me moving: complete all six World Marathon Majors, break three hours in the marathon, and swim the Strait of Gibraltar. Two Majors are done, 3:04:14 is the number to beat, and Gibraltar is still waiting. Pick an event below to see the result — and the finish-line photo. The arrows flip through the rest of the album." data-ua="Три цілі тримають мене в русі: пробігти всі шість World Marathon Majors, вибігти марафон із трьох годин і переплисти Гібралтарську протоку. Два Majors уже є, 3:04:14 — час, який треба побити, а Гібралтар ще чекає. Обери подію нижче — побачиш результат і фото на фініші. Стрілки гортають решту альбому.">Three goals keep me moving: complete all six World Marathon Majors, break three hours in the marathon, and swim the Strait of Gibraltar. Two Majors are done, 3:04:14 is the number to beat, and Gibraltar is still waiting. Pick an event below to see the result — and the finish-line photo. The arrows flip through the rest of the album.</p>
+              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:clamp(14px,1.25vw,16px); line-height:1.55; color:var(--ink); opacity:.82; margin:0; max-width:54ch;" data-en="Three goals keep me moving: complete all six World Marathon Majors, break three hours in the marathon, and swim the Strait of Gibraltar. Two Majors are done, the three-hour wall came down in Amsterdam (2:52:09), and Gibraltar is still waiting. Pick an event below to see the result — and the finish-line photo. The arrows flip through the rest of the album." data-ua="Три цілі тримають мене в русі: пробігти всі шість World Marathon Majors, вибігти марафон із трьох годин і переплисти Гібралтарську протоку. Два Majors уже є, стіна трьох годин упала в Амстердамі (2:52:09), а Гібралтар ще чекає. Обери подію нижче — побачиш результат і фото на фініші. Стрілки гортають решту альбому.">Three goals keep me moving: complete all six World Marathon Majors, break three hours in the marathon, and swim the Strait of Gibraltar. Two Majors are done, the three-hour wall came down in Amsterdam (2:52:09), and Gibraltar is still waiting. Pick an event below to see the result — and the finish-line photo. The arrows flip through the rest of the album.</p>
             </div>
 
             <!-- MAJORS -->
@@ -510,10 +512,21 @@
                 <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.06em; color:#E1251B;" data-en="GOAL · MARATHON UNDER 3:00:00" data-ua="ЦІЛЬ · МАРАФОН ДО 3:00:00">GOAL · MARATHON UNDER 3:00:00</span>
               </div>
               <div style="margin-top:14px; display:flex; flex-direction:column; gap:12px;">
+                <div data-ev="amsterdam" style="transition:opacity .25s; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding-right:12px; min-height:19px;">
+                    <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--ink);"><span data-en="AMSTERDAM" data-ua="АМСТЕРДАМ">AMSTERDAM</span><span style="color:var(--muted);"> · </span><span style="color:var(--muted);" data-en="NETHERLANDS" data-ua="НІДЕРЛАНДИ">NETHERLANDS</span></span>
+                    <span style="display:inline-flex; align-items:center; gap:6px; flex:none;"><span style="font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.06em; line-height:1; padding:3px 5px 2px; background:#E1251B; color:#F4F1E8;">PB</span><span style="font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">2:52:09</span></span>
+                  </div>
+                  <div style="position:relative; height:20px;">
+                    <div style="position:absolute; left:0; top:0; bottom:0; width:80%; background:var(--hair);"></div>
+                    <div data-fill="amsterdam" style="position:absolute; left:0; top:0; bottom:0; background:#E1251B;"></div>
+                    <div style="position:absolute; left:80%; top:-4px; bottom:-4px; width:3px; margin-left:-1px; background:#E1251B; z-index:2;"></div>
+                  </div>
+                </div>
                 <div data-ev="london" style="transition:opacity .25s; display:flex; flex-direction:column; gap:6px;">
                   <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; padding-right:12px; min-height:19px;">
                     <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; color:var(--ink);"><span data-en="LONDON" data-ua="ЛОНДОН">LONDON</span><span style="color:var(--muted);"> · </span><span style="color:var(--muted);" data-en="UK" data-ua="ВЕЛИКА БРИТАНІЯ">UK</span></span>
-                    <span style="display:inline-flex; align-items:center; gap:6px; flex:none;"><span style="font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.06em; line-height:1; padding:3px 5px 2px; background:#E1251B; color:#F4F1E8;">PB</span><span style="font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:04:14</span></span>
+                    <span style="display:inline-flex; align-items:center; gap:6px; flex:none;"><span style="font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--ink);">3:04:14</span></span>
                   </div>
                   <div style="position:relative; height:20px;">
                     <div style="position:absolute; left:0; top:0; bottom:0; width:80%; background:var(--hair);"></div>
@@ -538,7 +551,7 @@
                   <span style="position:absolute; left:80%; top:14px; transform:translateX(-50%); font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.04em; color:#E1251B; white-space:nowrap;">3:00:00</span>
                 </div>
               </div>
-              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.5; color:var(--ink); opacity:.7; margin:12px 0 0;" data-en="Each bar is my finish time. Sub-3 means stopping before the 3:00:00 line — London, my best, runs 4 min 14 sec past it." data-ua="Кожна смуга — мій фінішний час. Sub-3 — це зупинитися до лінії 3:00:00; Лондон, мій найкращий, виходить за неї на 4 хв 14 с.">Each bar is my finish time. Sub-3 means stopping before the 3:00:00 line — London, my best, runs 4 min 14 sec past it.</p>
+              <p style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; line-height:1.5; color:var(--ink); opacity:.7; margin:12px 0 0;" data-en="Each bar is my finish time. Sub-3 means stopping before the 3:00:00 line — Amsterdam, my best, stops 7 min 51 sec short of it." data-ua="Кожна смуга — мій фінішний час. Sub-3 — це зупинитися до лінії 3:00:00; Амстердам, мій найкращий, зупиняється за 7 хв 51 с до неї.">Each bar is my finish time. Sub-3 means stopping before the 3:00:00 line — Amsterdam, my best, stops 7 min 51 sec short of it.</p>
             </div>
 
             <!-- SWIM — sorted by distance; full track = 22 km (blue goal line at the right); city · water; PB time where it is one -->
@@ -591,8 +604,15 @@
           <!-- VIEWER — album: entries [data-slot] × frames [data-f]; captions [data-cap] (data-capf = per-frame); JS sets [data-on] -->
           <div data-endcol="" style="display:flex; flex-direction:column; gap:5px; background:var(--rule); min-width:0;">
             <div data-endphoto="" data-cursor="1" role="region" aria-roledescription="album" aria-label="Beyond the desk — photo album" data-aria-en="Beyond the desk — photo album" data-aria-ua="Поза роботою — фотоальбом" style="background:#14110B; position:relative; flex:1 1 auto; min-height:clamp(360px,42vw,470px); overflow:hidden; cursor:pointer; touch-action:pan-y; user-select:none;">
+            <div data-slot="amsterdam" style="position:absolute; inset:0;">
+              <video data-f="0" data-src="assets/video/home/end-amsterdam-run.mp4" data-poster="assets/images/home/end-amsterdam-run.webp" muted loop playsinline preload="none" disablepictureinpicture aria-label="Amsterdam Marathon — running past the I amsterdam letters" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 70%;"></video>
+              <img data-f="1" data-src="assets/images/home/end-amsterdam-joy.webp" alt="Amsterdam Marathon — arms wide near the finish" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:92% 22%;">
+              <img data-f="2" data-src="assets/images/home/end-amsterdam-finish.webp" alt="Amsterdam Marathon — 25 metres to the finish in the Olympic Stadium" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:52% 30%;">
+              <video data-f="3" data-src="assets/video/home/end-amsterdam-bell.mp4" data-poster="assets/images/home/end-amsterdam-bell.webp" muted loop playsinline preload="none" disablepictureinpicture aria-label="Ringing the PB bell after the Amsterdam Marathon" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 60%;"></video>
+              <div aria-hidden="true" style="position:absolute; top:17px; right:18px; z-index:4; display:flex; gap:6px; pointer-events:none;"><span data-dot="0" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="1" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="2" style="width:7px; height:7px; background:#F4F1E8;"></span><span data-dot="3" style="width:7px; height:7px; background:#F4F1E8;"></span></div>
+            </div>
             <div data-slot="london" style="position:absolute; inset:0;">
-              <img data-f="0" src="assets/images/home/end-london.png" alt="London Marathon — with my wife" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%;">
+              <img data-f="0" data-src="assets/images/home/end-london.png" alt="London Marathon — with my wife" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%;">
             </div>
             <div data-slot="chicago" style="position:absolute; inset:0;">
               <img data-f="0" data-src="assets/images/home/end-chicago.png" alt="Chicago Marathon finish" loading="lazy" decoding="async" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:50% 36%;">
@@ -642,8 +662,17 @@
 
             <div style="position:absolute; top:18px; left:20px; z-index:4; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#F4F1E8; opacity:.5; pointer-events:none;" data-en="NOW SHOWING" data-ua="ЗАРАЗ ПОКАЗАНО">NOW SHOWING</div>
 
+            <div data-cap="amsterdam" data-capf="0,1,2" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F4604E;" data-en="AMSTERDAM MARATHON · PB · SUB-3" data-ua="АМСТЕРДАМСЬКИЙ МАРАФОН · PB · SUB-3">AMSTERDAM MARATHON · PB · SUB-3</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">02:52:09</div>
+              <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="7 min 51 sec under the three-hour wall." data-ua="На 7 хв 51 с швидше за стіну трьох годин.">7 min 51 sec under the three-hour wall.</div>
+            </div>
+            <div data-cap="amsterdam" data-capf="3" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F4604E;" data-en="AMSTERDAM MARATHON · AFTER THE FINISH" data-ua="АМСТЕРДАМСЬКИЙ МАРАФОН · ПІСЛЯ ФІНІШУ">AMSTERDAM MARATHON · AFTER THE FINISH</div>
+              <div style="font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(17px,1.6vw,22px); line-height:1.2; letter-spacing:-0.01em; color:#F4F1E8; margin-top:9px; max-width:30ch; text-wrap:pretty;" data-en="Personal best? Then you ring the bell." data-ua="Особистий рекорд? Тоді дзвониш у дзвін.">Personal best? Then you ring the bell.</div>
+            </div>
             <div data-cap="london" style="position:absolute; left:0; right:0; bottom:0; padding:44px 24px 22px; background:linear-gradient(to top, rgba(8,6,3,.97) 0%, rgba(8,6,3,.93) 32%, rgba(8,6,3,.78) 58%, rgba(8,6,3,.42) 82%, rgba(8,6,3,0) 100%); z-index:3; pointer-events:none;">
-              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F4604E;" data-en="LONDON MARATHON · PB" data-ua="ЛОНДОНСЬКИЙ МАРАФОН · PB">LONDON MARATHON · PB</div>
+              <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; line-height:1.45; color:#F4604E;" data-en="LONDON MARATHON" data-ua="ЛОНДОНСЬКИЙ МАРАФОН">LONDON MARATHON</div>
               <div style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(34px,5vw,52px); letter-spacing:-0.02em; color:#F4F1E8; line-height:1; margin-top:6px;">03:04:14</div>
               <div style="font-family:'Hanken Grotesk',sans-serif; font-size:14px; line-height:1.45; color:#F4F1E8; opacity:.75; margin-top:8px; text-wrap:pretty;" data-en="4 min 14 sec from the three-hour wall." data-ua="4 хв 14 с до стіни трьох годин.">4 min 14 sec from the three-hour wall.</div>
             </div>
@@ -706,6 +735,7 @@
             <div data-endbar="" style="background:var(--surface); padding:12px clamp(12px,1.6vw,18px); display:flex; flex-wrap:wrap; align-items:center; gap:10px; row-gap:8px;">
               <button type="button" data-endnav="prev" data-cursor="1" aria-label="Previous photo" data-aria-en="Previous photo" data-aria-ua="Попереднє фото" style="width:44px; height:44px; flex:none; display:grid; place-items:center; padding:0; border:2px solid var(--rule); background:transparent; color:var(--ink); font-family:'Space Mono',monospace; font-weight:700; font-size:16px; line-height:1; cursor:pointer; transition:background-color .2s, color .2s;">←</button>
               <div data-endidx="" style="order:-1; flex:1 1 100%; min-width:0; display:flex; flex-wrap:wrap; justify-content:center;">
+                <button type="button" data-endgo="amsterdam" data-cursor="1" aria-label="Amsterdam Marathon" data-aria-en="Amsterdam Marathon" data-aria-ua="Амстердамський марафон" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#E1251B;"></span></button>
                 <button type="button" data-endgo="london" data-cursor="1" aria-label="London Marathon" data-aria-en="London Marathon" data-aria-ua="Лондонський марафон" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#E1251B;"></span></button>
                 <button type="button" data-endgo="chicago" data-cursor="1" aria-label="Chicago Marathon" data-aria-en="Chicago Marathon" data-aria-ua="Чиказький марафон" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:var(--ink);"></span></button>
                 <button type="button" data-endgo="dublin" data-cursor="1" aria-label="Fastlane 10K, Dublin" data-aria-en="Fastlane 10K, Dublin" data-aria-ua="Fastlane 10K, Дублін" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#E1251B;"></span></button>
@@ -718,7 +748,7 @@
                 <button type="button" data-endgo="romanchuk" data-cursor="1" aria-label="With Mykhailo Romanchuk" data-aria-en="With Mykhailo Romanchuk" data-aria-ua="З Михайлом Романчуком" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:#1E3FCF;"></span></button>
                 <button type="button" data-endgo="dnipro" data-cursor="1" aria-label="Dnipro, winter 2024" data-aria-en="Dnipro, winter 2024" data-aria-ua="Дніпро, зима 2024" style="width:24px; height:24px; flex:none; padding:0; border:0; background:transparent; display:grid; place-items:center; cursor:pointer;"><span style="width:12px; height:12px; background:var(--ink);"></span></button>
               </div>
-              <span data-endcount="" aria-live="polite" style="flex:1 1 auto; text-align:center; font-family:'Space Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.06em; color:var(--ink); white-space:nowrap;">01 / 11</span>
+              <span data-endcount="" aria-live="polite" style="flex:1 1 auto; text-align:center; font-family:'Space Mono',monospace; font-weight:700; font-size:12px; letter-spacing:0.06em; color:var(--ink); white-space:nowrap;">01 / 12</span>
               <button type="button" data-endnav="next" data-cursor="1" aria-label="Next photo" data-aria-en="Next photo" data-aria-ua="Наступне фото" style="width:44px; height:44px; flex:none; display:grid; place-items:center; padding:0; border:2px solid var(--rule); background:transparent; color:var(--ink); font-family:'Space Mono',monospace; font-weight:700; font-size:16px; line-height:1; cursor:pointer; transition:background-color .2s, color .2s;">→</button>
             </div>
           </div>
@@ -1697,9 +1727,22 @@ class Component extends DCLogic {
       const mark = (el, v) => { if (v) el.setAttribute('data-on', ''); else el.removeAttribute('data-on'); };
       const pad = (n) => (n < 10 ? '0' : '') + n;
       let cur = 0, frame = 0;
+      const vids = [...end.querySelectorAll('video[data-f]')];
+      vids.forEach(v => { v.muted = true; v.loop = true; v.playsInline = true; });
+      const still = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (_) { return false; } })();
+      let seen = false;
+      const syncVideo = () => vids.forEach(v => {
+        if (v.hasAttribute('data-on') && seen && !still && !document.hidden) {
+          const d = v.getAttribute('data-src'); if (d && v.getAttribute('src') !== d) v.setAttribute('src', d);
+          v.muted = true; v.loop = true; const p = v.play(); if (p && p.catch) p.catch(() => {});
+        } else if (!v.paused) v.pause();
+      });
       const load = (i) => {
         const s = slots[(i + slots.length) % slots.length];
-        framesOf(s).forEach(img => { const d = img.getAttribute('data-src'); if (d && img.getAttribute('src') !== d) img.setAttribute('src', d); });
+        framesOf(s).forEach(el => {
+          if (el.tagName === 'VIDEO') { const p = el.getAttribute('data-poster'); if (p && el.getAttribute('poster') !== p) el.setAttribute('poster', p); return; }
+          const d = el.getAttribute('data-src'); if (d && el.getAttribute('src') !== d) el.setAttribute('src', d);
+        });
       };
       const render = () => {
         const id = order[cur];
@@ -1718,6 +1761,7 @@ class Component extends DCLogic {
         evs.forEach(b => mark(b, b.getAttribute('data-ev') === id));
         gos.forEach(b => { const a = b.getAttribute('data-endgo') === id; mark(b, a); b.setAttribute('aria-current', a ? 'true' : 'false'); });
         if (count) count.textContent = pad(cur + 1) + ' / ' + pad(slots.length);
+        syncVideo();
       };
       const go = (id) => { const i = order.indexOf(id); if (i < 0) return; cur = i; frame = 0; render(); };
       const step = (d) => {
@@ -1760,6 +1804,8 @@ class Component extends DCLogic {
         else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
         else if ((e.key === 'Enter' || e.key === ' ') && e.target === photo) { e.preventDefault(); step(1); }
       });
+      if ('IntersectionObserver' in window) new IntersectionObserver((es) => { seen = es[0].isIntersecting; syncVideo(); }, { threshold: 0.2 }).observe(photo); else seen = true;
+      document.addEventListener('visibilitychange', syncVideo);
       render();
     })();
     const pron = document.getElementById('vf-pron');
