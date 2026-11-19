@@ -1,3 +1,18 @@
+# Home page: degree name in English in the UA text (2026-11-19)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit 29b259b.
+
+## Why
+The UA APPROACH paragraph read «взаємодію людини з компʼютером (MSc з компʼютерних наук, 2027)», with «компʼютер» twice in a row. Vlad chose to keep the degree name in English, as the old «(MSc у HCI, 2026)» did, and to keep the "human-computer interaction" lens as it is.
+
+## Changes
+- `index.html`, the UA APPROACH paragraph (desktop grid block and phone card): «(MSc з компʼютерних наук, 2027)» → «(MSc у Computer Science, 2027)». EN is unchanged.
+
+## Checked
+- Desktop grid at 912, 1024, 1180, 1366, 1440, 1536 and 1900 px: the new UA text takes the same number of lines as the previous one at every width, and no line is cut off.
+
+---
+
 # Home page: MSc in Computer Science, 2027 (2026-11-07)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after commit cef130a.
