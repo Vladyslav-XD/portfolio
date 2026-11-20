@@ -1,3 +1,27 @@
+# Pace Tape support page: facts updated to 1.2.1 (2026-11-20)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after the entry below.
+
+## Why
+`pace-tape-support.html` still described version 1.0: "collects no personal data", the "Ticker jokes" switch, "Settings › Onboarding › Show again", two languages. Version 1.2.1 is out (November 2026).
+
+## Changes
+- Texts only, EN and UA; layout, markup and styles are kept. Every fact comes from the app's EN and UK strings, `pace-tape-privacy.html` or `pace-tape.html`; settings and screens carry the app's own names.
+- Version line: "iOS app · version 1.2.1 · November 2026".
+- Numbers: the ‹ › step arrows and quick values; the decimal key where a number can have a decimal part; closing the keypad.
+- Triathlon: finish time, typing the one you want, locks.
+- "Ticker jokes" → the Reduce Motion switch. Tips again: More (…) → How the app works → "Show on screen ›".
+- Languages: System language, English, Українська, Deutsch, Français.
+- Free: everything is free; the Aid station is a one-off thank-you that unlocks nothing.
+- New question in the same markup: "What do I need to run it?" (iPhone, iOS 15 or later).
+- Privacy: versions 1.0 and 1.1 send nothing; from 1.2 usage stats only after Yes on the in-app card; More (…) → Settings → Usage stats turns them off; link to the policy. UA heading «Приватність», link «Політика приватності», as the app and the policy page say.
+- UA written anew, addressing the reader as «ви», like the policy page.
+
+## Check before merging
+- 375 px and 1440 px, EN and UA: the page reads top to bottom, the e-mail and Privacy Policy links work.
+
+---
+
 # Pace Tape catalog rebuilt from pace_tape 1.2.1+12 (2026-11-20)
 
 Repo: Vladyslav-XD/portfolio · branch main. Built on main after the entry below.
