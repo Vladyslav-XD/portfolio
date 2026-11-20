@@ -1,3 +1,45 @@
+# Home on mobile: tilt composition, service and principle sheet, full portrait (2026-11-20)
+
+Repo: Vladyslav-XD/portfolio · branch main. Commit b1d2f4c; this entry was added afterwards, written from its diff.
+
+## Why
+On phones Vlad wants more interaction on the first screen. He picked the tilt composition. The sayings on the portrait are the principles he works by, not quotes.
+
+## Changes
+- `index.html`, the mobile hero (`#vf-hero-m`): the stacked name card, portrait and four service rows are replaced by one composition that fills the first screen: the name block (now the `<h1>`), four service tiles and the portrait, shown whole (`object-fit:contain`, bottom-aligned).
+- A bar under it: "Selected Work ↓" (to `#works`) and the chip "↻ Tilt the phone" / «↻ Нахили телефон».
+- Tilt: the chip asks for motion access where the browser requires it, then the grid's columns and rows lean with the phone; a second tap turns it off. With a mouse the composition leans towards the pointer. The chip shows its state: "Tilt on ✓", "Tilt is off", "Tilt not available", "Motion reduced" (disabled with reduced motion; nothing moves).
+- Bottom sheet (`#vf-mh-sheet`): a service tile opens its number, title and description in the tile's colours. The "Principles" button on the portrait opens "Principle 01 / N" with "Next principle →". "Close ✕" or Esc closes it and focus returns to the opener.
+- Removed: "TAP FOR A QUOTE" on the portrait and the tap-to-expand service rows, with their scripts.
+
+## Check before merging
+- iPhone Safari: the first screen holds the name, four tiles, the portrait and the bar; tap the chip, allow motion, tilt the phone; tap again to turn it off.
+- Each tile opens the sheet in its colour; Principles steps through all principles; Close returns focus.
+- EN and UA, light and dark; Reduce Motion: the chip reads "Motion reduced" and nothing moves.
+- Desktop layout unchanged above the mobile breakpoint.
+
+---
+
+# Pace Tape page: 1.2.1 screenshots, four weeks, After launch 1.2.1 (2026-11-20)
+
+Repo: Vladyslav-XD/portfolio · branch main. Commit 185aa5b; this entry was added afterwards, written from its diff.
+
+## Why
+Pace Tape 1.2.1 came out in November 2026, so the store screenshots were outdated. "Three weeks" from the first sketch to the App Store was wrong; it took four.
+
+## Changes
+- `pace-tape.html`, hero: "Version 1.2.1 · November 2026"; the three store screenshots are now the 1.2.1 ones (pool, triathlon, treadmill), EN and UA, with new alt texts.
+- Add `assets/images/pace-tape/store-121-1.webp`, `-3`, `-4` and `store-121-uk-1.webp`, `-3`, `-4`.
+- "three weeks" → "four weeks" in the heading, the paragraph under it and the results tile (3 → 4).
+- Results line: "1.2.1 in November 2026" added after 1.2.0.
+- After launch: new block "Two weeks later: version 1.2.1." with its intro and "WHAT’S NEW IN 1.2.1 · NOV 2026" (six items: Step arrows, Drag hint, VoiceOver, Finish time, Pool, Aid station).
+
+## Check before merging
+- 375 px and 1440 px, EN and UA: the three screenshots load and swap with the language; the six 1.2.1 items sit in three columns on desktop.
+- No "three weeks" left on the page.
+
+---
+
 # Beyond the desk: Amsterdam Marathon 2026, sub-3 (2026-11-06)
 
 Repo: Vladyslav-XD/portfolio · branch main. Prepared on 2026-11-06 against `index.html` at 3a48314; merged on 2026-11-19 onto ebb2265 (three-way merge, no conflicts), so the later header About and APPROACH changes stay.
