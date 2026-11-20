@@ -1,3 +1,24 @@
+# Pace Tape catalog rebuilt from pace_tape 1.2.1+12 (2026-11-20)
+
+Repo: Vladyslav-XD/portfolio · branch main. Built on main after the entry below.
+
+## Why
+The published catalog was the 1.2.0+9 build. The newest build in `pace_tape/build/widgetbook_site` (19 November 2026, 16:41) comes from the 1.2.1 code: pubspec 1.2.1+12, built just after the last source commit a202fa0; the later commits touch only the lock file and docs.
+
+## Changes
+- `pace-tape/widgetbook/`: everything deleted, the whole build copied in unchanged (30 files; only `main.dart.js` differs). The catalog now shows 28 components and 124 use cases.
+
+## Checked
+- Headless Chrome, locale en-IE, repo served locally: opening `/pace-tape/widgetbook/` makes 19 requests, all to the site itself, all 200. Opening all 124 use cases adds 11 more, all same-origin. No request to any other host.
+- Those 11 are 404s under `fallback-fonts/` (Noto Sans Symbols, Math, KR, SC, TC, HK), the issue known from the 21 October build: the sidebar label "First launch: Drag it ← → or tap it" shows an empty box for the arrow. Not fixed here.
+- Tab title "Pace Tape — component catalog"; the accessibility tree holds the catalog from the first frame (no "Enable accessibility" placeholder).
+- The privacy sentence on `index.html` ("loads entirely from this site, with no requests to other servers") still holds.
+
+## Not changed
+- `pace-tape.html` section 08 still says 27 components and 106 use cases.
+
+---
+
 # Home on mobile: tilt composition, service and principle sheet, full portrait (2026-11-20)
 
 Repo: Vladyslav-XD/portfolio · branch main. Commit b1d2f4c; this entry was added afterwards, written from its diff.
