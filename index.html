@@ -241,54 +241,46 @@
       </div>
     </div>
     <!-- ===== STATIC MOBILE HERO (≤768px only) ===== -->
-    <div id="vf-hero-m" style="display:none; flex-direction:column; gap:4px; background:var(--rule); padding:4px;">
-      <!-- NAME -->
-      <div style="background:var(--surface); padding:32px 22px 28px;">
-        <div data-en="Hi, I’m" data-ua="Привіт, я" style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);">Hi, I’m</div>
-        <div style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(46px,17vw,82px); line-height:0.82; letter-spacing:-0.035em; margin:10px 0 0; color:var(--ink);">VLAD<br>FILON</div>
-        <div data-en="User Experience Designer" data-ua="Дизайнер користувацького досвіду" style="font-family:'Hanken Grotesk',sans-serif; font-weight:500; font-size:14px; color:var(--muted); margin-top:16px;">User Experience Designer</div>
-        <div data-en="I design products — and can build them." data-ua="Я проєктую продукти — і вмію їх створювати." style="font-family:'Hanken Grotesk',sans-serif; font-weight:600; font-size:14px; color:var(--ink); margin-top:6px;">I design products — and can build them.</div>
+    <div id="vf-hero-m" style="display:none; flex-direction:column; background:var(--rule);">
+      <!-- Mobile hero · A Tilt: a De Stijl composition that leans with the phone -->
+      <div data-mh-comp="" style="height:max(560px, calc(100svh - var(--vf-mh-head, 61px) - 58px)); display:grid; gap:6px; padding:6px; grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);">
+        <div style="grid-column:1 / span 2; grid-row:1; background:var(--surface); padding:22px 20px 18px; display:flex; flex-direction:column; gap:12px; min-height:0;">
+          <div data-en="Hi, I’m" data-ua="Привіт, я" style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted);">Hi, I’m</div>
+          <h1 style="font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(44px,15vw,64px); line-height:0.84; letter-spacing:-0.035em; margin:0; color:var(--ink);">VLAD<br>FILON</h1>
+          <div>
+            <div data-en="User Experience Designer" data-ua="Дизайнер користувацького досвіду" style="font-family:'Hanken Grotesk',sans-serif; font-weight:500; font-size:15px; color:var(--muted);">User Experience Designer</div>
+            <div data-en="I design products — and can build them." data-ua="Я проєктую продукти — і вмію їх створювати." style="font-family:'Hanken Grotesk',sans-serif; font-weight:600; font-size:15px; color:var(--ink); margin-top:2px;">I design products — and can build them.</div>
+          </div>
+        </div>
+        <button type="button" data-mh-svc="" data-cursor="1" aria-haspopup="dialog" data-n="01" data-t-en="Product Design" data-t-ua="Продуктовий дизайн" data-d-en="UX/UI for SaaS, CRM, web and mobile products — from research and user flows to polished, testable interfaces." data-d-ua="UX/UI для SaaS, CRM, веб- і мобільних продуктів — від дослідження та user flows до відпрацьованих інтерфейсів, готових до тестування." style="grid-column:1; grid-row:2; background:var(--red); color:#F4F1E8; border:0; padding:14px; text-align:left; display:flex; flex-direction:column; justify-content:space-between; gap:8px; cursor:pointer; min-height:0; min-width:0; overflow:hidden;"><span style="display:flex; justify-content:space-between; width:100%;"><span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em;">01</span><span aria-hidden="true" style="font-family:'Space Mono',monospace; font-size:20px; line-height:1;">+</span></span><span data-en="Product&lt;br&gt;Design" data-ua="Продуктовий&lt;br&gt;дизайн" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; line-height:1.04;">Product<br>Design</span></button>
+        <button type="button" data-mh-svc="" data-cursor="1" aria-haspopup="dialog" data-n="02" data-t-en="Brand Identity" data-t-ua="Бренд-айдентика" data-d-en="Visual identities, logos and brand systems designed to build recognition, consistency and trust." data-d-ua="Візуальні ідентичності, логотипи та бренд-системи, що будують упізнаваність, послідовність і довіру." style="grid-column:1; grid-row:3; background:var(--blue); color:#F4F1E8; border:0; padding:14px; text-align:left; display:flex; flex-direction:column; justify-content:space-between; gap:8px; cursor:pointer; min-height:0; min-width:0; overflow:hidden;"><span style="display:flex; justify-content:space-between; width:100%;"><span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em;">02</span><span aria-hidden="true" style="font-family:'Space Mono',monospace; font-size:20px; line-height:1;">+</span></span><span data-en="Brand&lt;br&gt;Identity" data-ua="Бренд-&lt;br&gt;айдентика" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; line-height:1.04;">Brand<br>Identity</span></button>
+        <button type="button" data-mh-svc="" data-cursor="1" aria-haspopup="dialog" data-n="03" data-t-en="Design Engineering" data-t-ua="Design Engineering" data-d-en="Turning design into functional prototypes and responsive interfaces through AI-assisted front-end implementation." data-d-ua="Дизайн, доведений до робочих прототипів і адаптивних інтерфейсів через AI-асистований front-end." style="grid-column:2; grid-row:4; background:var(--stone); color:var(--ink); border:0; padding:14px; text-align:left; display:flex; flex-direction:column; justify-content:space-between; gap:8px; cursor:pointer; min-height:0; min-width:0; overflow:hidden;"><span style="display:flex; justify-content:space-between; width:100%;"><span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em;">03</span><span aria-hidden="true" style="font-family:'Space Mono',monospace; font-size:20px; line-height:1;">+</span></span><span data-en="Design&lt;br&gt;Engineering" data-ua="Design&lt;br&gt;Engineering" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; line-height:1.04;">Design<br>Engineering</span></button>
+        <button type="button" data-mh-svc="" data-cursor="1" aria-haspopup="dialog" data-n="04" data-t-en="Marketing Design" data-t-ua="Маркетинг-дизайн" data-d-en="Digital campaigns, advertising and promotional assets designed to support brand and marketing goals." data-d-ua="Цифрові кампанії, реклама та промо-матеріали, створені на підтримку бренд- і маркетингових цілей." style="grid-column:1; grid-row:4; background:var(--yellow); color:#14110B; border:0; padding:14px; text-align:left; display:flex; flex-direction:column; justify-content:space-between; gap:8px; cursor:pointer; min-height:0; min-width:0; overflow:hidden;"><span style="display:flex; justify-content:space-between; width:100%;"><span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em;">04</span><span aria-hidden="true" style="font-family:'Space Mono',monospace; font-size:20px; line-height:1;">+</span></span><span data-en="Marketing&lt;br&gt;Design" data-ua="Маркетинг-&lt;br&gt;дизайн" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:17px; line-height:1.04;">Marketing<br>Design</span></button>
+        <div style="grid-column:2; grid-row:2 / span 2; background:var(--portrait-bg); position:relative; overflow:hidden; min-height:0; transition:background-color .4s;">
+          <img class="vf-portrait" src="assets/images/home/portrait-black-neutral.png" alt="Vlad Filon" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:50% 100%; pointer-events:none;">
+          <button type="button" data-mh-principles="" data-cursor="1" aria-haspopup="dialog" data-en="Principles" data-ua="Принципи" style="position:absolute; top:8px; right:8px; min-height:44px; padding:0 12px; border:0; background:var(--ink); color:var(--surface); font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer;">Principles</button>
+        </div>
       </div>
-      <!-- PORTRAIT (tap to cycle a quote) -->
-      <button id="vf-mq" type="button" data-cursor="1" style="display:block; width:100%; text-align:left; border:none; padding:0; cursor:pointer; background:var(--portrait-bg); height:clamp(320px,80vw,420px); overflow:hidden; position:relative; transition:background-color .4s;">
-        <img loading="lazy" class="vf-portrait" src="assets/images/home/portrait-black-neutral.png" alt="Vlad Filon" draggable="false" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 26%; pointer-events:none;">
-        <span id="vf-mq-hint" style="position:absolute; right:12px; top:12px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#F4F1E8; background:rgba(20,17,11,0.6); padding:5px 9px;" data-en="TAP FOR A QUOTE" data-ua="ТОРКНИСЬ — ЦИТАТА">TAP FOR A QUOTE</span>
-        <span id="vf-mq-box" style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; background:rgba(20,17,11,0.85); opacity:0; transform:translateY(10px); transition:opacity .35s ease, transform .35s ease;">
-          <span data-en="PRINCIPLES I WORK BY" data-ua="ПРИНЦИПИ, ЗА ЯКИМИ ПРАЦЮЮ" style="display:block; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#F2C200; margin-bottom:8px;">PRINCIPLES I WORK BY</span>
-          <span id="vf-mq-t" style="display:block; font-family:'Hanken Grotesk',sans-serif; font-style:italic; font-weight:500; font-size:14px; line-height:1.4; color:#F4F1E8;"></span>
-          <span id="vf-mq-a" style="display:block; font-family:'Space Mono',monospace; font-size:11px; color:#c9c3b3; margin-top:7px;"></span>
-        </span>
-      </button>
-      <!-- SERVICES (1-col, tap to expand description) -->
-      <div style="display:flex; flex-direction:column; gap:4px;">
-        <button type="button" data-msvc="" data-cursor="1" style="display:block; width:100%; text-align:left; border:none; cursor:pointer; background:var(--red); color:#F4F1E8; padding:20px 18px;">
-          <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.85;">01</span><span data-msvc-ic="" style="font-family:'Space Mono',monospace; font-size:18px; line-height:1; opacity:.85;">+</span></span>
-          <span data-en="Product Design" data-ua="Продуктовий дизайн" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px; line-height:1; margin:10px 0 0;">Product Design</span>
-          <span data-msvc-d="" style="display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><span data-en="UX/UI for SaaS, CRM, web and mobile products — from research and user flows to polished, testable interfaces." data-ua="UX/UI для SaaS, CRM, веб- і мобільних продуктів — від дослідження та user flows до відпрацьованих інтерфейсів, готових до тестування." style="display:block; font-family:'Hanken Grotesk',sans-serif; font-weight:500; font-size:13px; line-height:1.45; padding-top:10px; opacity:.92;">UX/UI for SaaS, CRM, web and mobile products — from research and user flows to polished, testable interfaces.</span></span>
-        </button>
-        <button type="button" data-msvc="" data-cursor="1" style="display:block; width:100%; text-align:left; border:none; cursor:pointer; background:var(--blue); color:#F4F1E8; padding:20px 18px;">
-          <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.85;">02</span><span data-msvc-ic="" style="font-family:'Space Mono',monospace; font-size:18px; line-height:1; opacity:.85;">+</span></span>
-          <span data-en="Brand Identity" data-ua="Бренд-айдентика" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px; line-height:1; margin:10px 0 0;">Brand Identity</span>
-          <span data-msvc-d="" style="display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><span data-en="Visual identities, logos and brand systems designed to build recognition, consistency and trust." data-ua="Візуальні ідентичності, логотипи та бренд-системи, що будують упізнаваність, послідовність і довіру." style="display:block; font-family:'Hanken Grotesk',sans-serif; font-weight:500; font-size:13px; line-height:1.45; padding-top:10px; opacity:.92;">Visual identities, logos and brand systems designed to build recognition, consistency and trust.</span></span>
-        </button>
-        <button type="button" data-msvc="" data-cursor="1" style="display:block; width:100%; text-align:left; border:2px solid var(--rule); cursor:pointer; background:#14110B; color:#F4F1E8; padding:20px 18px;">
-          <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.6;">03</span><span data-msvc-ic="" style="font-family:'Space Mono',monospace; font-size:18px; line-height:1; opacity:.6;">+</span></span>
-          <span data-en="Design Engineering" data-ua="Design Engineering" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px; line-height:1; margin:10px 0 0;">Design Engineering</span>
-          <span data-msvc-d="" style="display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><span data-en="Turning design into functional prototypes and responsive interfaces through AI-assisted front-end implementation." data-ua="Дизайн, доведений до робочих прототипів і адаптивних інтерфейсів через AI-асистований front-end." style="display:block; font-family:'Hanken Grotesk',sans-serif; font-weight:500; font-size:13px; line-height:1.45; padding-top:10px; opacity:.92;">Turning design into functional prototypes and responsive interfaces through AI-assisted front-end implementation.</span></span>
-        </button>
-        <button type="button" data-msvc="" data-cursor="1" style="display:block; width:100%; text-align:left; border:none; cursor:pointer; background:var(--yellow); color:#14110B; padding:20px 18px;">
-          <span style="display:flex; align-items:center; justify-content:space-between;"><span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.12em; opacity:.7;">04</span><span data-msvc-ic="" style="font-family:'Space Mono',monospace; font-size:18px; line-height:1; opacity:.7;">+</span></span>
-          <span data-en="Marketing Design" data-ua="Маркетинг-дизайн" style="display:block; font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:20px; line-height:1; margin:10px 0 0;">Marketing Design</span>
-          <span data-msvc-d="" style="display:block; max-height:0; opacity:0; overflow:hidden; transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;"><span data-en="Digital campaigns, advertising and promotional assets designed to support brand and marketing goals." data-ua="Цифрові кампанії, реклама та промо-матеріали, створені на підтримку бренд- і маркетингових цілей." style="display:block; font-family:'Hanken Grotesk',sans-serif; font-weight:500; font-size:13px; line-height:1.45; padding-top:10px; opacity:.92;">Digital campaigns, advertising and promotional assets designed to support brand and marketing goals.</span></span>
-        </button>
+      <div style="height:58px; flex:none; background:var(--surface); border-top:2px solid var(--rule); display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 8px 0 20px;">
+        <a href="#works" data-cursor="1" data-en="Selected Work ↓" data-ua="Вибрані роботи ↓" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:16px; color:var(--ink); text-decoration:none; min-height:44px; display:flex; align-items:center;">Selected Work ↓</a>
+        <button type="button" data-mh-tilt="" data-cursor="1" style="min-height:44px; padding:0 16px; border:2px solid var(--ink); border-radius:40px; background:transparent; color:var(--ink); font-family:'Space Mono',monospace; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; white-space:nowrap;">↻ Tilt the phone</button>
       </div>
       <!-- APPROACH -->
       <div style="background:var(--stone); border:2px solid var(--rule); padding:24px 22px;">
         <div data-en="APPROACH" data-ua="ПІДХІД" style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; color:var(--muted);">APPROACH</div>
         <p data-en="For years, I have been optimising customer and user experiences through three distinct lenses: commercial context (MBA), human-computer interaction (MSc in Computer Science, 2027), and a deep passion for visual design. This helps me connect user needs, business goals, and implementation constraints throughout the product process." data-ua="Роками я покращую клієнтський і користувацький досвід через три призми: комерційний контекст (MBA), взаємодію людини з компʼютером (MSc у Computer Science, 2027) і глибоку любов до візуального дизайну. Це допомагає мені поєднувати потреби користувачів, бізнес-цілі та обмеження реалізації впродовж усього продуктового процесу." style="font-family:'Hanken Grotesk',sans-serif; font-weight:500; font-size:15px; line-height:1.45; color:var(--ink); margin:12px 0 0;">For years, I have been optimising customer and user experiences through three distinct lenses: commercial context (MBA), human-computer interaction (MSc in Computer Science, 2027), and a deep passion for visual design. This helps me connect user needs, business goals, and implementation constraints throughout the product process.</p>
       </div>
+      <!-- bottom sheet: a service or a principle -->
+      <div id="vf-mh-sheet" role="dialog" aria-modal="false" aria-label="Details" aria-hidden="true" style="position:fixed; left:0; right:0; bottom:0; z-index:300; transform:translateY(105%); transition:transform .45s cubic-bezier(.2,.8,.2,1); background:#14110B; color:#F4F1E8; border-top:5px solid var(--rule); padding:22px 20px calc(24px + env(safe-area-inset-bottom));">
+        <div data-mh-num="" style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em;"></div>
+        <div data-mh-title="" aria-live="polite" style="font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:28px; line-height:1.08; margin-top:10px;"></div>
+        <p data-mh-desc="" style="font-family:'Hanken Grotesk',sans-serif; font-size:17px; line-height:1.5; margin:12px 0 18px;"></p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button type="button" data-mh-next="" hidden data-en="Next principle →" data-ua="Наступний принцип →" style="min-height:44px; padding:0 18px; border:0; border-radius:40px; background:#F4F1E8; color:#14110B; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;">Next principle →</button>
+          <button type="button" data-mh-close="" data-en="Close ✕" data-ua="Закрити ✕" style="min-height:44px; padding:0 18px; border:2px solid currentColor; border-radius:40px; background:transparent; color:inherit; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;">Close ✕</button>
+        </div>
+      </div>
     </div>
-
   </section>
 
   <!-- ===== SELECTED WORK ===== -->
@@ -1435,27 +1427,131 @@ class Component extends DCLogic {
         el.addEventListener('mouseleave', () => { d.style.opacity = '0'; d.style.maxHeight = '0'; });
       });
 
-      /* ---------- MOBILE static hero: tap interactions ---------- */
-      const mq = document.getElementById('vf-mq');
-      if (mq) {
-        let mqi = 0;
-        const box = document.getElementById('vf-mq-box'), qt = document.getElementById('vf-mq-t'), qa = document.getElementById('vf-mq-a'), hint = document.getElementById('vf-mq-hint');
-        mq.addEventListener('click', () => {
-          const q = quotes[mqi % quotes.length]; mqi++;
-          qt.textContent = '“' + q.t + '”';
-          qa.textContent = q.a + (q.s ? ' · ' + q.s : '');
-          box.style.opacity = '1'; box.style.transform = 'translateY(0)';
-          if (hint) hint.textContent = (document.documentElement.lang === 'uk' ? 'ЩЕ →' : 'NEXT →');
+      /* ---------- MOBILE hero · A Tilt: composition leans with the phone; services and principles open a sheet ---------- */
+      const mh = document.getElementById('vf-hero-m');
+      if (mh) {
+        const isUa = () => document.documentElement.getAttribute('lang') === 'uk';
+        const T = (en, ua) => (isUa() ? ua : en);
+        const rmq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+        const reduced = () => !!(rmq && rmq.matches);
+        const cl = (v) => Math.max(-1, Math.min(1, v));
+        const pad2 = (n) => String(n).padStart(2, '0');
+        const comp = mh.querySelector('[data-mh-comp]');
+        const head = document.querySelector('#vf-root header') || document.querySelector('header');
+        const setHead = () => { if (head) mh.style.setProperty('--vf-mh-head', head.getBoundingClientRect().height + 'px'); };
+        setHead();
+        window.addEventListener('resize', setHead, { passive: true });
+
+        /* bottom sheet */
+        const sheet = document.getElementById('vf-mh-sheet');
+        const sNum = sheet.querySelector('[data-mh-num]');
+        const sTitle = sheet.querySelector('[data-mh-title]');
+        const sDesc = sheet.querySelector('[data-mh-desc]');
+        const sClose = sheet.querySelector('[data-mh-close]');
+        const sNext = sheet.querySelector('[data-mh-next]');
+        if (reduced()) sheet.style.transition = 'none';
+        sheet.inert = true;
+        let opener = null, pi = 0, mode = '';
+        const open = (bg, fg, num, title, desc, from, isPrinciple) => {
+          if (from) opener = from;
+          mode = isPrinciple ? 'p' : 's';
+          sheet.style.background = bg;
+          sheet.style.color = fg;
+          sheet.setAttribute('aria-label', isPrinciple ? T('Principles I work by', 'Принципи, за якими працюю') : T('Service', 'Послуга'));
+          sNum.textContent = num;
+          sTitle.textContent = title;
+          sTitle.style.fontSize = isPrinciple ? '23px' : '28px';
+          sTitle.style.lineHeight = isPrinciple ? '1.18' : '1.08';
+          sDesc.textContent = desc;
+          sNext.hidden = !isPrinciple;
+          const wasOpen = !sheet.inert;
+          sheet.inert = false;
+          sheet.setAttribute('aria-hidden', 'false');
+          sheet.style.transform = 'translateY(0)';
+          if (!wasOpen) setTimeout(() => { try { (isPrinciple ? sNext : sClose).focus({ preventScroll: true }); } catch (_) {} }, reduced() ? 0 : 320);
+        };
+        const shut = () => {
+          if (sheet.inert) return;
+          sheet.style.transform = 'translateY(105%)';
+          sheet.setAttribute('aria-hidden', 'true');
+          sheet.inert = true;
+          mode = '';
+          if (opener) { try { opener.focus({ preventScroll: true }); } catch (_) {} }
+        };
+        const showPrinciple = (from) => {
+          const q = quotes[pi % quotes.length];
+          open('#14110B', '#F4F1E8', T('Principle ', 'Принцип ') + pad2((pi % quotes.length) + 1) + ' / ' + quotes.length, '“' + q.t + '”', q.a + (q.s ? ' · ' + q.s : ''), from, true);
+        };
+        sClose.addEventListener('click', shut);
+        sNext.addEventListener('click', () => { pi += 1; showPrinciple(null); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') shut(); });
+        mh.querySelectorAll('[data-mh-svc]').forEach((b) => {
+          b.addEventListener('click', () => {
+            const cs = getComputedStyle(b);
+            open(cs.backgroundColor, cs.color, b.dataset.n, T(b.dataset.tEn, b.dataset.tUa), T(b.dataset.dEn, b.dataset.dUa), b, false);
+          });
         });
+        const pbtn = mh.querySelector('[data-mh-principles]');
+        if (pbtn) pbtn.addEventListener('click', () => showPrinciple(pbtn));
+
+        /* tilt: a mouse leans it on wide screens, the phone leans it after one tap */
+        const chip = mh.querySelector('[data-mh-tilt]');
+        const LABEL = {
+          idle: ['↻ Tilt the phone', '↻ Нахили телефон'],
+          on: ['Tilt on ✓', 'Нахил увімкнено ✓'],
+          off: ['Tilt is off', 'Нахил вимкнено'],
+          na: ['Tilt not available', 'Нахил недоступний'],
+          rm: ['Motion reduced', 'Рух зменшено']
+        };
+        let tstate = reduced() ? 'rm' : 'idle';
+        const paintChip = () => { if (!chip) return; chip.textContent = T(LABEL[tstate][0], LABEL[tstate][1]); chip.disabled = tstate === 'rm'; };
+        paintChip();
+        try { new MutationObserver(paintChip).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] }); } catch (_) {}
+        let tx = 0, ty = 0, cx = 0, cy = 0, running = false;
+        const apply = () => {
+          const a = cx * 0.24, b = cy * 0.28;
+          comp.style.gridTemplateColumns = 'minmax(0,' + (1 + a).toFixed(3) + 'fr) minmax(0,' + (1 - a).toFixed(3) + 'fr)';
+          comp.style.gridTemplateRows = 'auto minmax(0,' + (1 - b).toFixed(3) + 'fr) minmax(0,1fr) minmax(0,' + (1 + b).toFixed(3) + 'fr)';
+        };
+        const loop = () => {
+          cx += (tx - cx) * 0.08;
+          cy += (ty - cy) * 0.08;
+          apply();
+          if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) requestAnimationFrame(loop);
+          else running = false;
+        };
+        const kick = () => { if (!running && !reduced()) { running = true; requestAnimationFrame(loop); } };
+        mh.addEventListener('pointermove', (e) => {
+          if (e.pointerType !== 'mouse' || reduced()) return;
+          const r = comp.getBoundingClientRect();
+          tx = cl(((e.clientX - r.left) / r.width - 0.5) * 2);
+          ty = cl(((e.clientY - r.top) / r.height - 0.5) * 2);
+          kick();
+        });
+        mh.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
+        const onOri = (e) => {
+          if (e.gamma == null || e.beta == null) return;
+          tx = cl(e.gamma / 25);
+          ty = cl((e.beta - 40) / 25);
+          kick();
+        };
+        if (chip) chip.addEventListener('click', async () => {
+          if (tstate === 'on') { window.removeEventListener('deviceorientation', onOri); tstate = 'idle'; tx = 0; ty = 0; kick(); paintChip(); return; }
+          try {
+            if (window.DeviceOrientationEvent && typeof window.DeviceOrientationEvent.requestPermission === 'function') {
+              const res = await window.DeviceOrientationEvent.requestPermission();
+              if (res !== 'granted') { tstate = 'off'; paintChip(); return; }
+            }
+            if (!('DeviceOrientationEvent' in window)) { tstate = 'na'; paintChip(); return; }
+            window.addEventListener('deviceorientation', onOri);
+            tstate = 'on';
+          } catch (_) {
+            tstate = 'na';
+          }
+          paintChip();
+        });
+        if (rmq && rmq.addEventListener) rmq.addEventListener('change', () => { tstate = reduced() ? 'rm' : 'idle'; if (reduced()) { tx = 0; ty = 0; cx = 0; cy = 0; apply(); window.removeEventListener('deviceorientation', onOri); } paintChip(); });
       }
-      root.querySelectorAll('[data-msvc]').forEach(b => {
-        const d = b.querySelector('[data-msvc-d]'), ic = b.querySelector('[data-msvc-ic]');
-        b.addEventListener('click', () => {
-          const open = d.style.maxHeight && d.style.maxHeight !== '0px';
-          if (open) { d.style.maxHeight = '0'; d.style.opacity = '0'; if (ic) ic.textContent = '+'; }
-          else { d.style.maxHeight = '220px'; d.style.opacity = '1'; if (ic) ic.textContent = '–'; }
-        });
-      });
     }
 
     /* ---------- work rows hover — now handled by CSS :hover (see helmet) ---------- */
